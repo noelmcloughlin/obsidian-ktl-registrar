@@ -5,7 +5,7 @@ title: Knowledge Sources
 description: Map of the repository locations this bundle was derived from, and how to re-check each on a future refresh.
 generated:
   by: process:lokf-librarian
-  at: "2026-09-12T21:00:00Z"
+  at: "2026-09-13T23:00:00Z"
 ---
 
 # Sources swept for this bootstrap discovery pass
@@ -19,12 +19,46 @@ generated:
 | `.github/workflows/build.yml`, `.github/workflows/release.yml` | CI/release facts referenced in the releasing playbook | diff the pinned-action SHAs, permissions, and trigger conditions |
 | `.github/workflows/lint-and-docs.yaml`, `.markdownlint-cli2.jsonc` | the quality-gates playbook | diff the three job names/tools and the markdownlint rule overrides |
 | `.github/dependabot.yml` | the quality-gates playbook's dependency-freshness paragraph | diff the three `package-ecosystem` entries and their groupings |
-| `.github/workflows/knowledge-librarian.yaml`, `.lokf/scripts/knowledge-librarian.sh` | the scheduled-librarian playbook | diff the job split, permissions, and what the wrapper enforces |
+| `.github/workflows/knowledge-librarian.yaml`, `.lokf/scripts/knowledge-librarian.sh` | the scheduled-librarian playbook | diff the job split, permissions, and what the wrapper enforces; then diff both against the `lokf-sidecar` templates - the copies are meant to differ only by `persist-credentials: false`, and any other difference is drift to report, not fix |
+| `.github/workflows/knowledge-registrar.yaml` | the knowledge-registrar-gate playbook | diff the three jobs (`validate`, `provenance`, `attestation`) against the `lokf-sidecar` template the same way |
+| `SECURITY.md` | what the scheduled-librarian playbook says this repository owns versus inherits | diff the "what is inherited, what this repository owns" section |
 | `AI_COVENANT.md`, `CODE_OF_CONDUCT.md` | the two governance policy concepts | diff against the sibling `lokf-agent-skills` copies - both are meant to stay verbatim |
 | `scripts/smoke-test.ts` | the plain-Node testability claim in the validator-engine concept | confirm it still imports only from `../src/validator` |
 | `docs/for-the-curious.md` (new 2026-09-12, moved out of `README.md`'s former "For the curious" section) | the detailed reasoning behind the checks - what LOKF adds over plain OKF, the OKF v0.2 base-layer rationale, what is deliberately left unchecked, the four-tier trust model | diff against `explanation/why-lokf-registrar.md`'s `sources` list; re-read on every README/docs restructuring |
+| `.assets/*.svg` | the README's card and two-vaults pictures | decorative, consciously excluded as concepts; re-check only that the row still applies if an image starts carrying a claim the README does not |
 | `CHANGELOG.md`, `versions.json`, `git tag` | release history | see note below |
 | PyPI `lokf` package | `.lokf/pyproject.toml`'s `lokf[build]>=` floor | `pip index versions lokf`; bump the floor on a minor/patch release, ask the human first on a major one |
+
+**2026-09-13 (night) re-check**, after a `lokf-sidecar` repair pass on this
+repository: `.lokf/justfile` regained the template's `lokf-check-refs`
+recipe (its query had been run by hand for two passes), the
+`knowledge_bundle` doorway link was laid at the root and excluded from
+markdownlint and lychee so the bundle is not processed twice, and Step 3
+found no placeholder. Swept the two commits since the prior pass (the README
+rewrite and its two images now committed unchanged; `knowledge-registrar.yaml`
+and the `if:` guard committed) and re-verified `playbooks/scheduled-librarian.md`
+and `playbooks/knowledge-registrar-gate.md` against them, with one
+correction: the gate's copy also rewords the `provenance` job's signing
+comment, GPG first, beyond `persist-credentials: false`. Added the
+`.assets/` row. Drift still reported, not fixed: `knowledge-librarian.yaml`
+differs from its template in comments beyond the deliberate
+`persist-credentials: false`. `just lokf-check-refs` now runs here. PyPI's
+`lokf` is still `0.7.0`; no floor bump.
+
+**2026-09-13 (evening) re-check**: swept the 1.1.0 release commits and the
+session's uncommitted working tree - the README rewritten around usage,
+`SECURITY.md` restructured to inherit the guard design from
+`lokf-agent-skills`, `knowledge-registrar.yaml` gaining the template's
+`provenance` and `attestation` jobs, and the `if:` guard on the `refresh`
+job's write-scope step. Added the three rows above (the registrar gate had
+no row and no concept - now `playbooks/knowledge-registrar-gate.md`) and
+corrected `policies/no-telemetry.md`, `explanation/why-lokf-registrar.md`,
+`playbooks/scheduled-librarian.md` and `playbooks/releasing.md` (see
+`log.md`). Drift found and reported, not fixed: `.lokf/justfile` lacks the
+template's `lokf-check-refs` recipe (its query was run by hand this pass),
+and `knowledge-librarian.yaml` differs from its template in comments beyond
+the deliberate `persist-credentials: false`. PyPI's `lokf` is still `0.7.0`;
+no floor bump needed. The `origin` remote still carries the pre-rename URL.
 
 **2026-09-12 (evening) re-check**: swept `src/main.ts`, `src/validator.ts`,
 `src/settings.ts` against the "no bundle" state and the break-glass

@@ -46,6 +46,7 @@ A [LOKF](https://lokf.nolan-nichols.com) knowledge base for the **LOKF Registrar
 * [Releasing](playbooks/releasing.md)
 * [Quality gates](playbooks/quality-gates.md)
 * [Scheduled librarian](playbooks/scheduled-librarian.md)
+* [Knowledge registrar gate](playbooks/knowledge-registrar-gate.md) - what a new `human:` confirmation must be backed by before it merges
 
 # Policies
 

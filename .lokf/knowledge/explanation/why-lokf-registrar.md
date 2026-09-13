@@ -15,8 +15,11 @@ relatedTo:
   - https://lokf-registrar.example/knowledge/services/lokf-registrar-plugin
 generated:
   by: process:lokf-librarian
-  at: "2026-09-12T21:00:00Z"
+  at: "2026-09-13T19:00:00Z"
 status: draft
+verified:
+  - by: process:lokf-librarian
+    at: "2026-09-13T19:00:00Z"
 ---
 
 # Overview
@@ -37,8 +40,12 @@ most of what this section below used to draw from README directly - the
 checks-added-over-plain-OKF list, the OKF v0.2 base-layer rationale, what is
 deliberately left unchecked, and the four-tier trust model. This concept's
 "Why the name" and "What it still leaves out" sections still draw on
-README.md itself (Credits, Alternative plugins, and the sibling-plugin
-framing), so both files are recorded as sources.
+README.md itself (the credits, the alternatives footnote beneath them, and
+the sibling-plugin framing), so both files are recorded as sources. The
+README was rewritten around usage on 2026-09-13 - two vaults, a quick
+start, the commands, which folder is the bundle - and now points at the
+`lokf-agent-skills` README for the role table and the trust ladder rather
+than restating them; none of the claims here changed with it.
 
 # Why it checks the OKF v0.2 base layer itself
 
@@ -54,9 +61,9 @@ recommended one when absent. That detection read Obsidian's undocumented
 `app.plugins` API (a routine community-review flag), and the recommendation
 became moot once the base layer was covered here; both, and the settings
 action that deep-linked to a specific validator, were removed on 2026-09-12.
-Other OKF v0.2 validators are now mentioned once, in the README's
-"Alternative plugins" footnote, as alternatives for that layer - never as
-companions or dependencies.
+Other OKF v0.2 validators are now mentioned once, in a footnote at the end
+of the README (beneath the credits since the 2026-09-13 rewrite), as
+alternatives for that layer - never as companions or dependencies.
 
 # Why the name
 
@@ -64,8 +71,8 @@ Until 2026-09-12 the plugin was *LOKF Enforcer*; it was renamed before any
 release, for two reasons. The job it does is the registrar's - the clerical
 role in the `lokf-agent-skills` taxonomy, alongside `lokf validate` and CI's
 `knowledge-registrar.yaml` gate - and a registrar keeps records well-formed
-and says what it finds, where an enforcer would block: the README's longest
-section is on why almost everything here is a warning. And the old name
+and says what it finds, where an enforcer would block: the longest section
+of `docs/for-the-curious.md` is on why almost everything here is a warning. And the old name
 differed by one letter from an unrelated OKF validator in the community
 directory, inviting the reading that this was a fork of it, when the two
 share nothing but the base specification. The id (`lokf-registrar`), the

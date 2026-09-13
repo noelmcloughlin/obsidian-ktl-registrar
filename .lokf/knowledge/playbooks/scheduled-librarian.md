@@ -6,10 +6,15 @@ description: The knowledge-librarian.yaml workflow's two-job privilege split - h
 resource: .github/workflows/knowledge-librarian.yaml
 dependsOn:
   - https://lokf-registrar.example/knowledge/references/lokf-toolkit
+relatedTo:
+  - https://lokf-registrar.example/knowledge/playbooks/knowledge-registrar-gate
 generated:
   by: process:lokf-librarian
-  at: "2026-09-12T21:00:00Z"
+  at: "2026-09-13T19:00:00Z"
 status: draft
+verified:
+  - by: process:lokf-librarian
+    at: "2026-09-13T23:00:00Z"
 ---
 
 # Overview
@@ -19,8 +24,10 @@ on a schedule (Mondays 05:00 UTC) to keep `.lokf/knowledge/` in step with the
 repository, then opens a review PR with whatever changed - never pushing to
 the default branch or auto-merging, and a no-op when nothing changed. It is
 inert until the `KNOWLEDGE_LIBRARIAN_ENABLED` repository variable is set to
-`true`. `AGENT_CLI` is read from a repository variable or, as a fallback,
-a repository secret (`vars.AGENT_CLI || secrets.AGENT_CLI`).
+`true`; since 2026-09-13 the `refresh` job's own "Enforce the agent's write
+scope" step carries the same `if:` guard as the agent step, so with the
+variable unset neither runs. `AGENT_CLI` is read from a repository variable
+or, as a fallback, a repository secret (`vars.AGENT_CLI || secrets.AGENT_CLI`).
 
 **Two jobs, split by privilege.** `refresh` runs the agent - third-party
 code - under `contents: read` with `persist-credentials: false`, so no git
@@ -63,11 +70,21 @@ fail-fast conveniences, not the backstop.
 for a PR opened with the default `GITHUB_TOKEN` (anti-recursion). `publish`'s
 checks above are this PR's real backstop; if branch protection requires
 `validate`/`provenance`, they sit at "Expected" until a human fires a fresh
-`pull_request` event (close/reopen, or an empty commit).
+`pull_request` event (close/reopen, or an empty commit) - which is one reason
+required status checks are deliberately off here. What that gate checks on a
+person's own PR is [Knowledge registrar gate](knowledge-registrar-gate.md).
 
-See [SECURITY.md](../../../SECURITY.md)'s "Repository hardening" and
-"Prompt-injection guards" sections for the full rationale, and
-[AI_COVENANT.md](../../../AI_COVENANT.md)'s "Repository-Owned Agent
-Automation" for the human-accountability rules this workflow operates
-under (bot identity, review always required, verdicts only a person can
-record).
+**Whose design this is.** Both files are copies of the `lokf-sidecar`
+template in `lokf-agent-skills`, and since 2026-09-13 this repository's
+[SECURITY.md](../../../SECURITY.md) says so in "The librarian workflow: what
+is inherited, what this repository owns": it names what this repository is
+accountable for - the deployed copy and its one local edit
+(`persist-credentials: false` on the read-only checkouts, stricter than the
+template), the `KNOWLEDGE_LIBRARIAN_ENABLED` / `AGENT_CLI` switches, the
+surfaces the librarian reads here, and the blast radius if the inherited
+guards fail - and links to the skills repository's `SECURITY.md` for the
+guard design itself rather than restating it, since a restated copy would go
+stale with nothing in CI to notice. [AI_COVENANT.md](../../../AI_COVENANT.md)'s
+"Repository-Owned Agent Automation" sets the human-accountability rules this
+workflow operates under (bot identity, review always required, verdicts only
+a person can record).

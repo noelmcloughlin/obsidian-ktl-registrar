@@ -8,10 +8,10 @@ dependsOn:
   - https://lokf-registrar.example/knowledge/references/obsidian-plugin-guidelines
 generated:
   by: process:lokf-librarian
-  at: "2026-09-12T18:00:00Z"
+  at: "2026-09-13T19:00:00Z"
 verified:
   - by: process:lokf-librarian
-    at: "2026-09-12T18:00:00Z"
+    at: "2026-09-13T19:00:00Z"
 ---
 
 # Overview
@@ -53,3 +53,11 @@ approval) in front of it.
 A `pull_request`-triggered `plan` job in `semantic-release.yml` previews
 every PR into `main` with `--dry-run` - no write scope, no commit, no tag -
 so a malformed commit message or a broken exec script surfaces in review.
+
+`main` is protected, but not by a merge gate (`CONTRIBUTING.md` and
+`SECURITY.md`, 2026-09-13): deletions and force-pushes are blocked and
+linear history is required, while a rule requiring pull requests or passing
+status checks is deliberately off - rulesets apply to direct pushes too, and
+the release job's own `[skip ci]` promotion commit would be rejected, with
+no bypass-list entry possible for `github-actions[bot]`. CI still runs on
+every pull request and is read before merge; access control is the gate.
