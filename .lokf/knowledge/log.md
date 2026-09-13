@@ -1,5 +1,51 @@
 # Change Log
 
+## 2026-09-13 (3)
+
+* **Steady-state refresh** (librarian pass, no feedback pending), after a
+  `lokf-sidecar` repair pass that restored `.lokf/justfile`'s
+  `lokf-check-refs` recipe and laid the `knowledge_bundle` doorway link.
+  Re-verified `playbooks/scheduled-librarian.md` and
+  `playbooks/knowledge-registrar-gate.md` against the now-committed
+  workflows; the gate concept now says its copy also rewords the
+  `provenance` job's signing comment, not only `persist-credentials: false`.
+  `playbooks/knowledge-sources.md`: `.assets/` row and run note added.
+
+## 2026-09-13 (2)
+
+* **Steady-state refresh** (librarian pass, no feedback pending), against the
+  1.1.0 release commits and this session's uncommitted working tree: the
+  README rewritten around usage (two vaults, quick start, commands, *Which
+  folder is the bundle*), `SECURITY.md` restructured to inherit the guard
+  design from `lokf-agent-skills`, and `knowledge-registrar.yaml` gaining the
+  template's `provenance` and `attestation` jobs. Added
+  `playbooks/knowledge-registrar-gate.md` for that gate - a real gap: the
+  workflow had no source-map row and no concept. Corrected
+  `policies/no-telemetry.md` (it still named the header command as the
+  plugin's only write; the README has listed the safe-fix, promote-relations,
+  affordance and report-action writes for some time - drift older than this
+  session), `explanation/why-lokf-registrar.md` (the alternatives footnote
+  now sits beneath the credits, and the warnings-not-errors argument is
+  `docs/for-the-curious.md`'s longest section, not the README's),
+  `playbooks/scheduled-librarian.md` (the `if:` guard on the `refresh` job's
+  write-scope step; `SECURITY.md`'s renamed section and its links out to the
+  skills repository) and `playbooks/releasing.md` (required status checks
+  deliberately off, per `CONTRIBUTING.md`/`SECURITY.md`) and
+  `references/lokf-specification.md` (its `definedBy` pointed at the spec's
+  own URL rather than a concept, the one dangling target the hand-run
+  reference check found; `derivedFrom` the OKF spec instead; "14 classes"
+  corrected to 15; and it still said Rule 6's trust fields were left to a
+  separately installed OKF validator - the design abandoned on 2026-09-12,
+  since when the plugin checks their shape itself). Re-verified, no change:
+  `references/commands-and-settings.md` (command table and settings groups
+  identical in the rewritten README) and `playbooks/contributing.md`.
+  **Drift audit (reported, not fixed - lokf-sidecar's job):** `.lokf/justfile`
+  lacks the template's `lokf-check-refs` recipe (its query run by hand this
+  pass, clean after the fix above); `knowledge-librarian.yaml` differs
+  from its template in comments only, beyond the deliberate
+  `persist-credentials: false`; `knowledge-registrar.yaml` differs by that
+  line alone. `lokf` on PyPI is still `0.7.0`, matching the floor.
+
 ## 2026-09-13
 
 * **Steady-state refresh** (librarian pass, no feedback pending): re-verified

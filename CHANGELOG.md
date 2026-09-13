@@ -6,6 +6,11 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+### Changed
+
+- **README rewritten around how to use the plugin**, as an extension of the [`lokf-agent-skills`](https://github.com/noelmcloughlin/lokf-agent-skills): *Two vaults* (two images carry the workshop/exhibition story; per-host link mechanics point at the skills' playbook), a four-step *Quick start*, *Using it*, the command table, *Which folder is the bundle*, *Install*, *Settings*. The role table, the library metaphor and the trust ladder now live in the skills' README and are linked once rather than restated; *Install* points at the GitHub releases; the `src/` tree names the modules added since 0.5.0. No plugin change.
+- **This repository's own sidecar repaired** by `lokf-sidecar`: the `knowledge_bundle` doorway link is now committed at the root, `.lokf/justfile` regains the template's `lokf-check-refs` recipe, and markdownlint and lychee skip the link's duplicate path. No plugin change.
+
 ## [1.1.0] - 2026-09-13
 
 ### Changed
