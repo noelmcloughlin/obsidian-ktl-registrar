@@ -6,10 +6,10 @@ description: The plugin's commands, status-bar behavior, and settings-tab groups
 resource: README.md
 generated:
   by: process:lokf-librarian
-  at: "2026-09-12T21:00:00Z"
+  at: "2026-09-13T12:00:00Z"
 verified:
   - by: process:lokf-librarian
-    at: "2026-09-12T21:00:00Z"
+    at: "2026-09-13T15:00:00Z"
 ---
 
 # Commands
@@ -21,7 +21,7 @@ from what the source actually names.
 | --- | --- |
 | `validate-vault` | Validate vault (full LOKF report) |
 | `validate-active` | Validate active note |
-| `scaffold-root-header` | Insert the bundle's semantic header (creates `knowledge_bundle/` in a vault with no bundle) |
+| `scaffold-root-header` | Insert the bundle's semantic header (in a vault with no bundle, asks whether this vault is the exhibition or should hold a `knowledge_bundle/` folder) |
 | `find-concept` | Find a concept (by name, type, or relations) |
 | `find-orphan-concept` | Find an orphan concept (nothing links to it) |
 | `field-reference` | Look up a LOKF field |

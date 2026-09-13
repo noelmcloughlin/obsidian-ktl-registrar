@@ -13,10 +13,10 @@ about:
   - https://lokf-registrar.example/knowledge/references/commands-and-settings
 generated:
   by: process:lokf-librarian
-  at: "2026-09-12T21:00:00Z"
+  at: "2026-09-13T12:00:00Z"
 verified:
   - by: process:lokf-librarian
-    at: "2026-09-12T21:00:00Z"
+    at: "2026-09-13T15:00:00Z"
 ---
 
 # Overview
@@ -71,9 +71,12 @@ command that would otherwise act shows one explanatory `Notice`
 headerless whole vault as one bundle anyway, but never overrides a detected
 `knowledge_bundle/` folder. **Insert the bundle's semantic header**
 (`scaffold-root-header`) targets whichever bundle the active note belongs
-to; in a vault with no bundle it creates a `knowledge_bundle/` folder and
-writes the header into its `index.md`, rather than decorating the vault
-root. The scan checks Obsidian's live index before explaining an absent
+to; in a vault with no bundle it opens a two-choice modal
+(`ScaffoldChoiceModal`, `src/scaffold-modal.ts`) - make this vault the
+exhibition (the header goes on the root `index.md`) or create a
+`knowledge_bundle/` folder (the notes around it are left alone) - suggesting
+the first when the vault holds no Markdown besides `index.md` and the second
+otherwise, and never deciding alone. The scan checks Obsidian's live index before explaining an absent
 root, so a dot-folder root a plugin such as Hidden Folders Access exposes is
 scanned like any other.
 `writeDiataxisMap` now writes `diataxis.md` as a `Document` with a minted
