@@ -1,5 +1,23 @@
 # Change Log
 
+## 2026-09-13
+
+* **Steady-state refresh** (librarian pass, no feedback pending): re-verified
+  `policies/no-telemetry.md`, `references/commands-and-settings.md`,
+  `services/settings-tab.md` and `services/lokf-registrar-plugin.md` against
+  `README.md`, `src/main.ts` and `src/settings.ts` after this session's
+  README-notice rewording, the header command's new two-choice modal
+  (`src/scaffold-modal.ts`), and the sidecar's `.lokf/justfile`/workflow
+  comments following the current `lokf-sidecar` templates. All four already
+  matched - the command table, the break-glass setting's description and the
+  no-bundle state were corrected in an earlier pass this session - so only
+  each concept's `verified` event was refreshed; no content changed.
+  `src/scaffold-modal.ts` is not given its own concept: it is a small UI
+  helper of `lokf-registrar-plugin.md`, already described there under "Insert
+  the bundle's semantic header". `playbooks/quality-gates.md` and
+  `playbooks/releasing.md` were not re-checked this run - their resources
+  (`lint-and-docs.yaml`, `CONTRIBUTING.md`) were untouched this session.
+
 ## 2026-09-12 (5)
 
 * **Steady-state refresh** (librarian pass, no feedback pending): corrected
