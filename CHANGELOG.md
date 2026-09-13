@@ -6,6 +6,8 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-09-13
+
 ### Changed
 
 - **"Insert the bundle's semantic header" now asks** in a vault with no bundle - *make this vault the exhibition*, or *create a `knowledge_bundle` folder* - instead of always nesting a folder. A two-choice modal (`src/scaffold-modal.ts`) suggests by what the vault holds: the root for a vault with nothing but an `index.md`, the folder otherwise. The palette name drops its parenthetical.
