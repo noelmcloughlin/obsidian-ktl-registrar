@@ -36,6 +36,7 @@ import { computeFix, computeFixes } from "./fixes";
 import { extractBodyLinks, buildProposals, type Proposal } from "./propose";
 import { FindingSuggestModal, type FindingItem } from "./finding-modal";
 import { ConfirmModal } from "./confirm-modal";
+import { ScaffoldChoiceModal, type ScaffoldChoice } from "./scaffold-modal";
 import { FieldReferenceModal } from "./field-modal";
 import { LOKF_FIELD_DOCS } from "./fields";
 import {
@@ -153,9 +154,9 @@ export default class LokfPlugin extends Plugin {
 
   /** With nothing configured, let the vault say what it is: a root index.md
    *  carrying a LOKF header makes the whole vault the bundle; a top-level
-   *  `knowledge_bundle/` with its own index.md is a notes vault hosting a
-   *  bundle beside its notes (lokf-sidecar's visible layout); neither is a
-   *  workshop with no exhibition, and the plugin stays out of it unless the
+   *  `knowledge_bundle/` with its own index.md is a notes vault keeping a
+   *  bundle as a folder among its notes (at the cost the README names);
+   *  neither is a workshop with no exhibition, and the plugin stays out of it unless the
    *  break-glass setting says otherwise. Two index lookups and a
    *  metadata-cache read - cheap enough to run per call and never cached, so
    *  a folder or header appearing or vanishing takes effect at once. The
@@ -178,7 +179,7 @@ export default class LokfPlugin extends Plugin {
    *  hit it. */
   private noBundleNotice(): void {
     new Notice(
-      "LOKF: this vault has no knowledge bundle - no knowledge_bundle folder with an index.md, and no LOKF header on the root index.md - so there is nothing to check. Run \"Insert the bundle's semantic header\" to create one, or turn on Settings → Scope and performance → Treat the vault root as the bundle to check the whole vault anyway.",
+      "LOKF: this vault has no knowledge bundle - no knowledge_bundle folder with an index.md, and no LOKF header on the root index.md - so there is nothing to check. Run \"Insert the bundle's semantic header\" - it asks whether this vault is the bundle or should hold one - or turn on Settings → Scope and performance → Treat the vault root as the bundle to check the whole vault anyway.",
       12000
     );
   }
@@ -233,7 +234,7 @@ export default class LokfPlugin extends Plugin {
     });
     this.addCommand({
       id: "scaffold-root-header",
-      name: "Insert the bundle's semantic header (creates knowledge_bundle/ in a vault with no bundle)",
+      name: "Insert the bundle's semantic header",
       callback: () => {
         if (this.blockedOnDevice()) return;
         void this.scaffoldRootHeader();
@@ -1569,30 +1570,48 @@ export default class LokfPlugin extends Plugin {
    *  are configured and no open note picks one out - there is no default to
    *  fall back to that wouldn't silently scaffold the wrong bundle. */
   /** Which bundle the scaffold command works on: the active note's, else the
-   *  only one there is. A vault with no bundle gets one created - as the
-   *  visible `knowledge_bundle/` folder beside the notes, never by turning the
-   *  vault root into one: the vault is the workshop, the bundle the exhibition,
-   *  and the other notes were never LOKF concepts to begin with. */
-  private resolveScaffoldTarget(): string | null {
+   *  only one there is. A vault with no bundle is asked (scaffold-modal.ts)
+   *  whether it *is* the exhibition - the header goes on its root index.md
+   *  and every note becomes a record - or should hold one as a
+   *  `knowledge_bundle/` folder beside the notes, which are then left alone.
+   *  The plugin never decides that by itself: an empty vault someone opened
+   *  to be the bundle wants the first, a vault full of ordinary notes the
+   *  second. Several roots with no note open in any of them is ambiguous. */
+  private resolveScaffoldTarget(): { kind: "root"; root: string } | { kind: "ask" } | { kind: "ambiguous" } {
     const active = this.app.workspace.getActiveFile();
     if (active) {
       const r = this.resolveRoot(active.path);
-      if (r !== null) return r;
+      if (r !== null) return { kind: "root", root: r };
     }
     const roots = this.bundleRoots();
-    if (roots.length === 0) return VISIBLE_BUNDLE_FOLDER;
-    if (roots.length === 1) return roots[0] ?? "";
-    return null;
+    if (roots.length === 0) return { kind: "ask" };
+    if (roots.length === 1) return { kind: "root", root: roots[0] ?? "" };
+    return { kind: "ambiguous" };
   }
 
   private async scaffoldRootHeader(): Promise<void> {
-    const root = this.resolveScaffoldTarget();
-    if (root === null) {
+    const target = this.resolveScaffoldTarget();
+    if (target.kind === "ambiguous") {
       new Notice(
         "LOKF: several bundle roots are configured - open a note inside the bundle you want to scaffold first."
       );
       return;
     }
+    if (target.kind === "ask") {
+      // Suggest by what the vault holds: nothing but (at most) an index.md
+      // means it was opened to be the bundle; any other note means it was not.
+      const holdsNotes = this.app.vault.getMarkdownFiles().some((f) => f.path !== "index.md");
+      new ScaffoldChoiceModal(this.app, holdsNotes ? "folder" : "vault-root", VISIBLE_BUNDLE_FOLDER, (choice) => {
+        void this.writeScaffoldHeader(choice === "folder" ? VISIBLE_BUNDLE_FOLDER : "", choice);
+      }).open();
+      return;
+    }
+    await this.writeScaffoldHeader(target.root, null);
+  }
+
+  /** `created` is the answer the no-bundle question got, or null when the
+   *  command targeted a bundle that already existed. */
+  private async writeScaffoldHeader(root: string, created: ScaffoldChoice | null): Promise<void> {
     const rootIndexPath = this.rootIndexPathFor(root);
     const rootIndex = this.app.vault.getAbstractFileByPath(rootIndexPath);
     let content = "";
@@ -1647,11 +1666,12 @@ publisher:
       return;
     }
     this.invalidateBaseIri(rootIndexPath);
-    const created = root === VISIBLE_BUNDLE_FOLDER && !this.settings.bundleRoots.length && !this.settings.treatVaultRootAsBundle;
     new Notice(
-      created
+      created === "folder"
         ? `LOKF: created the ${root} folder with a semantic header in its index.md - this vault's bundle from now on; the notes around it are left alone. Replace the placeholder base_iri before publishing.`
-        : `LOKF: inserted a semantic header template into ${rootIndexPath} - replace the placeholder base_iri before publishing.`,
+        : created === "vault-root"
+          ? "LOKF: this vault is now the bundle - a semantic header is on its index.md, and every note here is a record. Replace the placeholder base_iri before publishing."
+          : `LOKF: inserted a semantic header template into ${rootIndexPath} - replace the placeholder base_iri before publishing.`,
       created ? 10000 : 5000
     );
     this.refreshStatus();
