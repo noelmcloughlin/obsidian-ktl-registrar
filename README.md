@@ -7,11 +7,13 @@
 
 If you keep a structured knowledge base in Obsidian - a wiki, a team's shared brain, documentation for a project - this plugin quietly checks it stays well-formed as you write. No servers, no setup beyond installing it: open a vault, and a small status-bar icon tells you where things stand.
 
-It speaks a particular dialect of structured notes called **LOKF** (Linked Open Knowledge Format, layered on the Open Knowledge Format, OKF v0.2 - more on both in [How the checking works](docs/for-the-curious.md)). A folder of notes written that way is a **knowledge bundle**: one concept per note, a little frontmatter on each, and an `index.md` at the folder's root that names the bundle. Two words this README keeps coming back to: the bundle is the **exhibition**, and each concept in it an exhibit - the checked, curated part of what you know, as against the workshop of ordinary notes around it. That is the whole unit this plugin works on, and it is just a folder of Markdown - which is why Obsidian can open it, and why nothing about your vault has to change to hold one.
+> **What this plugin is for.** Your Obsidian vault is your **workshop**; nothing here touches it. The plugin works on the **exhibition** generated from it: a separate folder of knowledge notes that follow the Linked Open Knowledge Format (LOKF), a few properties on each, that you open in Obsidian as a vault of its own. Running the [`lokf-agent-skills`](https://github.com/noelmcloughlin/lokf-agent-skills) builds and refreshes that folder from your workshop; this plugin is the same work at your desk, keeping every note in it well-formed as you type. It does not need the skills - the folder is only Markdown, and you can grow one by hand - but the two were designed together, and that is where it is most valuable. [Where it works](#where-it-works-the-exhibition-not-the-workshop) has the three arrangements.
+
+It speaks a particular dialect of structured notes called **LOKF** (Linked Open Knowledge Format, layered on the Open Knowledge Format, OKF v0.2 - more on both in [How the checking works](docs/for-the-curious.md)). A folder of notes written that way is a **knowledge bundle**: one concept per note, a little frontmatter on each, and an `index.md` at the folder's root that names the bundle. That folder is the exhibition, and each concept in it an **exhibit** - the checked, curated part of what you know. It is just a folder of Markdown, which is why Obsidian can open it, and why nothing about your vault has to change to hold one.
 
 If the [`lokf-agent-skills`](https://github.com/noelmcloughlin/lokf-agent-skills) are the library's staff - one lays the network, one binds it into order, one holds the scales, one guides the visitors - Obsidian is the desk where the one who holds the scales sits - and that one is always a person: the **curator** is a named human, never a tool. Two plugins work at that desk. **LOKF Registrar** - this one - is the **registrar**, and named for it: it checks that each record is well-formed as it is written. Its sibling [LOKF Curator](https://github.com/noelmcloughlin/obsidian-lokf-curator) is the curator's assistant, named for whom it serves: it puts the source beside the claim and writes down what the person decided. **Neither reaches a verdict of its own: the registrar keeps the paperwork straight, the assistant keeps the record of the decisions, and the judging stays with the person.**
 
-*New to LOKF, with just a vault of ordinary notes? Start at [How this fits](#how-this-fits-the-sidecar-the-doorway-and-your-vault).*
+*New to LOKF, with just a vault of ordinary notes? Start at [Where it works](#where-it-works-the-exhibition-not-the-workshop).*
 
 > **Two ways in.** This README is one; the other is a docent. Install [`lokf-docent`](https://github.com/noelmcloughlin/lokf-agent-skills) into whatever agent you already use - `npx skills add noelmcloughlin/lokf-agent-skills --skill lokf-docent --yes` - and ask it anything about this project - *Where does it look for the bundle root?*, say. It answers from `.lokf/knowledge/`, the checked part of what the project knows, says how far each answer has been trusted (still a draft, checked by automation only, or confirmed by a named person), opens the source for exact values, and records what it couldn't answer so the gap gets filled. One door for a person at a prompt, an agent reading this file, or a chatbot that can load a skill. **Agents:** if `.lokf/knowledge/index.md` exists, read it first - `llms.txt` says how to weigh it.
 
@@ -21,15 +23,17 @@ The knowledge is already in the vault. What's missing is a way to tell, at a gla
 
 A catalogue is only worth keeping if its records hold their shape. That is this plugin's half of the job: the frontmatter is well-formed, the types are ones the vocabulary knows, the relationships point at notes that exist, and each id is the one this bundle's `base_iri` would give it. Who checked a claim, and when, is a separate question - recorded in the same files and shown in plain words by [LOKF Curator](https://github.com/noelmcloughlin/obsidian-lokf-curator). Well-formed is the floor all of that stands on: a record nobody can parse is one nobody can vouch for either.
 
-## How this fits: the sidecar, the doorway, and your vault
+## Where it works: the exhibition, not the workshop
 
-The pattern every LOKF tool is built around is a **sidecar**: a folder of curated knowledge kept *beside* the raw material it was distilled from - beside the code in a repository, beside the notes in a vault, beside the documents in a shared drive - in the same folder tree and, almost always, the same git repository. The sidecar is `.lokf/`. The bundle inside it is `.lokf/knowledge/` - and, because a dot-folder is hidden from folder pickers, the bundle also goes by a visible name, `knowledge_bundle`. One of the two is the real folder and the other a link onto it; the host decides which ([below](#three-places-a-bundle-can-live)), and nothing else about the bundle changes. Obsidian users already live with this shape: `.obsidian/` is a sidecar too - configuration kept beside your notes, in a dot-folder the app manages and the file explorer never shows. `.lokf/` is a second one, holding the knowledge somebody is prepared to vouch for.
+The bundle is a **sidecar**: a folder of curated knowledge kept *beside* the raw material it was distilled from - `.lokf/knowledge/` next to the code in a repository, the notes in a vault, or the documents in a shared drive - with a `knowledge_bundle` link beside it, so folder pickers, which hide dot-folders, have a name to open. Obsidian users already live with this shape: `.obsidian/` is a sidecar too. Three ways to meet one:
 
-### Where Obsidian comes in
+1. **Open the exhibition as its own vault** - the intended way. **File → Open folder as vault**, pick `knowledge_bundle` (or type the path `.lokf/knowledge`; to make the link yourself, `ln -s .lokf/knowledge knowledge_bundle`, on Windows `mklink /J knowledge_bundle .lokf\knowledge`, no administrator rights). Install this plugin in that vault. Nothing to configure: a root `index.md` with a header makes the whole vault the bundle. Your own vault never lists the link - Obsidian skips a link that resolves inside the vault, and never indexes a dot-folder - so the two vaults never index the same file, and your notes stay yours.
+2. **A folder inside your vault.** Also works: the plugin finds a top-level `knowledge_bundle/` on its own, and any folder you list under *Bundle root folders* (several, if one vault holds several bundles). Know the cost first: Obsidian indexes that folder like any other, so link suggestions, the quick switcher, graph and search will mix exhibits with everyday notes; *Settings → Files and links → Excluded files* makes them less noticeable, not gone. That is why it is not the default.
+3. **The whole vault is the exhibition** - a team wiki, a handbook. Put the header on the root `index.md` (**Insert the bundle's semantic header** does it) and every note is a record. For a vault that really is one but has no header yet, *Treat the vault root as the bundle* under *Scope and performance* reads it anyway; it is a break-glass switch, and the plugin says so.
 
-Obsidian is the **curator's desk** - the curator being a person: you. However the bundle was produced - by hand, or derived by the [`lokf-agent-skills`](https://github.com/noelmcloughlin/lokf-agent-skills) - the person who checks it works in Obsidian, and reaches the bundle one of two ways. Beside code, `knowledge_bundle` is a link: **File → Open folder as vault**, pick it, and the bundle opens as a small vault of its own, every note a concept, nothing to configure - Obsidian treats a linked folder like any other vault and keeps its workspace state inside it (the real `.lokf/knowledge/.obsidian/`, which the sidecar's gitignore expects); on Windows the link is a junction (`mklink /J knowledge_bundle .lokf\knowledge`, no administrator rights), and where a sync service has dropped it you open `.lokf/knowledge` by typing the path. Inside your own vault, `knowledge_bundle/` is a real folder among your notes and you open nothing new: this plugin finds it on its own. Same desk either way: this plugin, the registrar, keeps the records well-formed as you type; [LOKF Curator](https://github.com/noelmcloughlin/obsidian-lokf-curator), the assistant, records what you confirm.
+Your vault is never migrated into an exhibition. What moves is what you would stand behind - the notes you would hand to a teammate, a new hire, a CI gate, or an agent answering questions on your behalf - and only a few at a sitting. Where the sidecar sits host by host - a repository, a vault kept in git, a shared drive, many repositories into one vault - is in [Where the bundle lives](docs/for-the-curious.md#where-the-bundle-lives-host-by-host).
 
-The skills and the plugins never call each other. The skills run where an agent runs, in a terminal at the host; the plugins run in Obsidian; the bundle is the only thing they share. Role by role:
+**With the skills.** In a terminal at the host: `lokf-sidecar` once, then `lokf-librarian` to derive the bundle from code, docs or notes, every concept marked a draft. Open `knowledge_bundle` as a vault, and this plugin keeps what the librarian wrote well-formed while you edit it; install LOKF Curator when you start confirming. The skills and the plugins never call each other - the bundle is the only thing they share. Role by role:
 
 | Role | In a terminal, or in CI | In Obsidian |
 | --- | --- | --- |
@@ -39,27 +43,7 @@ The skills and the plugins never call each other. The skills run where an agent 
 | **Curator** - always a person; confirms, corrects, retires, sends back | the `lokf-curator` skill's review session - the person's assistant in a terminal | **LOKF Curator** - the same assistant in Obsidian: the same session, the same five verbs, the same fields, specified by the same two reference files |
 | **Docent** - answers readers from the bundle | `lokf-docent` skill; `lokf serve` for SPARQL queries and a graph view | - (readers open the vault; nothing in Obsidian writes on a reader's behalf) |
 
-### Three places a bundle can live
-
-**A code repository.** The librarian derives the bundle from code and docs; you review it through the doorway. Concepts cite sources that sit *above* the small vault you opened - `src/…`, `docs/…` - so a review shows those as paths to copy rather than pretending to open them.
-
-**Your vault, kept in git.** Run the skills at the host and the sidecar is created beside your notes. If the host is a vault, `lokf-sidecar` sets the bundle up the visible way round: `knowledge_bundle/` is a real folder among your notes - explorer, graph, search and sync like any other, and inside the vault even when the vault is a subfolder of the repository - and `.lokf/knowledge` is the link the tools follow. This plugin recognises that folder with nothing to configure, and you can still open it on its own, as a smaller vault, when you want to focus. Prefer the hidden layout instead and your main vault simply never sees the sidecar: Obsidian indexes neither a dot-folder nor a link that resolves back inside the vault, so notes and bundle never index one file twice - the one hazard behind its caution about nested vaults - and you curate in a second vault opened through the doorway. Either way it is one repository, not two: the bundle travels with the notes it was distilled from, and splitting it into a repository of its own is a later choice for a team, never a starting one.
-
-**A shared drive or a SharePoint library.** The sidecar is just files, and the visible layout is the natural fit: `knowledge_bundle/` syncs as an ordinary folder, and so does `.lokf/` (Microsoft's list of restricted OneDrive and SharePoint names has nothing against a leading dot). Only the tools' link is per-machine, because OneDrive syncs neither symbolic links nor junctions - `just lokf-link` recreates it.
-
-**Many hosts, one vault.** Obsidian follows a link whose target lies *outside* the vault. Link each repository's `.lokf/knowledge` into a folder of your own vault (`projects/acme-knowledge → ~/git/acme/.lokf/knowledge`) and list those folders under *Bundle root folders*: every bundle you curate, in one vault, beside the notes you keep about them - and the sources now sit inside the vault, so LOKF Curator can open them beside the claim. Keep such links out of Obsidian Sync, which does not carry them.
-
-### Am I supposed to migrate my vault into a bundle?
-
-No - and it is never the goal. Your vault is the **workshop**: quick notes, half-thoughts, everything that makes Obsidian yours. The bundle is the **exhibition**: the part you would hand to a teammate, a new hire, a CI gate, or an agent answering questions on your behalf, because every record in it says what it is, what it relates to, where it came from, and who last checked it. Some vaults are exhibitions by nature - a team wiki, a handbook - and then the vault simply *is* the bundle: put the header on its root `index.md` and every note is a record. Most personal vaults instead keep a bundle as a folder among their folders, or grow one in a sidecar. What moves into a bundle is *curated* knowledge - what someone is willing to put on **exhibit** and keep standing behind, and no more.
-
-### The short version
-
-1. Make or keep your vault the Obsidian way.
-2. Decide what hosts the bundle: a code repository, your vault, or a shared folder - and whether the whole vault is the bundle, or a folder in it, or the sidecar beside it.
-3. Install this plugin, and LOKF Curator when you are ready to start confirming.
-4. If you want an agent to build the bundle and keep it up to date: in a terminal at the host, install the [skills](https://github.com/noelmcloughlin/lokf-agent-skills), run `lokf-sidecar` once, then `lokf-librarian`.
-5. Open the bundle - the `knowledge_bundle/` folder as its own vault, or as a folder inside yours - and check a few concepts at a sitting; the number to watch is *confirmed by a person*, and it is meant to rise slowly.
+**Without the skills.** Open an empty folder as a vault, run **Insert the bundle's semantic header** and choose *Make this vault the exhibition*, then write notes: the plugin underlines what is missing as you type, **Promote body links to typed relations** turns your `[[wikilinks]]` into typed relations you confirm one by one, and LOKF Curator records who checked what when you are ready. Slower to grow, and nothing refreshes it for you - which is what the librarian is for.
 
 ## What it looks like
 
@@ -83,7 +67,7 @@ Requires Obsidian **1.13.0** or later (declarative settings API).
 
 **With nothing configured, what is in the vault decides.**
 
-1. If the root `index.md` carries a LOKF header, the whole vault is the bundle - the case whenever you open a `knowledge_bundle/` folder as its own vault, or for any vault that is a bundle outright - and the plugin checks all of it.
+1. If the root `index.md` carries a LOKF header, the whole vault is the bundle - the case whenever you open the bundle folder as its own vault, whatever it is called, or for any vault that is a bundle outright - and the plugin checks all of it.
 2. Otherwise, if there is a top-level `knowledge_bundle/` folder with its own `index.md`, that folder is the bundle, and every note outside it is left alone.
 3. Otherwise the vault has **no bundle**: it is an ordinary notes vault, the workshop with no exhibition in it yet. Nothing is scanned, nothing is warned about, the status bar reads *LOKF: no bundle*, and every command says so instead of acting.
 
@@ -91,7 +75,7 @@ The plugin never treats a notes vault as a bundle on its own. If you want it to 
 
 **A bundle as a folder inside a larger vault, or several of them:** list the folders under *Settings → Scope and performance → Bundle root folders* (comma-separated, e.g. `bird-watching, projects/art-portfolio`). Each becomes an independent bundle: its own `<folder>/index.md` and `base_iri`, with ids and relations worked out and checked against that folder alone. A note outside every listed folder is ignored entirely - as if it didn't exist. A folder inside a dot-folder is accepted but only scanned if something has put it in Obsidian's index (the community plugin *Hidden Folders Access* does that for a folder you choose); otherwise the scan says so instead of reporting an empty bundle as clean.
 
-**Insert the bundle's semantic header** targets whichever bundle the active note belongs to; with several roots configured and no note open in any of them, it asks you to open one first rather than guessing which bundle you meant. In a vault with no bundle it creates one - a `knowledge_bundle/` folder with a header in its `index.md`, the layout the sidecar uses inside a vault - rather than turning the vault root into one: the notes around it were never LOKF concepts, so a header on the root would describe an exhibition that does not exist. What goes *into* the new bundle is lokf-librarian's job, or yours.
+**Insert the bundle's semantic header** targets whichever bundle the active note belongs to; with several roots configured and no note open in any of them, it asks you to open one first rather than guessing which bundle you meant. In a vault with no bundle it asks which of two things you mean: **make this vault the exhibition** - the header goes on the root `index.md` and every note here is a record, the right answer for an empty folder you just opened to be one - or **create a `knowledge_bundle` folder inside it**, the right answer for a vault full of notes that were never LOKF concepts, which are then left alone. It suggests the first when the vault holds nothing but an `index.md`, the second otherwise, and never decides alone. What goes *into* the new bundle is lokf-librarian's job, or yours.
 
 Open the command palette and search for **LOKF**:
 
@@ -99,7 +83,7 @@ Open the command palette and search for **LOKF**:
 | --- | --- |
 | Validate vault (full LOKF report) | Scan everything and open the report panel |
 | Validate active note | Check the current note |
-| Insert the bundle's semantic header | Adds a starter header to the bundle's `index.md`, only if it has no frontmatter at all; in a vault with no bundle, creates `knowledge_bundle/` and puts the header there |
+| Insert the bundle's semantic header | Adds a starter header to the bundle's `index.md`, only if it has no frontmatter at all; in a vault with no bundle, asks whether this vault is the exhibition or should hold a `knowledge_bundle/` folder |
 | Find a concept (by name, type, or relations) | Keyboard-first quick-switcher over every concept in the bundle |
 | Find an orphan concept (nothing links to it) | Lists the concepts nothing else links to |
 | Look up a LOKF field | Searchable reference of the LOKF frontmatter fields and what each one means |
@@ -133,7 +117,7 @@ Configure under **Settings → LOKF Registrar**. Every setting can be found thro
 
 ## For the curious
 
-The sections above are everything you need to use the plugin. The reasoning behind it - what LOKF adds over plain OKF, the OKF v0.2 rules checked underneath, what is deliberately left unchecked, where the plugin sits on the four-tier trust model, and why almost everything is a warning rather than an error - is in [docs/for-the-curious.md](docs/for-the-curious.md).
+The sections above are everything you need to use the plugin. The reasoning behind it - what LOKF adds over plain OKF, the OKF v0.2 rules checked underneath, what is deliberately left unchecked, where the plugin sits on the four-tier trust model, where the bundle lives host by host, and why almost everything is a warning rather than an error - is in [docs/for-the-curious.md](docs/for-the-curious.md).
 
 ## Privacy
 
@@ -172,9 +156,11 @@ docs/               the reasoning behind the checks, moved out of this README
 
 - [Nolan Nichols](https://lokf.nolan-nichols.com/), creator of [LOKF](https://lokf.nolan-nichols.com/specification/) (Linked Open Knowledge Format) and its [toolkit](https://github.com/nicholsn/lokf).
 - The [LinkML Community](https://linkml.io/), creators of [LinkML](https://linkml.io/linkml/), the schema language LOKF is written in.
+- [Introducing the Open Knowledge Bundle, Google blog](https://cloud.google.com/blog/products/data-analytics/how-the-open-knowledge-format-can-improve-data-sharing), creator of Open Knowledge Format specification.
+- [LLM Wiki, Karpaty](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f), a pattern for building personal knowledge bases using LLMs.
 - [obsidian-sample-plugin](https://github.com/obsidianmd/obsidian-sample-plugin), whose build/lint/release layout this repository follows.
 - [lokf-agent-skills](https://github.com/noelmcloughlin/lokf-agent-skills) - the registrar role this plugin fills in the editor, whose trust model and plain-language labels this README shares, and whose bundle template the smoke test validates.
-- [LOKF Curator](https://github.com/noelmcloughlin/obsidian-lokf-curator) - the sibling plugin at the human-confirmed tier, forked from this one, and sharing the bundle-root plumbing in `src/bundle.ts`.
+- [LOKF Curator](https://github.com/noelmcloughlin/obsidian-lokf-curator) - the sibling plugin at the human-confirmed tier, forked from this one, and sharing the bundle-root plumbing that lives here in `src/validator.ts`.
 
 ## Alternative plugins
 
