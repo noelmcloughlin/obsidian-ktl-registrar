@@ -6,6 +6,12 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+### Changed
+
+- **"Insert the bundle's semantic header" now asks** in a vault with no bundle - *make this vault the exhibition*, or *create a `knowledge_bundle` folder* - instead of always nesting a folder. A two-choice modal (`src/scaffold-modal.ts`) suggests by what the vault holds: the root for a vault with nothing but an `index.md`, the folder otherwise. The palette name drops its parenthetical.
+- **README restructured for the two-vault story.** An early notice says the plugin works on the exhibition, never the workshop vault you already keep, and that it pairs with the [`lokf-agent-skills`](https://github.com/noelmcloughlin/lokf-agent-skills) without needing them. *Where it works* replaces *How this fits*: three arrangements, the bundle as its own vault first, with the cost of a bundle folder inside your vault stated plainly. Host-by-host layouts moved to `docs/for-the-curious.md`.
+- **This repository's own sidecar follows the current `lokf-sidecar` templates**: `just lokf-link` creates the `knowledge_bundle` doorway link, and the wrapper and both workflows describe the bundle's second name as the templates do. No plugin change.
+
 ## [1.0.0] - 2026-09-12
 
 ### Changed

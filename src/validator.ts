@@ -261,11 +261,11 @@ export const VISIBLE_BUNDLE_FOLDER = "knowledge_bundle";
  *  order: a root index.md that carries a LOKF header makes the whole vault
  *  the bundle (a `knowledge_bundle` doorway opened as its own vault, or a
  *  vault that is a bundle outright). Otherwise a `knowledge_bundle/` folder
- *  with its own index.md is a notes vault hosting a bundle beside its notes -
- *  lokf-sidecar's visible layout - so that folder is the root and every note
- *  outside it is left alone. Otherwise this is a workshop with no exhibition
- *  in it: nothing is scanned, nothing is warned about, and the scaffold
- *  command offers to create the folder - unless the break-glass setting
+ *  with its own index.md is a notes vault keeping a bundle as a folder among
+ *  its notes - so that folder is the root and every note outside it is left
+ *  alone. Otherwise this is a workshop with no exhibition in it: nothing is
+ *  scanned, nothing is warned about, and the scaffold command asks whether
+ *  this vault is the bundle or should hold one - unless the break-glass setting
  *  says to read the whole vault as the bundle anyway. Pure, so the smoke
  *  test can pin every branch. */
 export function implicitBundleRoots(

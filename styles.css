@@ -298,4 +298,9 @@
   gap: 8px;
   margin-top: 12px;
 }
+/* the suggested answer in the no-bundle header question (scaffold-modal.ts) */
+.lokf-scaffold-hint {
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+}
 
