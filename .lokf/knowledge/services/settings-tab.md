@@ -10,10 +10,10 @@ about:
   - https://lokf-registrar.example/knowledge/references/commands-and-settings
 generated:
   by: process:lokf-librarian
-  at: "2026-09-12T21:00:00Z"
+  at: "2026-09-14T09:00:00Z"
 verified:
   - by: process:lokf-librarian
-    at: "2026-09-13T15:00:00Z"
+    at: "2026-09-14T09:00:00Z"
 ---
 
 # Overview
@@ -42,3 +42,16 @@ severity, Field aliasing, and Scope & performance. There is no group for any
 other plugin: the former "Alternative OKF validator" group (a deep link into
 the community-plugin browser plus a one-time-notice toggle) was removed on
 2026-09-12.
+
+*Known LOKF types* (`knownTypes`, under Type vocabulary) is the one setting
+that widens what the plugin accepts rather than tightening it, and since
+2026-09-14 its description says so: a bundle validated against a domain
+schema (`lokf validate --schema <file>`) lists that schema's classes there,
+the schema itself sitting outside the vault. Listed classes stop raising
+`lokf/3-vocab` and join frontmatter autocomplete (`suggestVocabularyFor`
+reads the same list). `loadSettings` refreshes the list to the pinned
+manifest only while it still equals the pre-schema hard-coded default, so an
+edited list is never overwritten - and never gains a later core class on its
+own. The type-specific field checks in `validateTypeVocabulary` key on the
+exact normalized class name, so a domain subclass of `Metric` is not held to
+its parent's recommended fields.

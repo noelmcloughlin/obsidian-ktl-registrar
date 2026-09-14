@@ -5,7 +5,7 @@ title: Knowledge Sources
 description: Map of the repository locations this bundle was derived from, and how to re-check each on a future refresh.
 generated:
   by: process:lokf-librarian
-  at: "2026-09-13T23:00:00Z"
+  at: "2026-09-14T09:30:00Z"
 ---
 
 # Sources swept for this bootstrap discovery pass
@@ -23,11 +23,30 @@ generated:
 | `.github/workflows/knowledge-registrar.yaml` | the knowledge-registrar-gate playbook | diff the three jobs (`validate`, `provenance`, `attestation`) against the `lokf-sidecar` template the same way |
 | `SECURITY.md` | what the scheduled-librarian playbook says this repository owns versus inherits | diff the "what is inherited, what this repository owns" section |
 | `AI_COVENANT.md`, `CODE_OF_CONDUCT.md` | the two governance policy concepts | diff against the sibling `lokf-agent-skills` copies - both are meant to stay verbatim |
-| `scripts/smoke-test.ts` | the plain-Node testability claim in the validator-engine concept | confirm it still imports only from `../src/validator` |
+| `scripts/smoke-test.ts` | the plain-Node testability claim in the validator-engine concept, and what the suite actually asserts | confirm it still imports only from modules that are themselves import-free of Obsidian (`validator`, `locator`, `vocab`, `graph`, `suggest-context`, `fixes`, `propose`, `report-filter`, `affordances`, `fields`); a new Obsidian-bound import there would mean the suite no longer runs under plain Node |
 | `docs/for-the-curious.md` (new 2026-09-12, moved out of `README.md`'s former "For the curious" section) | the detailed reasoning behind the checks - what LOKF adds over plain OKF, the OKF v0.2 base-layer rationale, what is deliberately left unchecked, the four-tier trust model | diff against `explanation/why-lokf-registrar.md`'s `sources` list; re-read on every README/docs restructuring |
 | `.assets/*.svg` | the README's card and two-vaults pictures | decorative, consciously excluded as concepts; re-check only that the row still applies if an image starts carrying a claim the README does not |
 | `CHANGELOG.md`, `versions.json`, `git tag` | release history | see note below |
 | PyPI `lokf` package | `.lokf/pyproject.toml`'s `lokf[build]>=` floor | `pip index versions lokf`; bump the floor on a minor/patch release, ask the human first on a major one |
+
+**2026-09-14 (second pass)**, whole repository. `CONTRIBUTING.md` was the
+drift this time, not a concept: it still claimed the smoke test covers
+`validator.ts` alone and listed four `src/` files. Corrected at the source,
+then `playbooks/contributing.md` and `services/lokf-registrar-plugin.md`
+re-derived from it. The lesson for the next run: this row's re-check
+instruction ("diff the layout table and the pre-PR checklist") only works if
+the checklist is compared against `scripts/smoke-test.ts` as well as against
+the concept - a document can be stale in a way no concept reveals.
+
+**2026-09-14 re-check**, against the uncommitted
+`chore/known-types-docs-and-coverage` branch (no feedback pending): swept
+`src/settings.ts`, `README.md`, `docs/for-the-curious.md`, `CHANGELOG.md`.
+`services/settings-tab.md` and `references/commands-and-settings.md` now
+carry what the branch documents - *Known LOKF types* as the extension point
+for a domain-schema bundle; `explanation/why-lokf-registrar.md` re-verified
+unchanged, its "controlled type vocabulary" still covering it.
+`src/validator.ts` is untouched, so `services/validator-engine.md` was not
+re-checked. Type-check and lint pass. PyPI's `lokf` is still `0.7.0`.
 
 **2026-09-13 (night) re-check**, after a `lokf-sidecar` repair pass on this
 repository: `.lokf/justfile` regained the template's `lokf-check-refs`

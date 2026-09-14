@@ -6,10 +6,10 @@ description: The plugin's commands, status-bar behavior, and settings-tab groups
 resource: README.md
 generated:
   by: process:lokf-librarian
-  at: "2026-09-13T12:00:00Z"
+  at: "2026-09-14T09:30:00Z"
 verified:
   - by: process:lokf-librarian
-    at: "2026-09-13T19:00:00Z"
+    at: "2026-09-14T09:30:00Z"
 ---
 
 # Commands
@@ -47,4 +47,10 @@ if none is open.
 This device, In-editor diagnostics, Type vocabulary, Type-specific fields,
 Semantic header & base_iri, Relationships, OKF v0.2 base layer, Trust &
 lifecycle, Rule severity, Field aliasing, Scope & performance - see
-`src/settings.ts` and [Settings tab](../services/settings-tab.md).
+`src/settings.ts` and [Settings tab](../services/settings-tab.md). Since
+2026-09-14 the README's *Type vocabulary* bullet names *Known LOKF types*
+as the extension point for a bundle validated against a domain schema
+(`lokf validate --schema <file>`): list that schema's classes there, since
+the plugin cannot read the schema from the vault. Unlisted classes only
+warn unless `lokf/3-vocab` is escalated; an edited list is kept current by
+hand, and should match LOKF Curator's.

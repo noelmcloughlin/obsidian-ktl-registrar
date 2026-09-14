@@ -1,5 +1,38 @@
 # Change Log
 
+## 2026-09-14 (2)
+
+* **`CONTRIBUTING.md` and its concept disagreed with the code**, found on a
+  whole-repository librarian pass. The document still said "`npm run
+  smoke-test` only covers `validator.ts`" and listed only four `src/` files,
+  after the suite grew to ten import-free modules and the settings merge rule
+  moved into `vocab.ts` precisely so a test could reach it. The source is
+  corrected (a `vocab.ts` row, the real module list, and the reason logic
+  leaves `main.ts`) and `playbooks/contributing.md` re-derived from it.
+  `services/lokf-registrar-plugin.md` gains the same fact for `loadSettings`,
+  which the bundle had recorded only in this log.
+
+## 2026-09-14
+
+* **Steady-state refresh** (librarian pass, no feedback pending) against the
+  uncommitted `chore/known-types-docs-and-coverage` branch, where *Known
+  LOKF types* is documented - settings description, README,
+  `docs/for-the-curious.md` - as the extension point for a bundle validated
+  against a domain schema. `services/settings-tab.md` says so, with the two
+  facts the code already held: a customised list is never refreshed to the
+  manifest, and the type-specific field checks key on the exact class name.
+  `references/commands-and-settings.md`: the README bullet. Re-verified, no
+  change: `explanation/why-lokf-registrar.md`.
+  `playbooks/knowledge-sources.md`: run note.
+* **Coverage pass on the same branch**, no behaviour change: the settings
+  merge rule moved from `main.ts` into the pure `vocab.ts`
+  (`mergeSavedSettings`, plus `vocabFromManifest` so the malformed-manifest
+  fallbacks are reachable from a test); 277 to 324 expectations; the two
+  golden fixtures now pin their warning counts. This map's
+  `scripts/smoke-test.ts` row was stale - it asked a future run to confirm
+  the suite "imports only from `../src/validator`", untrue as the plugin
+  grew - and now names the import-free modules it may draw on.
+
 ## 2026-09-13 (3)
 
 * **Steady-state refresh** (librarian pass, no feedback pending), after a
