@@ -28,7 +28,7 @@ import { LokfReportView, LOKF_VIEW_TYPE, type FileResult } from "./report-view";
 import { locateFrontmatterKey } from "./locator";
 import { LokfSettingTab } from "./settings";
 import { lokfInlineExtension } from "./inline";
-import { pluginDefaultSettings, HARDCODED_VOCAB } from "./vocab";
+import { mergeSavedSettings } from "./vocab";
 import { buildConceptGraph, type ConceptGraph, type ConceptRecord } from "./graph";
 import { ConceptSuggestModal } from "./concept-modal";
 import { LokfSuggest, type SuggestVocabulary } from "./suggest";
@@ -89,10 +89,6 @@ interface ParsedNote {
    *  (the scan); absent on the metadata-cache path, where the body-shaped OKF
    *  checks are skipped. */
   body?: string;
-}
-
-function arraysEqual(a: string[], b: readonly string[]): boolean {
-  return a.length === b.length && a.every((v, i) => v === b[i]);
 }
 
 export default class LokfPlugin extends Plugin {
@@ -425,24 +421,10 @@ export default class LokfPlugin extends Plugin {
   }
 
   async loadSettings(): Promise<void> {
-    const saved = (await this.loadData()) as Record<string, unknown> | null;
-    const defaults = pluginDefaultSettings();
-    Object.assign(this.settings, defaults);
-    if (!saved) return;
-    for (const key of Object.keys(DEFAULT_SETTINGS) as (keyof LokfSettings)[]) {
-      if (saved[key] !== undefined) {
-        (this.settings as unknown as Record<string, unknown>)[key] = saved[key];
-      }
-    }
-    // Refresh a vocabulary list still at the previous built-in default to the
-    // pinned schema's (so an upgrade picks up Role and the wider predicates),
-    // without clobbering a list the user actually customised.
-    for (const key of ["knownTypes", "knownPredicates", "genreValues", "conceptStatuses"] as const) {
-      const savedVal = saved[key];
-      if (Array.isArray(savedVal) && arraysEqual(savedVal as string[], HARDCODED_VOCAB[key])) {
-        (this.settings as unknown as Record<string, unknown>)[key] = defaults[key];
-      }
-    }
+    // The merge rule - saved values over manifest-refreshed defaults, with an
+    // untouched vocabulary list refreshed and an edited one preserved - is
+    // `mergeSavedSettings` in vocab.ts, pure and covered by the smoke test.
+    Object.assign(this.settings, mergeSavedSettings((await this.loadData()) as Record<string, unknown> | null));
   }
 
   async saveSettings(): Promise<void> {
