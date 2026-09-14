@@ -30,6 +30,19 @@ generated:
 | `CHANGELOG.md`, `versions.json`, `git tag` | release history | see note below |
 | PyPI `lokf` package | `.lokf/pyproject.toml`'s `lokf[build]>=` floor | `pip index versions lokf`; bump the floor on a minor/patch release, ask the human first on a major one |
 
+**2026-09-14 (fourth pass)**, against the now-committed
+`chore/known-types-docs-and-coverage` branch (working tree clean). Re-walked
+this table; no row needed adding or changing. Diffed
+`.github/workflows/knowledge-registrar.yaml`'s `validate` job against
+`playbooks/knowledge-registrar-gate.md` per this row's own re-check
+instruction and found the gap commit `80bd8b0` left (the workflow and
+`scripts/knowledge-conventions.sh` row already existed here; only the gate
+concept's own job description was stale) - corrected, see `log.md`. Diffed
+`src/settings.ts`'s `heading:` order against `services/settings-tab.md` and
+`references/commands-and-settings.md` and found both concepts had two groups
+transposed - corrected. Orphan sweep unchanged from the third pass below.
+PyPI's `lokf` not re-checked this pass.
+
 **2026-09-14 (third pass)**, against this session's uncommitted working tree
 (a CONTRIBUTING rewrite back into a checklist, `npm run check`, four
 `obsidianmd` lint rules promoted to error, an action-pinning step added to

@@ -10,10 +10,10 @@ about:
   - https://lokf-registrar.example/knowledge/references/commands-and-settings
 generated:
   by: process:lokf-librarian
-  at: "2026-09-14T09:00:00Z"
+  at: "2026-09-14T14:58:54Z"
 verified:
   - by: process:lokf-librarian
-    at: "2026-09-14T09:00:00Z"
+    at: "2026-09-14T14:58:54Z"
 ---
 
 # Overview
@@ -37,7 +37,7 @@ by default and "not recommended" in its own description) is on, which reads
 a headerless whole vault as one bundle anyway without overriding a detected
 `knowledge_bundle/` folder. The tab's groups are: This device, In-editor
 diagnostics, Type vocabulary, Type-specific fields, Semantic header &
-base_iri, Relationships, OKF v0.2 base layer, Trust & lifecycle, Rule
+base_iri, OKF v0.2 base layer, Trust & lifecycle, Relationships, Rule
 severity, Field aliasing, and Scope & performance. There is no group for any
 other plugin: the former "Alternative OKF validator" group (a deep link into
 the community-plugin browser plus a one-time-notice toggle) was removed on

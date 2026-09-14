@@ -3,6 +3,30 @@
 ## 2026-09-14
 
 * **Steady-state refresh** (librarian pass, no `.lokf/feedback.md` present),
+  against the now-committed `chore/known-types-docs-and-coverage` branch (git
+  status clean). Two real drifts found and fixed: `playbooks/knowledge-registrar-gate.md`'s
+  `validate` job paragraph still described only `uv run lokf validate
+  knowledge`, missing the two steps commit `80bd8b0` added to that same job
+  (`scripts/knowledge-conventions.sh` and `uvx ... just lokf-check-refs`) -
+  that commit updated the workflow, the new script and `CHANGELOG.md` but not
+  this bundle. `services/settings-tab.md` and
+  `references/commands-and-settings.md` both listed the settings-tab group
+  order as `... Semantic header & base_iri, Relationships, OKF v0.2 base
+  layer, Trust & lifecycle, Rule severity ...`; `src/settings.ts`'s actual
+  `heading:` order is `... Semantic header and base IRI, OKF v0.2 base layer,
+  Trust and lifecycle, Relationships, Rule severity ...` - both concepts
+  corrected to match. Re-verified against source with no change needed:
+  `playbooks/contributing.md` (`CONTRIBUTING.md`'s dev-setup, layout, and
+  pre-PR checklist sections), `references/commands-and-settings.md`'s command
+  table (all 15 `addCommand` ids in `src/main.ts` match),
+  `services/lokf-registrar-plugin.md` (the `vocab.ts` settings-merge
+  paragraph). Orphan sweep: no new file under `src/`, `docs/`,
+  `.github/workflows/`, or the repository root beyond what
+  `playbooks/knowledge-sources.md` already accounts for. `just lokf-validate`
+  (22/22), `just lokf-check-refs`, and `bash scripts/knowledge-conventions.sh`
+  all pass.
+
+* **Steady-state refresh** (librarian pass, no `.lokf/feedback.md` present),
   against this session's further uncommitted working-tree change on top of
   the earlier pass below: `CONTRIBUTING.md` rewritten again, this time from a
   design log back into a checklist under a 1000-word budget, with the

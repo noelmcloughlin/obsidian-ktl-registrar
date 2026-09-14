@@ -14,11 +14,11 @@ dependsOn:
   - https://lokf-registrar.example/knowledge/references/lokf-toolkit
 generated:
   by: process:lokf-librarian
-  at: "2026-09-13T23:00:00Z"
+  at: "2026-09-14T14:58:54Z"
 status: draft
 verified:
   - by: process:lokf-librarian
-    at: "2026-09-13T23:00:00Z"
+    at: "2026-09-14T14:58:54Z"
 ---
 
 # Overview
@@ -34,9 +34,16 @@ design and its stated limits are documented once, in that repository's
 `.lokf/**`, `knowledge_bundle/**` or the workflow itself, on a Monday 06:00
 UTC schedule, and on demand. Three jobs:
 
-**`validate` - "Validate the LOKF bundle".** `uv sync` in `.lokf/`, then
-`uv run lokf validate knowledge` - the same check `just lokf-validate` runs
-locally.
+**`validate` - "Validate the LOKF bundle".** `uv sync` in `.lokf/`, then three
+steps: `uv run lokf validate knowledge` (the same check `just lokf-validate`
+runs locally); `bash scripts/knowledge-conventions.sh knowledge` for the
+conventions the toolkit cannot see because it reads a concept body as an
+opaque string and never opens `log.md` (one ISO-date `log.md` heading per
+day, quoted timestamps, `verified` as a list with at most one
+`process:lokf-librarian` event, open-question bullets in the curator's
+shape); and `uvx --from 'rust-just==1.47.0' just lokf-check-refs`, the same
+SPARQL dangling-reference query `just lokf-check-refs` runs locally, invoked
+through `uvx` since the runner has no other copy of `just`.
 
 **`provenance` - "Check new human confirmations".** Pull requests only;
 `contents: read`, `pull-requests: read`. A `verified` event whose actor is
