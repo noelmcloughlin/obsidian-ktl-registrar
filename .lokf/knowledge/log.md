@@ -1,10 +1,10 @@
 # Change Log
 
-## 2026-09-14 (3)
+## 2026-09-14
 
 * **Steady-state refresh** (librarian pass, no `.lokf/feedback.md` present),
   against this session's further uncommitted working-tree change on top of
-  the (2) pass below: `CONTRIBUTING.md` rewritten again, this time from a
+  the earlier pass below: `CONTRIBUTING.md` rewritten again, this time from a
   design log back into a checklist under a 1000-word budget, with the
   release walkthrough moved out to `lokf-agent-skills`' `docs/releasing.md`
   and `docs/signing-commits.md` (both confirmed present); `npm run check`
@@ -29,8 +29,6 @@
   `0.7.0`, matching the `pyproject.toml` floor - no bump. `just
   lokf-validate` (22/22) and `just lokf-check-refs` both pass.
 
-## 2026-09-14 (2)
-
 * **`CONTRIBUTING.md` and its concept disagreed with the code**, found on a
   whole-repository librarian pass. The document still said "`npm run
   smoke-test` only covers `validator.ts`" and listed only four `src/` files,
@@ -40,8 +38,6 @@
   leaves `main.ts`) and `playbooks/contributing.md` re-derived from it.
   `services/lokf-registrar-plugin.md` gains the same fact for `loadSettings`,
   which the bundle had recorded only in this log.
-
-## 2026-09-14
 
 * **Steady-state refresh** (librarian pass, no feedback pending) against the
   uncommitted `chore/known-types-docs-and-coverage` branch, where *Known
@@ -62,7 +58,7 @@
   the suite "imports only from `../src/validator`", untrue as the plugin
   grew - and now names the import-free modules it may draw on.
 
-## 2026-09-13 (3)
+## 2026-09-13
 
 * **Steady-state refresh** (librarian pass, no feedback pending), after a
   `lokf-sidecar` repair pass that restored `.lokf/justfile`'s
@@ -72,8 +68,6 @@
   workflows; the gate concept now says its copy also rewords the
   `provenance` job's signing comment, not only `persist-credentials: false`.
   `playbooks/knowledge-sources.md`: `.assets/` row and run note added.
-
-## 2026-09-13 (2)
 
 * **Steady-state refresh** (librarian pass, no feedback pending), against the
   1.1.0 release commits and this session's uncommitted working tree: the
@@ -108,8 +102,6 @@
   `persist-credentials: false`; `knowledge-registrar.yaml` differs by that
   line alone. `lokf` on PyPI is still `0.7.0`, matching the floor.
 
-## 2026-09-13
-
 * **Steady-state refresh** (librarian pass, no feedback pending): re-verified
   `policies/no-telemetry.md`, `references/commands-and-settings.md`,
   `services/settings-tab.md` and `services/lokf-registrar-plugin.md` against
@@ -126,7 +118,7 @@
   `playbooks/releasing.md` were not re-checked this run - their resources
   (`lint-and-docs.yaml`, `CONTRIBUTING.md`) were untouched this session.
 
-## 2026-09-12 (5)
+## 2026-09-12
 
 * **Steady-state refresh** (librarian pass, no feedback pending): corrected
   drift against this session's "no bundle" state and break-glass
@@ -164,8 +156,6 @@
   pre-rename `obsidian-lokf-enforcer` URL, but no concept's `resource` field
   hardcodes it, so no concept-level fix was needed.
 
-## 2026-09-12 (4)
-
 * **Semantic-release, hardened** (maintainer decision): `playbooks/releasing.md`
   rewritten (`generated`/`verified` refreshed) - a person no longer picks the
   version. `semantic-release.yml`'s `release` job, behind the `release`
@@ -180,8 +170,6 @@
   its own `push:` event; unchanged otherwise, including for a hand-pushed
   tag. semantic-release is installed at pinned versions inside the workflow,
   never added to `package.json`.
-
-## 2026-09-12 (3)
 
 * **Renamed** (maintainer decision): the plugin is **LOKF Registrar**, id
   `lokf-registrar`, repository `obsidian-lokf-registrar` - the name now says
@@ -200,8 +188,6 @@
   in passing: the plugin has checked required `type` and Attested Computation
   shape itself since 0.4.0, which that concept still denied. Entries below keep
   the names in use at the time.
-
-## 2026-09-12 (2)
 
 * **Corrected** `services/lokf-enforcer-plugin.md`, `services/settings-tab.md`,
   `references/commands-and-settings.md` after the maintainer had the
@@ -238,7 +224,7 @@
   documents. Not a full steady-state sweep - concepts untouched by these
   changes were not re-checked.
 
-## 2026-09-11 (2)
+## 2026-09-11
 
 * **Corrected** `services/validator-engine.md`, `services/lokf-enforcer-plugin.md`,
   `services/report-view.md` against the six-bug correctness pass on
@@ -265,8 +251,6 @@
 * **Updated** `playbooks/knowledge-sources.md` with source-map rows for all
   of the above, and re-checked the PyPI `lokf` floor (still `0.7.0`, no
   bump needed).
-
-## 2026-09-11
 
 * **Corrected** `services/lokf-enforcer-plugin.md`, `references/commands-and-settings.md`:
   both described a fourth command, `check-sibling-plugin`, "re-checking for
@@ -334,7 +318,7 @@
   (LOKF spec, OKF spec, Obsidian plugin guidelines) were not re-fetched this
   run and were left unverified.
 
-## 2026-09-08 (3)
+## 2026-09-08
 
 * **Added** `references/lokf-toolkit.md`: the `.lokf/pyproject.toml` toolkit
   dependency (the `lokf` PyPI package, or its raw LinkML schema as a
@@ -344,15 +328,11 @@
   `relatedTo`-linked from `services/validator-engine.md`, and fixed the
   website/toolkit conflation in `.lokf/README.md`.
 
-## 2026-09-08 (2)
-
 * **Gap closed**: the version-history gap flagged in
   [Knowledge sources](playbooks/knowledge-sources.md) - `manifest.json`/the
   `v0.2.0` git tag ahead of `versions.json`/`CHANGELOG.md` - was fixed in the
   host repo (`versions.json` now records `0.2.0`; `CHANGELOG.md` has a
   `## [0.2.0]` entry). Updated the playbook to stop reporting it as open.
-
-## 2026-09-08
 
 * **Initialization**: Bootstrap discovery pass. Scaffolded the LOKF bundle and
   populated it with 16 concepts derived from the lokf-enforcer repository: 4
