@@ -90,7 +90,7 @@ Under **Settings → LOKF Registrar**; every setting is also reachable through O
 
 - **This device** - silences the plugin on this computer or phone only. Never synced.
 - **In-editor diagnostics** - the underlines and the autocomplete, both on by default.
-- **Type vocabulary** - the known LOKF classes, whether an unrecognised `type` is worth a warning, and the accepted `genre` values.
+- **Type vocabulary** - the known LOKF classes, whether an unrecognised `type` is worth a warning, and the accepted `genre` values. *Known LOKF types* is also the extension point: a bundle validated against a domain schema (`lokf validate --schema <file>`, [recipe](https://github.com/noelmcloughlin/lokf-agent-skills/blob/main/skills/lokf-librarian/references/domain-schema.md)) lists that schema's classes here, since the plugin cannot read the schema, which sits outside the vault. Listed, they stop warning and appear in autocomplete; unlisted, they only ever warn. A list you have edited is yours to keep current - and should match LOKF Curator's.
 - **Type-specific fields** - the recommended-field warnings for `Metric`, `Service` and `GlossaryTerm`.
 - **Semantic header & base_iri** - the authority denylist, the placeholder-domain list, and whether a missing header warns.
 - **Relationships** - whether relation targets inside the bundle must resolve to a real file (always a warning, never an error), and an off-by-default predicate check.

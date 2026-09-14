@@ -8,6 +8,9 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ### Changed
 
+- **The settings merge rule moved into the pure `vocab.ts`** as `mergeSavedSettings`, joined by `vocabFromManifest` for the malformed-manifest fallbacks, so both are covered by the smoke test instead of sitting untested in `main.ts`. `loadSettings` is now a call and an assignment. No behaviour change.
+- **More of the suite asserts rather than characterises**: 324 expectations (was 277). The two golden fixtures pin their warning counts, so a rule that starts or stops firing fails the build; a drift guard catches a settings control naming a setting that does not exist. Pure-module coverage is 95.4% of statements, 86.6% of branches.
+- **The *Known LOKF types* setting is documented as the extension point** for a bundle validated against a domain schema (`lokf validate --schema <file>`): list that schema's classes there, because the plugin cannot read the schema - it sits outside the vault. Settings tab, README and `docs/for-the-curious.md`. No behaviour change.
 - **README rewritten around how to use the plugin**, as an extension of the [`lokf-agent-skills`](https://github.com/noelmcloughlin/lokf-agent-skills): *Two vaults* (two images carry the workshop/exhibition story; per-host link mechanics point at the skills' playbook), a four-step *Quick start*, *Using it*, the command table, *Which folder is the bundle*, *Install*, *Settings*. The role table, the library metaphor and the trust ladder now live in the skills' README and are linked once rather than restated; *Install* points at the GitHub releases; the `src/` tree names the modules added since 0.5.0. No plugin change.
 - **This repository's own sidecar repaired** by `lokf-sidecar`: the `knowledge_bundle` doorway link is now committed at the root, `.lokf/justfile` regains the template's `lokf-check-refs` recipe, and markdownlint and lychee skip the link's duplicate path. No plugin change.
 
