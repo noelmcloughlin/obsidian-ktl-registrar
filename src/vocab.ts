@@ -68,6 +68,27 @@ function genreValues(value: unknown): string[] | null {
   return values;
 }
 
+/** The four vocabulary lists a manifest supplies, each independently falling
+ *  back to validator.ts's hard-coded baseline when the manifest's own field is
+ *  missing or malformed. Pure in its argument so the fallback paths are
+ *  testable without shipping a broken manifest. */
+export interface VocabLists {
+  knownTypes: string[];
+  knownPredicates: string[];
+  genreValues: string[];
+  conceptStatuses: string[];
+}
+
+export function vocabFromManifest(manifest: unknown): VocabLists {
+  const m = (manifest ?? {}) as Partial<LokfVocabManifest>;
+  return {
+    knownTypes: classNames(m.classes) ?? DEFAULT_SETTINGS.knownTypes,
+    knownPredicates: stringArray(m.relationTypes) ?? DEFAULT_SETTINGS.knownPredicates,
+    genreValues: genreValues(m.genres) ?? DEFAULT_SETTINGS.genreValues,
+    conceptStatuses: stringArray(m.conceptStatuses) ?? DEFAULT_SETTINGS.conceptStatuses,
+  };
+}
+
 const raw = lokfVocab as Partial<LokfVocabManifest>;
 
 /** The pinned schema the shipped vocabulary was derived from, for the settings
@@ -100,11 +121,42 @@ export const HARDCODED_VOCAB = {
 /** The plugin's runtime defaults: validator.ts's, with the vocabulary lists
  *  refreshed from the pinned schema manifest where it is well-formed. */
 export function pluginDefaultSettings(): LokfSettings {
-  return {
-    ...DEFAULT_SETTINGS,
-    knownTypes: classNames(raw.classes) ?? DEFAULT_SETTINGS.knownTypes,
-    knownPredicates: stringArray(raw.relationTypes) ?? DEFAULT_SETTINGS.knownPredicates,
-    genreValues: genreValues(raw.genres) ?? DEFAULT_SETTINGS.genreValues,
-    conceptStatuses: stringArray(raw.conceptStatuses) ?? DEFAULT_SETTINGS.conceptStatuses,
-  };
+  return { ...DEFAULT_SETTINGS, ...vocabFromManifest(raw) };
+}
+
+/** The four settings whose default tracks the pinned schema, and which a
+ *  person may also have edited by hand. */
+export const VOCAB_SETTING_KEYS = ["knownTypes", "knownPredicates", "genreValues", "conceptStatuses"] as const;
+
+function arraysEqual(a: string[], b: readonly string[]): boolean {
+  return a.length === b.length && a.every((v, i) => v === b[i]);
+}
+
+/**
+ * The settings the plugin runs with, given whatever `loadData()` returned:
+ * the manifest-refreshed defaults, overlaid with every saved value, and then
+ * one correction - a vocabulary list still sitting at the *previous built-in*
+ * default is refreshed to the pinned schema's, so an upgrade picks up `Role`
+ * and the wider predicate set, while a list the person actually edited is
+ * left exactly as they left it (and so never gains a later core class on its
+ * own - the README and the setting's own description say so).
+ *
+ * Pure, so `main.ts`'s `loadSettings` is a call plus an assignment and the
+ * rule itself is testable under plain Node.
+ */
+export function mergeSavedSettings(saved: Record<string, unknown> | null | undefined): LokfSettings {
+  const defaults = pluginDefaultSettings();
+  const settings: LokfSettings = { ...defaults };
+  if (!saved) return settings;
+  const out = settings as unknown as Record<string, unknown>;
+  for (const key of Object.keys(DEFAULT_SETTINGS) as (keyof LokfSettings)[]) {
+    if (saved[key] !== undefined) out[key] = saved[key];
+  }
+  for (const key of VOCAB_SETTING_KEYS) {
+    const savedVal = saved[key];
+    if (Array.isArray(savedVal) && arraysEqual(savedVal as string[], HARDCODED_VOCAB[key])) {
+      out[key] = defaults[key];
+    }
+  }
+  return settings;
 }

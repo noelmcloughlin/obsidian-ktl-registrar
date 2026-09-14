@@ -42,7 +42,15 @@ import {
   VISIBLE_BUNDLE_FOLDER,
 } from "../src/validator";
 import { locateFrontmatterKey, locationToDocRange } from "../src/locator";
-import { pluginDefaultSettings, SCHEMA_VERSION, LOKF_VOCAB } from "../src/vocab";
+import {
+  pluginDefaultSettings,
+  SCHEMA_VERSION,
+  LOKF_VOCAB,
+  HARDCODED_VOCAB,
+  VOCAB_SETTING_KEYS,
+  mergeSavedSettings,
+  vocabFromManifest,
+} from "../src/vocab";
 import { buildConceptGraph, type ConceptRecord } from "../src/graph";
 import { detectSuggestContext, withinFrontmatter } from "../src/suggest-context";
 import { computeFixes, type FixEdit } from "../src/fixes";
@@ -562,6 +570,30 @@ section("OKF base layer - Attested Computation contract shape (§10)", () => {
 
   const badExecutor = check("comp/e.md", `---\ntype: Attested Computation\nruntime: python\nexecutor:\n  receipt: not-a-list\ncomputation: refs/x.py\n---\n`);
   expect("an executor missing resource warns", okfRules(badExecutor, "okf/attested-computation").some((i) => i.key === "executor"), show(badExecutor));
+  expect("and a non-list receipt warns on its own", okfRules(badExecutor, "okf/attested-computation").filter((i) => i.key === "executor").length === 2, show(badExecutor));
+
+  // The remaining §10.2 shapes: each part may be the wrong kind of thing
+  // entirely, which is a different mistake from a missing field inside it.
+  const scalarParts = check(
+    "comp/s.md",
+    `---\ntype: Attested Computation\nruntime: python\nparameters: 3\nexecutor: refs/run.md\nattester: refs/att.py\ncomputation: refs/x.py\n---\n`
+  );
+  for (const key of ["parameters", "executor", "attester"]) {
+    expect(`a scalar where ${key} needs a mapping/list warns`, okfRules(scalarParts, "okf/attested-computation").some((i) => i.key === key), show(scalarParts));
+  }
+  expect("none of those are errors", errors(scalarParts) === 0, show(scalarParts));
+
+  const badEntries = check(
+    "comp/b.md",
+    `---\ntype: Attested Computation\nruntime: python\nparameters:\n  - "just a string"\n  - { name: year, required: "yes" }\nattester:\n  resource: ""\ncomputation: refs/x.py\n---\n`
+  );
+  expect("a parameter that is not a mapping warns", okfRules(badEntries, "okf/attested-computation").some((i) => i.key === "parameters[0]"), show(badEntries));
+  expect("a non-boolean required warns", okfRules(badEntries, "okf/attested-computation").some((i) => i.key === "parameters[1]" && /required/.test(i.message)), show(badEntries));
+  expect("an attester with a blank resource warns", okfRules(badEntries, "okf/attested-computation").some((i) => i.key === "attester"), show(badEntries));
+
+  const blankComputation = check("comp/c.md", `---\ntype: Attested Computation\nruntime: python\ncomputation: "  "\n---\n# Computation\n\n    x = 1\n`);
+  expect("a blank computation path warns", okfRules(blankComputation, "okf/attested-computation").some((i) => i.key === "computation"), show(blankComputation));
+  expect("but the body block satisfies §10.3", !okfRules(blankComputation, "okf/attested-computation").some((i) => /# Computation/.test(i.message)), show(blankComputation));
 });
 
 section("OKF base layer - v0.1 to v0.2 migration hints (§13)", () => {
@@ -723,7 +755,7 @@ function walkMarkdown(dir: string): string[] {
 function validateBundle(
   name: string,
   knowledgeDir: string,
-  opts: { required: boolean; transform?: (content: string) => string }
+  opts: { required: boolean; transform?: (content: string) => string; expectedWarnings?: number }
 ): void {
   const transform = opts.transform ?? ((c: string) => c);
   section(`golden fixture: ${name}`, () => {
@@ -755,7 +787,22 @@ function validateBundle(
     const errCount = found.reduce((n, r) => n + errors(r.issues), 0);
     const warnCount = found.reduce((n, r) => n + warnings(r.issues), 0);
     expect("zero errors across the bundle", errCount === 0, found.map((r) => `${r.path}:\n${show(r.issues)}`).join("\n"));
-    console.log(`  characterized - ${warnCount} warning(s), not asserted`);
+    // The warning count is pinned, not merely printed: on a bundle known to be
+    // good, a rule that starts (or stops) firing is exactly the regression this
+    // fixture exists to catch. Update the number deliberately when a rule
+    // changes on purpose, with the diff below naming what moved.
+    if (opts.expectedWarnings !== undefined) {
+      expect(
+        `warning count holds at ${opts.expectedWarnings}`,
+        warnCount === opts.expectedWarnings,
+        `${warnCount} warning(s):\n${found
+          .filter((r) => warnings(r.issues) > 0)
+          .map((r) => `${r.path}:\n${show(r.issues)}`)
+          .join("\n")}`
+      );
+    } else {
+      console.log(`  characterized - ${warnCount} warning(s), not asserted`);
+    }
   });
 }
 
@@ -799,6 +846,31 @@ section("locateFrontmatterKey - list indices and item children", () => {
   expect("fields[1] lands on the second item", !!second && (lines[second.line] ?? "").trim() === "- name: b", show([]));
   const target = locateFrontmatterKey(raw, "relations[0].target");
   expect("relations[0].target lands on the target line", !!target && (lines[target.line] ?? "").trim() === "target: ./x.md", show([]));
+
+  // Asking for a line that isn't there degrades to the deepest segment that
+  // is, per this function's contract - the editor lands in the right
+  // neighbourhood rather than on the wrong line or nowhere at all.
+  const pastEnd = locateFrontmatterKey(raw, "fields[9]");
+  expect("an out-of-range index falls back to the list's own key", !!pastEnd && (lines[pastEnd.line] ?? "").trim() === "fields:", JSON.stringify(pastEnd));
+  const missingItem = locateFrontmatterKey(raw, "relations[3].target");
+  expect("a child of a missing item falls back to the list's key", !!missingItem && (lines[missingItem.line] ?? "").trim() === "relations:", JSON.stringify(missingItem));
+  const missingChild = locateFrontmatterKey(raw, "relations[0].missing");
+  expect("a child key the item lacks falls back to the item", !!missingChild && (lines[missingChild.line] ?? "").trim() === "- predicate: about", JSON.stringify(missingChild));
+  expect("an absent top-level key still resolves to nothing", locateFrontmatterKey(raw, "nosuchkey") === null, "");
+
+  // Bare items (`- x`) and comments/blank lines between items must not throw
+  // the count off, and a deeper nested list belongs to its own parent.
+  const bare = splitFrontmatter(`---\ntags:\n  - alpha\n\n  # a comment\n  - beta\n  - gamma\n---\n`).raw;
+  const bareLines = bare.split("\n");
+  const third = locateFrontmatterKey(bare, "tags[2]");
+  expect("blank lines and comments don't shift the index", !!third && (bareLines[third.line] ?? "").trim() === "- gamma", JSON.stringify(third));
+
+  const nested = splitFrontmatter(`---\nouter:\n  - name: a\n    inner:\n      - deep\n  - name: b\n---\n`).raw;
+  const nestedLines = nested.split("\n");
+  const outerSecond = locateFrontmatterKey(nested, "outer[1]");
+  expect("a nested list doesn't leak into the outer index", !!outerSecond && (nestedLines[outerSecond.line] ?? "").trim() === "- name: b", JSON.stringify(outerSecond));
+  const deep = locateFrontmatterKey(nested, "outer[0].inner[0]");
+  expect("and the nested item is reachable by path", !!deep && (nestedLines[deep.line] ?? "").trim() === "- deep", JSON.stringify(deep));
 });
 
 // ---- A0: findings carry a key anchor a UI can jump to ----
@@ -854,6 +926,156 @@ section("vocabulary manifest refreshes the plugin defaults", () => {
     defaults.knownPredicates.join(", ")
   );
   expect("the four Diataxis genres are unchanged", defaults.genreValues.length === 4, defaults.genreValues.join(", "));
+});
+
+section("vocabFromManifest - each list falls back on its own when malformed", () => {
+  const good = vocabFromManifest({
+    classes: [{ name: "Alpha" }, { name: "Beta" }],
+    relationTypes: ["isPartOf"],
+    genres: [{ value: "reference" }],
+    conceptStatuses: ["draft"],
+  });
+  expect("a well-formed manifest supplies all four lists", good.knownTypes.join() === "Alpha,Beta" && good.knownPredicates.join() === "isPartOf" && good.genreValues.join() === "reference" && good.conceptStatuses.join() === "draft", JSON.stringify(good));
+
+  // Each field degrades independently: a bad `classes` must not cost the
+  // genres, and vice versa - LOKF's permissive stance means a bad manifest
+  // degrades to the built-in behaviour rather than breaking the plugin.
+  const noClasses = vocabFromManifest({ relationTypes: ["isPartOf"] });
+  expect("a missing classes list falls back to the baseline", noClasses.knownTypes.join() === HARDCODED_VOCAB.knownTypes.join(), noClasses.knownTypes.join());
+  expect("a sibling list is still taken from the manifest", noClasses.knownPredicates.join() === "isPartOf", noClasses.knownPredicates.join());
+
+  const badShapes = vocabFromManifest({
+    classes: [{ name: "Alpha" }, { nome: "typo" }],
+    relationTypes: ["isPartOf", 7],
+    genres: [{ value: "reference" }, { value: null }],
+    conceptStatuses: "draft",
+  });
+  expect("one unnamed class rejects the whole classes list", badShapes.knownTypes.join() === HARDCODED_VOCAB.knownTypes.join(), badShapes.knownTypes.join());
+  expect("a non-string predicate rejects that list", badShapes.knownPredicates.join() === HARDCODED_VOCAB.knownPredicates.join(), badShapes.knownPredicates.join());
+  expect("a non-string genre value rejects that list", badShapes.genreValues.join() === HARDCODED_VOCAB.genreValues.join(), badShapes.genreValues.join());
+  expect("a scalar where a list belongs falls back", badShapes.conceptStatuses.join() === HARDCODED_VOCAB.conceptStatuses.join(), badShapes.conceptStatuses.join());
+
+  for (const manifest of [null, undefined, {}, "nonsense", 42]) {
+    const v = vocabFromManifest(manifest);
+    expect(`a ${JSON.stringify(manifest)} manifest degrades to the baseline`, v.knownTypes.join() === HARDCODED_VOCAB.knownTypes.join(), v.knownTypes.join());
+  }
+});
+
+section("mergeSavedSettings - saved values win, an untouched vocabulary refreshes", () => {
+  const defaults = pluginDefaultSettings();
+
+  const fresh = mergeSavedSettings(null);
+  expect("no saved data gives the manifest-refreshed defaults", fresh.knownTypes.includes("Role") && fresh.batchSize === defaults.batchSize, fresh.knownTypes.join());
+
+  const partial = mergeSavedSettings({ batchSize: 7, warnUnknownType: false });
+  expect("a saved value overrides its default", partial.batchSize === 7 && partial.warnUnknownType === false, JSON.stringify({ b: partial.batchSize, w: partial.warnUnknownType }));
+  expect("an unsaved key keeps its default", partial.inlineDiagnostics === defaults.inlineDiagnostics, String(partial.inlineDiagnostics));
+
+  // The upgrade rule, both ways round. This is the whole reason the rule
+  // exists: a list nobody edited should gain Role; a list someone edited is
+  // theirs, even though that means it never gains a later core class by itself.
+  const untouched = mergeSavedSettings({ knownTypes: [...HARDCODED_VOCAB.knownTypes] });
+  expect("a list still at the old built-in default is refreshed", untouched.knownTypes.includes("Role"), untouched.knownTypes.join());
+
+  const customised = mergeSavedSettings({ knownTypes: [...HARDCODED_VOCAB.knownTypes, "Module"] });
+  expect("a customised list is preserved verbatim", customised.knownTypes.join() === [...HARDCODED_VOCAB.knownTypes, "Module"].join(), customised.knownTypes.join());
+  expect("and is not silently given Role", !customised.knownTypes.includes("Role"), customised.knownTypes.join());
+
+  const reordered = mergeSavedSettings({ knownTypes: [...HARDCODED_VOCAB.knownTypes].reverse() });
+  expect("a reordered list counts as customised (order is compared)", reordered.knownTypes.join() === [...HARDCODED_VOCAB.knownTypes].reverse().join(), reordered.knownTypes.join());
+
+  for (const key of VOCAB_SETTING_KEYS) {
+    const one = mergeSavedSettings({ [key]: [...HARDCODED_VOCAB[key]] });
+    expect(`${key} refreshes from the manifest when untouched`, one[key].join() === defaults[key].join(), one[key].join());
+  }
+
+  const notAList = mergeSavedSettings({ knownTypes: "Dataset, Table" });
+  expect("a non-array saved vocabulary is left as saved, not refreshed", (notAList.knownTypes as unknown) === "Dataset, Table", String(notAList.knownTypes));
+
+  const stray = mergeSavedSettings({ somethingRemoved: true }) as unknown as Record<string, unknown>;
+  expect("a setting the plugin no longer has is dropped", stray["somethingRemoved"] === undefined, JSON.stringify(stray["somethingRemoved"]));
+});
+
+section("settings tab and settings model agree (drift guard)", () => {
+  // The tab is Obsidian-bound, so it is read as text rather than imported: a
+  // control key that is not a real setting, or a list-valued setting missing
+  // from CSV_KEYS, silently half-works in the UI. Both are caught here.
+  const tabSrc = readFileSync(join(repoRoot, "src", "settings.ts"), "utf8");
+  const settingKeys = new Set(Object.keys(DEFAULT_SETTINGS));
+  // The device-local flag is deliberately not a stored setting (localStorage).
+  const notStored = new Set(["disabledOnDevice"]);
+  const controlKeys = [...tabSrc.matchAll(/\bkey:\s*"([^"]+)"/g)].map((m) => m[1]!);
+  expect("the tab defines controls", controlKeys.length > 10, String(controlKeys.length));
+  const unknown = controlKeys.filter((k) => !settingKeys.has(k) && !notStored.has(k));
+  expect("every control key is a real setting", unknown.length === 0, unknown.join(", "));
+
+  const csvBlock = tabSrc.match(/CSV_KEYS = new Set<SettingKey>\(\[([\s\S]*?)\]\)/);
+  expect("CSV_KEYS is declared as a literal set", csvBlock !== null, "could not find CSV_KEYS");
+  const csvKeys = new Set([...(csvBlock?.[1] ?? "").matchAll(/"([^"]+)"/g)].map((m) => m[1]!));
+  const listSettings = Object.entries(DEFAULT_SETTINGS)
+    .filter(([, v]) => Array.isArray(v))
+    .map(([k]) => k);
+  const missingFromCsv = listSettings.filter((k) => controlKeys.includes(k) && !csvKeys.has(k));
+  expect("every list-valued setting the tab exposes is CSV-backed", missingFromCsv.length === 0, missingFromCsv.join(", "));
+  const notAList = [...csvKeys].filter((k) => !listSettings.includes(k));
+  expect("nothing scalar is treated as a CSV list", notAList.length === 0, notAList.join(", "));
+});
+
+section("the docs describe what the code actually is (drift guard)", () => {
+  // Two facts are stated as prose with no generator behind them, and both went
+  // stale on 2026-09-14: the class vocabulary in docs/for-the-curious.md, and
+  // the list of import-free modules in CONTRIBUTING.md, which still named
+  // validator.ts alone after the suite had grown to ten. Neither is checkable
+  // by reading the prose, so they are checked against their sources here.
+  const manifestClasses = (lokfVocab.classes ?? []).map((c: { name: string }) => c.name).sort();
+  const curious = readFileSync(join(repoRoot, "docs", "for-the-curious.md"), "utf8");
+  const vocabLine = curious.split("\n").find((l) => l.includes("controlled type vocabulary")) ?? "";
+  // The line names some classes twice (the list, then the type-specific
+  // fields example), so compare sets rather than sequences.
+  const documented = [...new Set([...vocabLine.matchAll(/`([A-Z][A-Za-z]*)`/g)].map((m) => m[1]!))].sort();
+  expect("for-the-curious.md lists a class vocabulary", documented.length > 0, vocabLine.slice(0, 60));
+  expect(
+    "the documented class list matches the pinned manifest",
+    documented.join(",") === manifestClasses.join(","),
+    `docs: ${documented.join(",")} | manifest: ${manifestClasses.join(",")}`
+  );
+
+  // Every module the suite imports from ../src must be named in CONTRIBUTING's
+  // import-free list, and vice versa: adding a pure module without saying so
+  // is how that document went stale.
+  const suiteSrc = readFileSync(join(repoRoot, "scripts", "smoke-test.ts"), "utf8");
+  const imported = new Set(
+    [...suiteSrc.matchAll(/from "\.\.\/src\/([a-z-]+)"/g)].map((m) => m[1]!)
+  );
+  const contributing = readFileSync(join(repoRoot, "CONTRIBUTING.md"), "utf8");
+  const listLine = contributing.split("\n").find((l) => l.includes("covers only the import-free modules")) ?? "";
+  // Only the parenthesised list is the claim; the sentences after it name
+  // main.ts as the place logic moves *out* of.
+  const listed = new Set([...(listLine.match(/\(([^)]*)\)/)?.[1] ?? "").matchAll(/`([a-z-]+)\.ts`/g)].map((m) => m[1]!));
+  expect("CONTRIBUTING names the import-free modules", listed.size > 0, listLine.slice(0, 60));
+  const undocumented = [...imported].filter((m) => !listed.has(m));
+  expect("every module the suite tests is named in CONTRIBUTING", undocumented.length === 0, undocumented.join(", "));
+  const notTested = [...listed].filter((m) => !imported.has(m));
+  expect("every module CONTRIBUTING claims is tested is imported here", notTested.length === 0, notTested.join(", "));
+
+  // CONTRIBUTING.md is a checklist, not a design log, and SECURITY.md is a
+  // policy, not a threat model: each rule or surface is a line or two that
+  // links to where its reasoning lives - a code comment, a workflow header,
+  // a docs page. A word budget is the one signal every contributor, person
+  // or agent, reliably reads. CONTRIBUTING sits between 700 and 850 across
+  // the four LOKF repositories and 1000 is where one has started to become
+  // a design log again; SECURITY sits between 450 and 800 and was 1,400 to
+  // 1,900 before the skills repository's docs/threat-model.md took the
+  // design, so 900 is its line. The siblings hold the same budgets.
+  const budgets: Array<[string, number]> = [["CONTRIBUTING.md", 1000], ["SECURITY.md", 900]];
+  for (const [file, budget] of budgets) {
+    const words = readFileSync(join(repoRoot, file), "utf8").split(/\s+/).filter(Boolean).length;
+    expect(
+      `${file} is within its ${budget}-word budget (${words} words)`,
+      words <= budget,
+      "move the reasoning next to the code or workflow it explains, or into the skills repository's docs/, and link to it"
+    );
+  }
 });
 
 section("a schema-refreshed type no longer warns", () => {
@@ -916,6 +1138,33 @@ section("detectSuggestContext - list items resolve to their parent key", () => {
   // A list item under a non-relation key (genre isn't multivalued) yields nothing.
   const under = detectSuggestContext(read, 4, read(4).length);
   expect("a list item under a non-relation key yields nothing", under === null, JSON.stringify(under));
+
+  // Finding the parent key means skipping what sits between: blank lines,
+  // comments, and the item's own siblings, all of which a real file has.
+  const spaced = ["---", "references:", "", "  # the ones that matter", "  - one", "  - tw", "---"];
+  const spacedRead = (i: number) => spaced[i] ?? "";
+  const afterNoise = detectSuggestContext(spacedRead, 5, spacedRead(5).length);
+  expect("blanks, comments and sibling items don't hide the parent key", afterNoise?.kind === "target" && afterNoise.query === "tw", JSON.stringify(afterNoise));
+
+  // A list with no key above it at all, and a deeper item under a mapping
+  // key that takes no completion.
+  const orphan = detectSuggestContext((i) => ["  - x"][i] ?? "", 0, 5);
+  expect("an item with no enclosing key yields nothing", orphan === null, JSON.stringify(orphan));
+  const nested = ["---", "publisher:", "  name: You", "  - x", "---"];
+  const nestedItem = detectSuggestContext((i) => nested[i] ?? "", 3, 5);
+  expect("an item under a non-completing key yields nothing", nestedItem === null, JSON.stringify(nestedItem));
+
+  // The fence check gates every completion: no frontmatter, or an unclosed
+  // block, must never read as inside one.
+  expect("a note with no frontmatter is never inside one", !withinFrontmatter((i) => ["# Title", "prose"][i] ?? "", 2, 1), "");
+  expect("an unclosed block is not treated as frontmatter", !withinFrontmatter((i) => ["---", "type: Reference"][i] ?? "", 2, 1), "");
+  expect("the fences themselves are outside", !withinFrontmatter(read, lines.length, 0) && !withinFrontmatter(read, lines.length, 5), "");
+
+  // Completing mid-value: the query is what precedes the cursor, and the
+  // replacement starts where that query does.
+  const mid = detectSuggestContext(() => "type: Refe", 0, "type: Re".length);
+  expect("the query stops at the cursor", mid?.query === "Re" && mid.startCh === "type: ".length, JSON.stringify(mid));
+  expect("a cursor still inside the key name completes nothing", detectSuggestContext(() => "type: Ref", 0, 2) === null, "");
 });
 
 // ---- E: safe quick-fixes (deterministic text edits) ----
@@ -1254,10 +1503,18 @@ validateBundle("lokf-sidecar template skeleton", join(repoRoot, "scripts", "fixt
       .replaceAll("<OWNER_SLUG>", "acme-maintainer")
       .replaceAll("<OWNER_NAME>", "Acme Maintainer")
       .replaceAll("<TODAY>", "2026-01-01"),
+  // Three: the skeleton's placeholder concepts carry no `resource`, which the
+  // template means as a prompt to the person filling them in.
+  expectedWarnings: 3,
 });
 
 // (b) this repo's own bundle.
-validateBundle("lokf-registrar's own .lokf/knowledge", join(repoRoot, ".lokf", "knowledge"), { required: true });
+// Eight: this bundle's `base_iri` is still the RFC 2606 placeholder
+// (lokf-registrar.example), which every concept's minted id inherits.
+validateBundle("lokf-registrar's own .lokf/knowledge", join(repoRoot, ".lokf", "knowledge"), {
+  required: true,
+  expectedWarnings: 8,
+});
 
 // (c) any other real bundle, opt-in so this suite stays hermetic - its result
 // must not depend on what happens to sit next to the checkout. Point it at a

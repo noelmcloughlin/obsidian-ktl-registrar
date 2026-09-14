@@ -8,12 +8,10 @@
 
 ## Checklist
 
-- [ ] `npm run build` passes locally (type-check + bundle)
-- [ ] `npm run lint` passes - `eslint-plugin-obsidianmd` findings are treated as upstream review feedback, not style noise
-- [ ] `npm run smoke-test` passes (the `validator.ts` rule set against its fixtures)
-- [ ] Anything needing a real Obsidian `App` (vault scan, bundle-root resolution, the scaffold command) was checked by hand in a real vault - there is no headless Obsidian to test it in
-- [ ] `CHANGELOG.md` updated under `[Unreleased]` if this changes plugin behavior
-- [ ] If `.lokf/` changed, `cd .lokf; uv run lokf validate knowledge` passes (todo: justfile)
+- [ ] `npm run check` passes locally (build, lint, smoke test - the same steps `build.yml` runs)
+- [ ] Anything needing a real Obsidian `App` (vault scan, bundle-root resolution, the scaffold command, the modals) was checked by hand in a real vault - there is no headless Obsidian to test it in
+- [ ] `CHANGELOG.md` has a line or two under `[Unreleased]` if this changes plugin behavior
+- [ ] If `.lokf/` changed, `cd .lokf && just lokf-validate` passes
 
 ## AI Assistance
 

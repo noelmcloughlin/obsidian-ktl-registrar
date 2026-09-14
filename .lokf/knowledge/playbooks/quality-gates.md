@@ -8,28 +8,35 @@ dependsOn:
   - https://lokf-registrar.example/knowledge/references/obsidian-plugin-guidelines
 generated:
   by: process:lokf-librarian
-  at: "2026-09-11T12:00:00Z"
+  at: "2026-09-14T15:00:00Z"
 verified:
   - by: process:lokf-librarian
-    at: "2026-09-12T21:00:00Z"
+    at: "2026-09-14T15:00:00Z"
 status: draft
 ---
 
 # Overview
 
 `.github/workflows/lint-and-docs.yaml` ("Lint & docs") runs three independent
-jobs on every push, every PR, and a weekly Monday 06:00 UTC schedule (to
-catch link rot with no PR to trigger it): `lint-scripts` (ShellCheck over the
-whole repo), `lint-workflows` (`actionlint` over the GitHub Actions YAML
-itself), and `validate-markdown` (`markdownlint-cli2` against
-`.markdownlint-cli2.jsonc`, then `lychee` link-checking, then `codespell`)
-over every `**/*.md` file. It never touches the Node build (`build.yml`) or
-the LOKF bundle's own semantics (the separate `knowledge-registrar.yaml`
-workflow) - this is the CI-hardening pass backported from
-`lokf-agent-skills`'s own `validate.yml`. Each job repeats the same
-`step-security/harden-runner` (audit mode) + `actions/checkout`
+jobs on push to `main`, every PR against any branch, and a weekly Monday
+06:00 UTC schedule (to catch link rot with no PR to trigger it) - `push` was
+narrowed from every branch to `main` only on 2026-09-14, matching
+`build.yml`/`semantic-release.yml`, since an open PR can never have `main` as
+its head and the two triggers no longer double-run the same commit:
+`lint-scripts` (ShellCheck over the whole repo), `lint-workflows`
+(`actionlint` over the GitHub Actions YAML itself, plus, since 2026-09-14, a
+second step that greps every workflow's `uses:` line and fails the job if
+any is not pinned to a 40-hex-char commit SHA or an image digest -
+`actionlint` checks syntax, not pinning), and `validate-markdown`
+(`markdownlint-cli2` against `.markdownlint-cli2.jsonc`, then `lychee`
+link-checking, then `codespell`) over every `**/*.md` file. It never touches
+the Node build (`build.yml`) or the LOKF bundle's own semantics (the separate
+`knowledge-registrar.yaml` workflow) - this is the CI-hardening pass
+backported from `lokf-agent-skills`'s own `validate.yml`. Each job repeats
+the same `step-security/harden-runner` (audit mode) + `actions/checkout`
 (`persist-credentials: false`) preamble as `release.yml`, with
-`permissions: {}` at the workflow level and `contents: read` scoped per job.
+`permissions: {}` at the workflow level and `contents: read` scoped per job;
+a `concurrency` group cancels a superseded run on the same ref.
 
 `.markdownlint-cli2.jsonc` disables five rules for reasons specific to this
 repo's content, not because the underlying style guidance is wrong in

@@ -19,7 +19,7 @@ generated:
 status: draft
 verified:
   - by: process:lokf-librarian
-    at: "2026-09-13T19:00:00Z"
+    at: "2026-09-14T15:00:00Z"
 ---
 
 # Overview
@@ -30,7 +30,14 @@ id/IRI-minting consistency - real, new surface worth its own validator, and
 one that has to run *as a person writes*, in the editor, because an Obsidian
 vault has no CI gate to catch a malformed record after the fact. That is the
 registrar's half of the job the `lokf-agent-skills` README names: keeping
-records well-formed, never judging whether they are true.
+records well-formed, never judging whether they are true. Since 2026-09-14
+the README also places that job on the **three lines of defence** the family
+reads its cast through ([lokf-agent-skills' docs/three-lines.md](https://github.com/noelmcloughlin/lokf-agent-skills/blob/main/docs/three-lines.md)):
+this plugin and `lokf validate` are the **second line** - compliance, not
+content, ensuring every record is well-formed without owning or judging what
+it claims - alongside the CI gate `knowledge-registrar.yaml` runs; the
+librarian and curator are the first line, and independent audit (not
+shipped) would be the third.
 
 # Where the detailed reasoning now lives
 

@@ -13,10 +13,10 @@ about:
   - https://lokf-registrar.example/knowledge/references/commands-and-settings
 generated:
   by: process:lokf-librarian
-  at: "2026-09-13T12:00:00Z"
+  at: "2026-09-14T12:15:00Z"
 verified:
   - by: process:lokf-librarian
-    at: "2026-09-13T15:00:00Z"
+    at: "2026-09-14T12:15:00Z"
 ---
 
 # Overview
@@ -35,6 +35,14 @@ so via a `Notice`, instead of clearing the status bar to `LOKF: —` with no
 explanation - every other outcome (clean, unreadable, N findings) already
 produced one. The debounced file-open path that fires on every navigation
 stays silent by design; only an explicit ask gets told why nothing happened.
+
+Its settings are not its own (2026-09-14): `loadSettings` is one call to
+`vocab.ts`'s import-free `mergeSavedSettings` and one `Object.assign` -
+defaults from the pinned manifest, saved values over them, and a vocabulary
+list still equal to the pre-schema hard-coded default refreshed to the
+manifest's while an edited one is preserved. The rule moved out of `main.ts`
+so the smoke test could reach it, which is the boundary this plugin draws
+generally.
 
 It caches the bundle-root `base_iri` (read once per scan from `index.md`,
 invalidated on `create`/`modify`/`delete`/`rename` of that one file) so

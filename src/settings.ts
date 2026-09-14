@@ -134,9 +134,12 @@ export class LokfSettingTab extends PluginSettingTab {
         items: [
           {
             name: "Known LOKF types",
-            desc: SCHEMA_VERSION
-              ? `Comma-separated recognized LOKF classes. Defaults track the pinned LOKF schema ${SCHEMA_VERSION}; an untouched list is refreshed automatically on upgrade.`
-              : "Comma-separated list of recognized LOKF classes.",
+            desc: `${
+              SCHEMA_VERSION
+                ? `Comma-separated recognized LOKF classes. Defaults track the pinned LOKF schema ${SCHEMA_VERSION}; an untouched list is refreshed automatically on upgrade.`
+                : "Comma-separated list of recognized LOKF classes."
+            } A bundle validated against a domain schema (lokf validate --schema <file>) lists that schema's classes here too - the plugin cannot read the schema, which sits outside the vault - so they stop warning and appear in autocomplete. Keep the list the same as LOKF Curator's.`,
+            aliases: ["vocabulary", "classes", "domain schema", "custom type", "knownTypes"],
             control: { type: "textarea", key: "knownTypes", rows: 3 },
           },
           {

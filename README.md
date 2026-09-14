@@ -11,7 +11,7 @@ An Obsidian plugin that keeps a **LOKF knowledge bundle** well-formed as you edi
   <img src=".assets/lokf-obsidian-plugins-card.svg" alt="The five LOKF roles, and which two are Obsidian plugins" width="720" />
 </p>
 
-A bundle is a folder of Markdown notes in the [Linked Open Knowledge Format](https://lokf.nolan-nichols.com/) (LOKF): one concept per note, a few properties on each, and an `index.md` at the root that names the bundle. The [`lokf-agent-skills`](https://github.com/noelmcloughlin/lokf-agent-skills) build one beside whatever they are run on - a code repository, a vault of notes, a folder of documents. This plugin is the **registrar** of that family: it checks that every record is well-formed. Its sibling [LOKF Curator](https://github.com/noelmcloughlin/obsidian-lokf-curator) records what a person decides about each record. Neither reaches a verdict of its own; the judging stays with the person. The whole cast is in the skills' README under [the fifth role](https://github.com/noelmcloughlin/lokf-agent-skills#the-fifth-role-which-is-not-a-skill). Obsidian is optional in both directions: the skills rely on `lokf validate`, not on this plugin, and the plugin works on any LOKF bundle however it was made. The format is all they share.
+A bundle is a folder of Markdown notes in the [Linked Open Knowledge Format](https://lokf.nolan-nichols.com/) (LOKF): one concept per note, a few properties on each, and an `index.md` at the root that names the bundle. The [`lokf-agent-skills`](https://github.com/noelmcloughlin/lokf-agent-skills) build one beside whatever they are run on - a code repository, a vault of notes, a folder of documents. This plugin is the **registrar** of that family: it checks that every record is well-formed. Its sibling [LOKF Curator](https://github.com/noelmcloughlin/obsidian-lokf-curator) records what a person decides about each record. Neither reaches a verdict of its own; the judging stays with the person. The whole cast is in the skills' README under [the fifth role](https://github.com/noelmcloughlin/lokf-agent-skills#the-fifth-role-which-is-not-a-skill); for anyone who works under the **three lines of defence**, this plugin is second-line work, keeping the format and never judging truth, and [docs/three-lines.md](https://github.com/noelmcloughlin/lokf-agent-skills/blob/main/docs/three-lines.md) says where the rest sit. Obsidian is optional in both directions: the skills rely on `lokf validate`, not on this plugin, and the plugin works on any LOKF bundle however it was made. The format is all they share.
 
 > **Prefer to ask?** Install the docent skill into any agent you already use - `npx skills add noelmcloughlin/lokf-agent-skills --skill lokf-docent --yes` - and ask it about this project. It answers from this repository's own bundle and says how far each answer has been checked. **Agents:** if `.lokf/knowledge/index.md` exists, read it first; `llms.txt` says how to weigh it.
 
@@ -90,7 +90,7 @@ Under **Settings → LOKF Registrar**; every setting is also reachable through O
 
 - **This device** - silences the plugin on this computer or phone only. Never synced.
 - **In-editor diagnostics** - the underlines and the autocomplete, both on by default.
-- **Type vocabulary** - the known LOKF classes, whether an unrecognised `type` is worth a warning, and the accepted `genre` values.
+- **Type vocabulary** - the known LOKF classes, whether an unrecognised `type` is worth a warning, and the accepted `genre` values. *Known LOKF types* is also the extension point: a bundle validated against a domain schema (`lokf validate --schema <file>`, [recipe](https://github.com/noelmcloughlin/lokf-agent-skills/blob/main/skills/lokf-librarian/references/domain-schema.md)) lists that schema's classes here, since the plugin cannot read the schema, which sits outside the vault. Listed, they stop warning and appear in autocomplete; unlisted, they only ever warn. A list you have edited is yours to keep current - and should match LOKF Curator's.
 - **Type-specific fields** - the recommended-field warnings for `Metric`, `Service` and `GlossaryTerm`.
 - **Semantic header & base_iri** - the authority denylist, the placeholder-domain list, and whether a missing header warns.
 - **Relationships** - whether relation targets inside the bundle must resolve to a real file (always a warning, never an error), and an off-by-default predicate check.
@@ -143,7 +143,7 @@ docs/               the reasoning behind the checks
 
 ## This repository's own bundle
 
-This repository keeps a bundle of its own under `.lokf/knowledge/`, maintained by the `lokf-agent-skills`, which a scheduled [workflow](.github/workflows/knowledge-librarian.yaml) installs at run time. It is what the docent answers from, and none of it is part of the plugin. To contribute to it, [CONTRIBUTING.md](CONTRIBUTING.md#agent-skills-optional---only-for-editing-this-repos-own-lokf-bundle) says which skills that takes.
+This repository keeps a bundle of its own under `.lokf/knowledge/`, maintained by the `lokf-agent-skills`, which a scheduled [workflow](.github/workflows/knowledge-librarian.yaml) installs at run time. It is what the docent answers from, and none of it is part of the plugin. To contribute to it, [CONTRIBUTING.md](CONTRIBUTING.md#development-setup) says which skills that takes.
 
 ## Credits
 

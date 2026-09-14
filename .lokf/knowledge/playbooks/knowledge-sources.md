@@ -5,14 +5,15 @@ title: Knowledge Sources
 description: Map of the repository locations this bundle was derived from, and how to re-check each on a future refresh.
 generated:
   by: process:lokf-librarian
-  at: "2026-09-13T23:00:00Z"
+  at: "2026-09-14T15:00:00Z"
 ---
 
 # Sources swept for this bootstrap discovery pass
 
 | Source | Yields | Re-check by |
 | --- | --- | --- |
-| `manifest.json`, `package.json` | plugin identity, version, dependencies | diff against the last recorded `version`/`minAppVersion` |
+| `manifest.json`, `package.json` | plugin identity, version, dependencies, npm scripts (`build`, `lint`, `smoke-test`, `check`) | diff against the last recorded `version`/`minAppVersion`, and the script list against `playbooks/contributing.md` |
+| `eslint.config.mts` | which `obsidianmd` rules are promoted to error, and the two deliberate vocabulary/scripts exceptions | diff against `playbooks/contributing.md`'s lint paragraph |
 | `src/main.ts`, `src/validator.ts`, `src/report-view.ts`, `src/settings.ts` | the four Service concepts | re-read each file; a new/removed command, rule group, or settings group is a gap |
 | `README.md` | commands/settings tables, privacy stance | diff the Commands/Settings/Privacy sections |
 | `CONTRIBUTING.md` | the contributing/releasing playbooks | diff against the current dev-setup and release-flow sections |
@@ -21,13 +22,88 @@ generated:
 | `.github/dependabot.yml` | the quality-gates playbook's dependency-freshness paragraph | diff the three `package-ecosystem` entries and their groupings |
 | `.github/workflows/knowledge-librarian.yaml`, `.lokf/scripts/knowledge-librarian.sh` | the scheduled-librarian playbook | diff the job split, permissions, and what the wrapper enforces; then diff both against the `lokf-sidecar` templates - the copies are meant to differ only by `persist-credentials: false`, and any other difference is drift to report, not fix |
 | `.github/workflows/knowledge-registrar.yaml` | the knowledge-registrar-gate playbook | diff the three jobs (`validate`, `provenance`, `attestation`) against the `lokf-sidecar` template the same way |
-| `SECURITY.md` | what the scheduled-librarian playbook says this repository owns versus inherits | diff the "what is inherited, what this repository owns" section |
+| `SECURITY.md` | reporting, supported versions, the plugin's privacy promise, and (since 2026-09-14) a surface table replacing the file's former "what is inherited, what this repository owns" prose - the design itself moved to the skills repository's `docs/threat-model.md` | diff the surface table's rows and links, not a section heading - the old ones this bundle used to cite ("The librarian workflow: what is inherited...", "The attribution gate is installed") no longer exist |
 | `AI_COVENANT.md`, `CODE_OF_CONDUCT.md` | the two governance policy concepts | diff against the sibling `lokf-agent-skills` copies - both are meant to stay verbatim |
-| `scripts/smoke-test.ts` | the plain-Node testability claim in the validator-engine concept | confirm it still imports only from `../src/validator` |
+| `scripts/smoke-test.ts` | the plain-Node testability claim in the validator-engine concept, and what the suite actually asserts | confirm it still imports only from modules that are themselves import-free of Obsidian (`validator`, `locator`, `vocab`, `graph`, `suggest-context`, `fixes`, `propose`, `report-filter`, `affordances`, `fields`); a new Obsidian-bound import there would mean the suite no longer runs under plain Node |
 | `docs/for-the-curious.md` (new 2026-09-12, moved out of `README.md`'s former "For the curious" section) | the detailed reasoning behind the checks - what LOKF adds over plain OKF, the OKF v0.2 base-layer rationale, what is deliberately left unchecked, the four-tier trust model | diff against `explanation/why-lokf-registrar.md`'s `sources` list; re-read on every README/docs restructuring |
 | `.assets/*.svg` | the README's card and two-vaults pictures | decorative, consciously excluded as concepts; re-check only that the row still applies if an image starts carrying a claim the README does not |
 | `CHANGELOG.md`, `versions.json`, `git tag` | release history | see note below |
 | PyPI `lokf` package | `.lokf/pyproject.toml`'s `lokf[build]>=` floor | `pip index versions lokf`; bump the floor on a minor/patch release, ask the human first on a major one |
+
+**2026-09-14 (fifth pass)**, against this session's uncommitted working-tree
+change to `SECURITY.md` (staged for a commit matching `lokf-agent-skills`'
+`b94a299` and `obsidian-lokf-curator`'s `96cf5fe`): the file shrank from
+~1,600 to 721 words, replacing its "This repository's own automation" prose -
+including the two named subsections `playbooks/scheduled-librarian.md` and
+`playbooks/knowledge-registrar-gate.md` used to cite by heading, "The
+librarian workflow: what is inherited, what this repository owns" and "The
+attribution gate is installed" - with a `Surface | What holds it` table that
+links out to the skills repository's new `docs/threat-model.md` instead.
+Both citing concepts corrected to link the threat model's anchors directly
+rather than a heading that no longer exists; this row's own "Re-check by"
+column updated to warn about exactly that failure mode for the next pass.
+`scripts/smoke-test.ts`'s CONTRIBUTING-budget drift guard was also extended
+in the same change to check `SECURITY.md` at a 900-word budget - no concept
+describes that test directly, so nothing else needed updating. `lokf` on
+PyPI is still `0.7.0`, matching the floor; `.lokf/feedback.md` has no
+entries.
+
+**2026-09-14 (fourth pass)**, against the now-committed
+`chore/known-types-docs-and-coverage` branch (working tree clean). Re-walked
+this table; no row needed adding or changing. Diffed
+`.github/workflows/knowledge-registrar.yaml`'s `validate` job against
+`playbooks/knowledge-registrar-gate.md` per this row's own re-check
+instruction and found the gap commit `80bd8b0` left (the workflow and
+`scripts/knowledge-conventions.sh` row already existed here; only the gate
+concept's own job description was stale) - corrected, see `log.md`. Diffed
+`src/settings.ts`'s `heading:` order against `services/settings-tab.md` and
+`references/commands-and-settings.md` and found both concepts had two groups
+transposed - corrected. Orphan sweep unchanged from the third pass below.
+PyPI's `lokf` not re-checked this pass.
+
+**2026-09-14 (third pass)**, against this session's uncommitted working tree
+(a CONTRIBUTING rewrite back into a checklist, `npm run check`, four
+`obsidianmd` lint rules promoted to error, an action-pinning step added to
+`lint-and-docs.yaml`, `build.yml`/`lint-and-docs.yaml`'s `push` trigger
+narrowed to `main`, and a `scripts/smoke-test.ts` drift guard enforcing
+CONTRIBUTING's own word budget and its import-free module list against what
+the suite actually imports). Corrected `playbooks/contributing.md` (rewritten
+to match) and `playbooks/quality-gates.md` (trigger and the new pin-check
+step). Re-verified, no content change: `playbooks/releasing.md` (its
+`resource`, `CONTRIBUTING.md`, now only summarizes and points at
+`lokf-agent-skills`' `docs/releasing.md`/`docs/signing-commits.md` - both
+confirmed present - but the underlying facts still come from
+`semantic-release.yml`/`release.yml`, which this session left untouched).
+Added a small addition to `explanation/why-lokf-registrar.md`: the README's
+new **three lines of defence** framing places this plugin on the second
+line, per `lokf-agent-skills`' `docs/three-lines.md`. Added a row above for
+`eslint.config.mts` and extended the `package.json` row to cover npm
+scripts. Orphan sweep: `src/`, `docs/`, `.github/workflows/`, and the
+repository root carry no file this map or the bundle doesn't already
+account for - unchanged from the 2026-09-12 (evening) sweep below.
+`.github/pull_request_template.md` changed (condensed to `npm run check`)
+but restates `playbooks/contributing.md`'s own checklist rather than adding
+a fact of its own; left out of the map, as before. PyPI's `lokf` was not
+re-checked this pass (see Step 6 in the hand-off).
+
+**2026-09-14 (second pass)**, whole repository. `CONTRIBUTING.md` was the
+drift this time, not a concept: it still claimed the smoke test covers
+`validator.ts` alone and listed four `src/` files. Corrected at the source,
+then `playbooks/contributing.md` and `services/lokf-registrar-plugin.md`
+re-derived from it. The lesson for the next run: this row's re-check
+instruction ("diff the layout table and the pre-PR checklist") only works if
+the checklist is compared against `scripts/smoke-test.ts` as well as against
+the concept - a document can be stale in a way no concept reveals.
+
+**2026-09-14 re-check**, against the uncommitted
+`chore/known-types-docs-and-coverage` branch (no feedback pending): swept
+`src/settings.ts`, `README.md`, `docs/for-the-curious.md`, `CHANGELOG.md`.
+`services/settings-tab.md` and `references/commands-and-settings.md` now
+carry what the branch documents - *Known LOKF types* as the extension point
+for a domain-schema bundle; `explanation/why-lokf-registrar.md` re-verified
+unchanged, its "controlled type vocabulary" still covering it.
+`src/validator.ts` is untouched, so `services/validator-engine.md` was not
+re-checked. Type-check and lint pass. PyPI's `lokf` is still `0.7.0`.
 
 **2026-09-13 (night) re-check**, after a `lokf-sidecar` repair pass on this
 repository: `.lokf/justfile` regained the template's `lokf-check-refs`
