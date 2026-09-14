@@ -10,11 +10,11 @@ relatedTo:
   - https://lokf-registrar.example/knowledge/playbooks/knowledge-registrar-gate
 generated:
   by: process:lokf-librarian
-  at: "2026-09-13T19:00:00Z"
+  at: "2026-09-14T17:45:00Z"
 status: draft
 verified:
   - by: process:lokf-librarian
-    at: "2026-09-13T23:00:00Z"
+    at: "2026-09-14T17:45:00Z"
 ---
 
 # Overview
@@ -75,16 +75,18 @@ required status checks are deliberately off here. What that gate checks on a
 person's own PR is [Knowledge registrar gate](knowledge-registrar-gate.md).
 
 **Whose design this is.** Both files are copies of the `lokf-sidecar`
-template in `lokf-agent-skills`, and since 2026-09-13 this repository's
-[SECURITY.md](../../../SECURITY.md) says so in "The librarian workflow: what
-is inherited, what this repository owns": it names what this repository is
-accountable for - the deployed copy and its one local edit
+template in `lokf-agent-skills`. As of 2026-09-14 this repository's
+[SECURITY.md](../../../SECURITY.md) names it only as one row of a
+`Surface | What holds it` table - the deployed copy's one local edit
 (`persist-credentials: false` on the read-only checkouts, stricter than the
-template), the `KNOWLEDGE_LIBRARIAN_ENABLED` / `AGENT_CLI` switches, the
-surfaces the librarian reads here, and the blast radius if the inherited
-guards fail - and links to the skills repository's `SECURITY.md` for the
-guard design itself rather than restating it, since a restated copy would go
-stale with nothing in CI to notice. [AI_COVENANT.md](../../../AI_COVENANT.md)'s
-"Repository-Owned Agent Automation" sets the human-accountability rules this
-workflow operates under (bot identity, review always required, verdicts only
-a person can record).
+template), the `KNOWLEDGE_LIBRARIAN_ENABLED` / `AGENT_CLI` switches, and what
+the librarian reads here - and links out for the guard design itself: the
+skills repository's shared
+[threat model](https://github.com/noelmcloughlin/lokf-agent-skills/blob/main/docs/threat-model.md#prompt-injection-guards),
+not restated here since a copy would go stale with nothing in CI to notice.
+Before this rewrite the same material sat in `SECURITY.md` itself, under a
+section called "The librarian workflow: what is inherited, what this
+repository owns" - that heading no longer exists; do not link to it.
+[AI_COVENANT.md](../../../AI_COVENANT.md)'s "Repository-Owned Agent
+Automation" sets the human-accountability rules this workflow operates under
+(bot identity, review always required, verdicts only a person can record).

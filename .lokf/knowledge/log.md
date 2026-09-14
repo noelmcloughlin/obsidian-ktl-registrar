@@ -2,6 +2,16 @@
 
 ## 2026-09-14
 
+* **Steady-state refresh**, against this session's uncommitted `SECURITY.md`
+  rewrite (matching the same change already committed in `lokf-agent-skills`
+  and `obsidian-lokf-curator`): its design content moved to the skills
+  repository's new `docs/threat-model.md`. Two concepts had cited it by a
+  now-gone section heading - `playbooks/scheduled-librarian.md` ("The
+  librarian workflow: what is inherited, what this repository owns") and
+  `playbooks/knowledge-registrar-gate.md` ("The attribution gate is
+  installed") - both corrected to link the threat model's anchors directly.
+  `playbooks/knowledge-sources.md`'s `SECURITY.md` row updated to match.
+
 * **Steady-state refresh** (librarian pass, no `.lokf/feedback.md` present),
   against the now-committed `chore/known-types-docs-and-coverage` branch (git
   status clean). Two real drifts found and fixed: `playbooks/knowledge-registrar-gate.md`'s

@@ -14,11 +14,11 @@ dependsOn:
   - https://lokf-registrar.example/knowledge/references/lokf-toolkit
 generated:
   by: process:lokf-librarian
-  at: "2026-09-14T14:58:54Z"
+  at: "2026-09-14T17:45:00Z"
 status: draft
 verified:
   - by: process:lokf-librarian
-    at: "2026-09-14T14:58:54Z"
+    at: "2026-09-14T17:45:00Z"
 ---
 
 # Overview
@@ -27,10 +27,13 @@ verified:
 keeping records well-formed and their provenance paperwork straight, never
 judging whether a claim is true. It is a copy of the `lokf-sidecar` template
 in `lokf-agent-skills`, unchanged here except for `persist-credentials:
-false` on its checkout (`SECURITY.md`, "The attribution gate is
-installed") and the wording of the `provenance` job's signing comment; the
-design and its stated limits are documented once, in that repository's
-`SECURITY.md`. It runs on a pull request that touches
+false` on its checkout and the wording of the `provenance` job's signing
+comment; the design and its stated limits are documented once, in the
+skills repository's shared
+[threat model](https://github.com/noelmcloughlin/lokf-agent-skills/blob/main/docs/threat-model.md#human-attribution-human-is-a-claim-not-a-credential)
+(this repository's own `SECURITY.md` links there rather than restating it -
+before 2026-09-14 the same material sat under a `SECURITY.md` section called
+"The attribution gate is installed", now gone). It runs on a pull request that touches
 `.lokf/**`, `knowledge_bundle/**` or the workflow itself, on a Monday 06:00
 UTC schedule, and on demand. Three jobs:
 
@@ -94,7 +97,8 @@ It never runs on the librarian's own review pull request, which
 `knowledge-librarian.yaml`'s `publish` job opens with the default
 `GITHUB_TOKEN` - GitHub does not start `pull_request` workflows for such a
 PR - so `publish` carries its own two checks first (a path allow-list, and
-no added `by: human:` claim); see [Scheduled librarian](scheduled-librarian.md).
+no added `by: human:` claim - the skills repository's threat model has that
+design); see [Scheduled librarian](scheduled-librarian.md).
 And it is not a required status check: `main` deliberately has no merge
 gate (`CONTRIBUTING.md`), because a path-filtered required check sits at
 "Expected" for ever on pull requests that never trigger it, and a release

@@ -22,13 +22,31 @@ generated:
 | `.github/dependabot.yml` | the quality-gates playbook's dependency-freshness paragraph | diff the three `package-ecosystem` entries and their groupings |
 | `.github/workflows/knowledge-librarian.yaml`, `.lokf/scripts/knowledge-librarian.sh` | the scheduled-librarian playbook | diff the job split, permissions, and what the wrapper enforces; then diff both against the `lokf-sidecar` templates - the copies are meant to differ only by `persist-credentials: false`, and any other difference is drift to report, not fix |
 | `.github/workflows/knowledge-registrar.yaml` | the knowledge-registrar-gate playbook | diff the three jobs (`validate`, `provenance`, `attestation`) against the `lokf-sidecar` template the same way |
-| `SECURITY.md` | what the scheduled-librarian playbook says this repository owns versus inherits | diff the "what is inherited, what this repository owns" section |
+| `SECURITY.md` | reporting, supported versions, the plugin's privacy promise, and (since 2026-09-14) a surface table replacing the file's former "what is inherited, what this repository owns" prose - the design itself moved to the skills repository's `docs/threat-model.md` | diff the surface table's rows and links, not a section heading - the old ones this bundle used to cite ("The librarian workflow: what is inherited...", "The attribution gate is installed") no longer exist |
 | `AI_COVENANT.md`, `CODE_OF_CONDUCT.md` | the two governance policy concepts | diff against the sibling `lokf-agent-skills` copies - both are meant to stay verbatim |
 | `scripts/smoke-test.ts` | the plain-Node testability claim in the validator-engine concept, and what the suite actually asserts | confirm it still imports only from modules that are themselves import-free of Obsidian (`validator`, `locator`, `vocab`, `graph`, `suggest-context`, `fixes`, `propose`, `report-filter`, `affordances`, `fields`); a new Obsidian-bound import there would mean the suite no longer runs under plain Node |
 | `docs/for-the-curious.md` (new 2026-09-12, moved out of `README.md`'s former "For the curious" section) | the detailed reasoning behind the checks - what LOKF adds over plain OKF, the OKF v0.2 base-layer rationale, what is deliberately left unchecked, the four-tier trust model | diff against `explanation/why-lokf-registrar.md`'s `sources` list; re-read on every README/docs restructuring |
 | `.assets/*.svg` | the README's card and two-vaults pictures | decorative, consciously excluded as concepts; re-check only that the row still applies if an image starts carrying a claim the README does not |
 | `CHANGELOG.md`, `versions.json`, `git tag` | release history | see note below |
 | PyPI `lokf` package | `.lokf/pyproject.toml`'s `lokf[build]>=` floor | `pip index versions lokf`; bump the floor on a minor/patch release, ask the human first on a major one |
+
+**2026-09-14 (fifth pass)**, against this session's uncommitted working-tree
+change to `SECURITY.md` (staged for a commit matching `lokf-agent-skills`'
+`b94a299` and `obsidian-lokf-curator`'s `96cf5fe`): the file shrank from
+~1,600 to 721 words, replacing its "This repository's own automation" prose -
+including the two named subsections `playbooks/scheduled-librarian.md` and
+`playbooks/knowledge-registrar-gate.md` used to cite by heading, "The
+librarian workflow: what is inherited, what this repository owns" and "The
+attribution gate is installed" - with a `Surface | What holds it` table that
+links out to the skills repository's new `docs/threat-model.md` instead.
+Both citing concepts corrected to link the threat model's anchors directly
+rather than a heading that no longer exists; this row's own "Re-check by"
+column updated to warn about exactly that failure mode for the next pass.
+`scripts/smoke-test.ts`'s CONTRIBUTING-budget drift guard was also extended
+in the same change to check `SECURITY.md` at a 900-word budget - no concept
+describes that test directly, so nothing else needed updating. `lokf` on
+PyPI is still `0.7.0`, matching the floor; `.lokf/feedback.md` has no
+entries.
 
 **2026-09-14 (fourth pass)**, against the now-committed
 `chore/known-types-docs-and-coverage` branch (working tree clean). Re-walked
