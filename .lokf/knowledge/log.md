@@ -1,5 +1,34 @@
 # Change Log
 
+## 2026-09-14 (3)
+
+* **Steady-state refresh** (librarian pass, no `.lokf/feedback.md` present),
+  against this session's further uncommitted working-tree change on top of
+  the (2) pass below: `CONTRIBUTING.md` rewritten again, this time from a
+  design log back into a checklist under a 1000-word budget, with the
+  release walkthrough moved out to `lokf-agent-skills`' `docs/releasing.md`
+  and `docs/signing-commits.md` (both confirmed present); `npm run check`
+  added (`build && lint && smoke-test`, matching `build.yml`); four
+  `obsidianmd` settings-tab/`createEl` lint rules promoted from warning to
+  error in `eslint.config.mts`; `lint-and-docs.yaml` gained an
+  action-pinning step in `lint-workflows` and, with `build.yml`, narrowed
+  its `push` trigger from every branch to `main` only; and
+  `scripts/smoke-test.ts` gained a drift guard checking CONTRIBUTING's own
+  word count and its import-free module list against what the suite
+  actually imports. `playbooks/contributing.md` rewritten to match;
+  `playbooks/quality-gates.md` corrected (trigger, the new pin-check step).
+  `explanation/why-lokf-registrar.md` gains a short addition: the README's
+  new **three lines of defence** framing (linking `docs/three-lines.md`)
+  places this plugin on the second line. Re-verified, no content change:
+  `playbooks/releasing.md` (`CONTRIBUTING.md`'s own release section is now a
+  pointer elsewhere, but `semantic-release.yml`/`release.yml`, the concept's
+  real facts, are unchanged). `playbooks/knowledge-sources.md`: a run note,
+  a new `eslint.config.mts` row, and the `package.json` row extended to
+  cover npm scripts. Orphan sweep: no new file under `src/`, `docs/`,
+  `.github/workflows/`, or the repository root. PyPI's `lokf` is still
+  `0.7.0`, matching the `pyproject.toml` floor - no bump. `just
+  lokf-validate` (22/22) and `just lokf-check-refs` both pass.
+
 ## 2026-09-14 (2)
 
 * **`CONTRIBUTING.md` and its concept disagreed with the code**, found on a

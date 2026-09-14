@@ -5,14 +5,15 @@ title: Knowledge Sources
 description: Map of the repository locations this bundle was derived from, and how to re-check each on a future refresh.
 generated:
   by: process:lokf-librarian
-  at: "2026-09-14T09:30:00Z"
+  at: "2026-09-14T15:00:00Z"
 ---
 
 # Sources swept for this bootstrap discovery pass
 
 | Source | Yields | Re-check by |
 | --- | --- | --- |
-| `manifest.json`, `package.json` | plugin identity, version, dependencies | diff against the last recorded `version`/`minAppVersion` |
+| `manifest.json`, `package.json` | plugin identity, version, dependencies, npm scripts (`build`, `lint`, `smoke-test`, `check`) | diff against the last recorded `version`/`minAppVersion`, and the script list against `playbooks/contributing.md` |
+| `eslint.config.mts` | which `obsidianmd` rules are promoted to error, and the two deliberate vocabulary/scripts exceptions | diff against `playbooks/contributing.md`'s lint paragraph |
 | `src/main.ts`, `src/validator.ts`, `src/report-view.ts`, `src/settings.ts` | the four Service concepts | re-read each file; a new/removed command, rule group, or settings group is a gap |
 | `README.md` | commands/settings tables, privacy stance | diff the Commands/Settings/Privacy sections |
 | `CONTRIBUTING.md` | the contributing/releasing playbooks | diff against the current dev-setup and release-flow sections |
@@ -28,6 +29,31 @@ generated:
 | `.assets/*.svg` | the README's card and two-vaults pictures | decorative, consciously excluded as concepts; re-check only that the row still applies if an image starts carrying a claim the README does not |
 | `CHANGELOG.md`, `versions.json`, `git tag` | release history | see note below |
 | PyPI `lokf` package | `.lokf/pyproject.toml`'s `lokf[build]>=` floor | `pip index versions lokf`; bump the floor on a minor/patch release, ask the human first on a major one |
+
+**2026-09-14 (third pass)**, against this session's uncommitted working tree
+(a CONTRIBUTING rewrite back into a checklist, `npm run check`, four
+`obsidianmd` lint rules promoted to error, an action-pinning step added to
+`lint-and-docs.yaml`, `build.yml`/`lint-and-docs.yaml`'s `push` trigger
+narrowed to `main`, and a `scripts/smoke-test.ts` drift guard enforcing
+CONTRIBUTING's own word budget and its import-free module list against what
+the suite actually imports). Corrected `playbooks/contributing.md` (rewritten
+to match) and `playbooks/quality-gates.md` (trigger and the new pin-check
+step). Re-verified, no content change: `playbooks/releasing.md` (its
+`resource`, `CONTRIBUTING.md`, now only summarizes and points at
+`lokf-agent-skills`' `docs/releasing.md`/`docs/signing-commits.md` - both
+confirmed present - but the underlying facts still come from
+`semantic-release.yml`/`release.yml`, which this session left untouched).
+Added a small addition to `explanation/why-lokf-registrar.md`: the README's
+new **three lines of defence** framing places this plugin on the second
+line, per `lokf-agent-skills`' `docs/three-lines.md`. Added a row above for
+`eslint.config.mts` and extended the `package.json` row to cover npm
+scripts. Orphan sweep: `src/`, `docs/`, `.github/workflows/`, and the
+repository root carry no file this map or the bundle doesn't already
+account for - unchanged from the 2026-09-12 (evening) sweep below.
+`.github/pull_request_template.md` changed (condensed to `npm run check`)
+but restates `playbooks/contributing.md`'s own checklist rather than adding
+a fact of its own; left out of the map, as before. PyPI's `lokf` was not
+re-checked this pass (see Step 6 in the hand-off).
 
 **2026-09-14 (second pass)**, whole repository. `CONTRIBUTING.md` was the
 drift this time, not a concept: it still claimed the smoke test covers

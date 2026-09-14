@@ -1021,6 +1021,57 @@ section("settings tab and settings model agree (drift guard)", () => {
   expect("nothing scalar is treated as a CSV list", notAList.length === 0, notAList.join(", "));
 });
 
+section("the docs describe what the code actually is (drift guard)", () => {
+  // Two facts are stated as prose with no generator behind them, and both went
+  // stale on 2026-09-14: the class vocabulary in docs/for-the-curious.md, and
+  // the list of import-free modules in CONTRIBUTING.md, which still named
+  // validator.ts alone after the suite had grown to ten. Neither is checkable
+  // by reading the prose, so they are checked against their sources here.
+  const manifestClasses = (lokfVocab.classes ?? []).map((c: { name: string }) => c.name).sort();
+  const curious = readFileSync(join(repoRoot, "docs", "for-the-curious.md"), "utf8");
+  const vocabLine = curious.split("\n").find((l) => l.includes("controlled type vocabulary")) ?? "";
+  // The line names some classes twice (the list, then the type-specific
+  // fields example), so compare sets rather than sequences.
+  const documented = [...new Set([...vocabLine.matchAll(/`([A-Z][A-Za-z]*)`/g)].map((m) => m[1]!))].sort();
+  expect("for-the-curious.md lists a class vocabulary", documented.length > 0, vocabLine.slice(0, 60));
+  expect(
+    "the documented class list matches the pinned manifest",
+    documented.join(",") === manifestClasses.join(","),
+    `docs: ${documented.join(",")} | manifest: ${manifestClasses.join(",")}`
+  );
+
+  // Every module the suite imports from ../src must be named in CONTRIBUTING's
+  // import-free list, and vice versa: adding a pure module without saying so
+  // is how that document went stale.
+  const suiteSrc = readFileSync(join(repoRoot, "scripts", "smoke-test.ts"), "utf8");
+  const imported = new Set(
+    [...suiteSrc.matchAll(/from "\.\.\/src\/([a-z-]+)"/g)].map((m) => m[1]!)
+  );
+  const contributing = readFileSync(join(repoRoot, "CONTRIBUTING.md"), "utf8");
+  const listLine = contributing.split("\n").find((l) => l.includes("covers only the import-free modules")) ?? "";
+  // Only the parenthesised list is the claim; the sentences after it name
+  // main.ts as the place logic moves *out* of.
+  const listed = new Set([...(listLine.match(/\(([^)]*)\)/)?.[1] ?? "").matchAll(/`([a-z-]+)\.ts`/g)].map((m) => m[1]!));
+  expect("CONTRIBUTING names the import-free modules", listed.size > 0, listLine.slice(0, 60));
+  const undocumented = [...imported].filter((m) => !listed.has(m));
+  expect("every module the suite tests is named in CONTRIBUTING", undocumented.length === 0, undocumented.join(", "));
+  const notTested = [...listed].filter((m) => !imported.has(m));
+  expect("every module CONTRIBUTING claims is tested is imported here", notTested.length === 0, notTested.join(", "));
+
+  // CONTRIBUTING.md is a checklist, not a design log: each rule is a line or
+  // two that links to where its reasoning lives - a code comment, a workflow
+  // header, a docs page. A word budget is the one signal every contributor,
+  // person or agent, reliably reads: the file sits near 800, the four LOKF
+  // repositories' files between 700 and 850, and 1000 is where one has
+  // started to become a design log again.
+  const words = contributing.split(/\s+/).filter(Boolean).length;
+  expect(
+    `CONTRIBUTING.md is within its 1000-word budget (${words} words)`,
+    words <= 1000,
+    "move the reasoning next to the code or workflow it explains, and link to it"
+  );
+});
+
 section("a schema-refreshed type no longer warns", () => {
   const withRole = check("misc/lead.md", `---\ntype: Role\n---\n`, { settings: pluginDefaultSettings() });
   expect("Role is accepted under the manifest defaults", !withRole.some((i) => i.rule === "lokf/3-vocab"), show(withRole));
