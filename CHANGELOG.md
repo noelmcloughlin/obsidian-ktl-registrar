@@ -6,6 +6,8 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-09-17
+
 ### Changed
 
 - **The pinned toolkit is lokf 0.8.0**, and a malformed `by`, `sources[].author`, `http_method` or `email` is now an error, as `lokf validate` rejects each. `stale_after` accepts a datetime as well as a bare date, and the *missing recommended fields* setting no longer lists `http_method`.
