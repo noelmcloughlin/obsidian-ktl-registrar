@@ -1,5 +1,14 @@
 # Change Log
 
+## 2026-09-18
+
+* **Sidecar brought up to the skills templates**: the scripts here were the
+  pre-0.19 copies, so the wrapper lacked the `EXIT`-trap restore and the
+  registrar gate still read confirmations by their `by:` line. Synced all
+  five scripts, added `.gitattributes`, and bumped `LOKF_SKILLS_REF` from
+  `v0.9.0` to `v0.19.2`. The release workflow now checks release notes and
+  the pull request title on a releasing pull request.
+
 ## 2026-09-14
 
 * **Steady-state refresh**, against this session's uncommitted `SECURITY.md`
