@@ -8,6 +8,8 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ### Changed
 
+- **The pinned toolkit is lokf 0.8.0**, and a malformed `by`, `sources[].author`, `http_method` or `email` is now an error, as `lokf validate` rejects each. `stale_after` accepts a datetime as well as a bare date, and the *missing recommended fields* setting no longer lists `http_method`.
+- **`npm run build-vocab` reads the schema from the sidecar's pinned toolkit**, not a sibling `../lokf` checkout; `LOKF_SCHEMA` still overrides it.
 - **The settings merge rule moved into the pure `vocab.ts`** (`mergeSavedSettings`, with `vocabFromManifest` for the malformed-manifest fallbacks), so the smoke test covers what sat untested in `main.ts`. No behaviour change.
 - **The smoke test asserts more and characterises less.** The two golden fixtures pin their warning counts, so a rule that starts or stops firing fails the build, and a drift guard catches a settings control naming a setting that does not exist.
 - **The *Known LOKF types* setting is documented as the extension point** for a bundle validated against a domain schema (`lokf validate --schema <file>`): list that schema's classes there, since the plugin cannot read a schema outside the vault. Settings tab, README and `docs/for-the-curious.md`; no behaviour change.
