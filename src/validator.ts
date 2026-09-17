@@ -786,13 +786,30 @@ export function validateTypeVocabulary(data: Record<string, unknown>, settings: 
         issues.push({ severity: "warning", rule: "lokf/3-fields", message: `Metric concept is missing recommended field "${f}".` });
       }
     }
-  } else if (typeKey === "service" && settings.warnTypeSpecificFields) {
+  } else if (typeKey === "service") {
     // http_method is deliberately not recommended (lokf.yaml): its own spec
     // says "if applicable", and a GraphQL, gRPC, or whole-REST-API Service has
-    // no single verb.
-    for (const f of ["endpoint", "documentation"]) {
-      if (data[f] === undefined) {
-        issues.push({ severity: "warning", rule: "lokf/3-fields", message: `Service concept is missing recommended field "${f}".` });
+    // no single verb. When present it must be one of the closed enum's values.
+    if (settings.warnTypeSpecificFields) {
+      for (const f of ["endpoint", "documentation"]) {
+        if (data[f] === undefined) {
+          issues.push({ severity: "warning", rule: "lokf/3-fields", message: `Service concept is missing recommended field "${f}".` });
+        }
+      }
+    }
+    const method = data["http_method"];
+    if (method !== undefined) {
+      const scalar = asScalar(method);
+      if (scalar === null || !HTTP_METHODS.includes(scalar.trim())) {
+        issues.push({ severity: "error", rule: "lokf/3-fields", key: "http_method", message: `http_method ${describeValue(method)} must be one of ${HTTP_METHODS.join(", ")} (uppercase) - lokf validate rejects it.` });
+      }
+    }
+  } else if (typeKey === "person") {
+    const email = data["email"];
+    if (email !== undefined) {
+      const scalar = asScalar(email);
+      if (scalar === null || !EMAIL_RE.test(scalar.trim())) {
+        issues.push({ severity: "error", rule: "lokf/3-fields", key: "email", message: `email ${describeValue(email)} is not an address (local@domain.tld) - lokf validate rejects it.` });
       }
     }
   } else if (typeKey === "glossaryterm") {
@@ -1010,15 +1027,20 @@ function isDateObject(value: unknown): boolean {
   return Object.prototype.toString.call(value) === "[object Date]" && !isNaN((value as Date).getTime());
 }
 
-const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const DATETIME_RE = /^\d{4}-\d{2}-\d{2}([T ]\d{2}:\d{2}(:\d{2})?(\.\d+)?(Z|[+-]\d{2}:?\d{2})?)?$/;
 // An OKF §7 provenance actor literal for a `by` slot: `human:<id>`,
 // `process:<id>`, or a bare `<producer>/<version>`. Matches lokf.yaml's `by`
 // pattern exactly - deliberately stricter than a source's `author`, which
-// admits any `<prefix>:<id>` (e.g. `team:analytics`); a `by` value narrower
-// than the schema's would let the trust-tier derivation read an actor the
-// real validator rejects.
+// admits any `<prefix>:<id>` (e.g. `team:analytics`, OKF §5.1's own example);
+// a `by` value narrower than the schema's would let the trust-tier derivation
+// read an actor the real validator rejects.
 const ACTOR_RE = /^(?:(?:human|process):\S+|[^\s/]+\/[^\s/]+)$/;
+const AUTHOR_RE = /^(?:[^\s:/]+:\S+|[^\s/]+\/[^\s/]+)$/;
+// lokf.yaml's `email` pattern, and the closed `HttpMethod` enum (uppercase:
+// the method name is a case-sensitive wire token). Since lokf 0.8.0 all
+// three, like the actor patterns, fail `lokf validate`, so each is an error.
+const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+const HTTP_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"];
 
 /** One `{ by, at }` event under `generated` or an entry of `verified`. */
 function validateTrustEvent(label: string, keyPath: string, entry: unknown, issues: LokfIssue[], byRequired: boolean): void {
@@ -1036,7 +1058,7 @@ function validateTrustEvent(label: string, keyPath: string, entry: unknown, issu
     if (actor === null || !actor.trim()) {
       issues.push({ severity: "warning", rule: "lokf/5-trust", key: `${keyPath}.by`, message: `${label} "by" ${describeValue(by)} should be a non-empty OKF §7 actor string (human:<id>, process:<id>, or <producer>/<version>).` });
     } else if (!ACTOR_RE.test(actor.trim())) {
-      issues.push({ severity: "warning", rule: "lokf/5-trust", key: `${keyPath}.by`, message: `${label} "by" "${actor}" doesn't look like an OKF §7 actor (human:<id>, process:<id>, or <producer>/<version>) - trust tiers derive from the human: prefix.` });
+      issues.push({ severity: "error", rule: "lokf/5-trust", key: `${keyPath}.by`, message: `${label} "by" "${actor}" is not an OKF §7 actor (human:<id>, process:<id>, or <producer>/<version>) - lokf validate rejects it, and trust tiers derive from the human: prefix.` });
     }
   }
   const at = entry["at"];
@@ -1076,11 +1098,13 @@ export function validateTrustLifecycle(data: Record<string, unknown>, settings: 
     }
   }
 
+  // OKF §5.5 writes an instant (`2026-09-23T00:00:00Z`); LOKF also reads a
+  // bare date as that day at midnight UTC. Both shapes pass.
   const staleAfter = data["stale_after"];
   if (staleAfter !== undefined && !isDateObject(staleAfter)) {
     const scalar = asScalar(staleAfter);
-    if (scalar === null || !DATE_RE.test(scalar)) {
-      issues.push({ severity: "warning", rule: "lokf/5-lifecycle", key: "stale_after", message: `stale_after ${describeValue(staleAfter)} should be an absolute date (YYYY-MM-DD).` });
+    if (scalar === null || !DATETIME_RE.test(scalar)) {
+      issues.push({ severity: "warning", rule: "lokf/5-lifecycle", key: "stale_after", message: `stale_after ${describeValue(staleAfter)} should be an ISO 8601 datetime or a YYYY-MM-DD date.` });
     }
   }
 
@@ -1095,6 +1119,11 @@ export function validateTrustLifecycle(data: Record<string, unknown>, settings: 
         } else if (entry["resource"] === undefined || (typeof entry["resource"] === "string" && !entry["resource"].trim())) {
           // A source's `resource` is REQUIRED within an entry (OKF §5.1).
           issues.push({ severity: "error", rule: "lokf/5-trust", key: `sources[${i}]`, message: `sources[${i}] is missing the required "resource".` });
+        } else if (entry["author"] !== undefined) {
+          const author = asScalar(entry["author"]);
+          if (author === null || !AUTHOR_RE.test(author.trim())) {
+            issues.push({ severity: "error", rule: "lokf/5-trust", key: `sources[${i}].author`, message: `sources[${i}] "author" ${describeValue(entry["author"])} is not an actor string (<prefix>:<id> or <producer>/<version>, OKF §5.1/§7) - lokf validate rejects it.` });
+          }
         }
       });
     }

@@ -160,7 +160,7 @@ export class LokfSettingTab extends PluginSettingTab {
         items: [
           {
             name: "Warn about missing recommended fields",
-            desc: "Metric/Service/GlossaryTerm concepts missing their recommended fields (unit/formula/measures, endpoint/http_method/documentation, definition).",
+            desc: "Metric/Service/GlossaryTerm concepts missing their recommended fields (unit/formula/measures, endpoint/documentation, definition).",
             control: { type: "toggle", key: "warnTypeSpecificFields" },
           },
         ],

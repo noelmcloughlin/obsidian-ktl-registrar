@@ -1304,7 +1304,15 @@ section("§5 shape findings: OKF-REQUIRED fields error, the rest warn", () => {
   expect("generated missing by errors (OKF §5.2 REQUIRED)", trust(noBy).some((i) => i.rule === "lokf/5-trust" && i.severity === "error"), show(noBy));
 
   const badActor = check("m/c.md", `---\ntype: Reference\nverified:\n  - by: alice\n    at: 2026-01-01\n---\n`);
-  expect("a non-actor verified by warns (not spec-REQUIRED)", trust(badActor).some((i) => i.key === "verified[0].by" && i.severity === "warning"), show(badActor));
+  expect("a non-actor verified by errors (lokf 0.8.0's by pattern rejects it)", trust(badActor).some((i) => i.key === "verified[0].by" && i.severity === "error"), show(badActor));
+
+  const badAuthor = check("m/c2.md", `---\ntype: Reference\nsources:\n  - resource: https://example.org/doc\n    author: alice\n---\n`);
+  expect("a bare source author errors (lokf 0.8.0's author pattern rejects it)", trust(badAuthor).some((i) => i.key === "sources[0].author" && i.severity === "error"), show(badAuthor));
+  const teamAuthor = check("m/c3.md", `---\ntype: Reference\nsources:\n  - resource: https://example.org/doc\n    author: team:ga4-docs\n---\n`);
+  expect("OKF §5.1's own team:<id> author passes (looser than by)", trust(teamAuthor).length === 0, show(teamAuthor));
+
+  const okfStale = check("m/c4.md", `---\ntype: Reference\nstale_after: 2026-09-23T00:00:00Z\n---\n`);
+  expect("OKF §5.5's datetime stale_after passes alongside the bare date", trust(okfStale).length === 0, show(okfStale));
 
   const badStatus = check("m/d.md", `---\ntype: Reference\nstatus: archived\n---\n`, { settings: pluginDefaultSettings() });
   expect("an out-of-vocabulary status warns", trust(badStatus).some((i) => i.rule === "lokf/5-lifecycle" && i.key === "status" && i.severity === "warning"), show(badStatus));
@@ -1314,6 +1322,20 @@ section("§5 shape findings: OKF-REQUIRED fields error, the rest warn", () => {
 
   const badSource = check("m/f.md", `---\ntype: Reference\nsources:\n  - title: no resource here\n---\n`);
   expect("a source missing resource errors (OKF §5.1 REQUIRED)", trust(badSource).some((i) => i.key === "sources[0]" && i.severity === "error"), show(badSource));
+});
+
+section("closed values lokf 0.8.0 validates: http_method and email", () => {
+  const lower = check("services/orders.md", `---\ntype: Service\ntitle: Orders API\nhttp_method: get\n---\n`);
+  expect("a lowercase http_method errors (closed uppercase HttpMethod enum)", lower.some((i) => i.key === "http_method" && i.severity === "error"), show(lower));
+  const upper = check("services/orders.md", `---\ntype: Service\ntitle: Orders API\nhttp_method: POST\nendpoint: https://api.example/orders\ndocumentation: https://docs.example/orders\n---\n`);
+  expect("an enum value passes", !upper.some((i) => i.key === "http_method"), show(upper));
+  const graphql = check("services/graph.md", `---\ntype: Service\ntitle: Graph API\nendpoint: https://api.example/graphql\ndocumentation: https://docs.example/graph\n---\n`);
+  expect("a Service with no http_method draws nothing (GraphQL has no single verb)", !graphql.some((i) => i.message.includes("http_method")), show(graphql));
+
+  const badEmail = check("people/ada.md", `---\ntype: Person\ntitle: Ada\nemail: ada-at-example\n---\n`);
+  expect("a malformed email errors", badEmail.some((i) => i.key === "email" && i.severity === "error"), show(badEmail));
+  const goodEmail = check("people/ada.md", `---\ntype: Person\ntitle: Ada\nemail: ada@example.org\n---\n`);
+  expect("an address passes", !goodEmail.some((i) => i.key === "email"), show(goodEmail));
 });
 
 section("OKF conformance can be relaxed to warnings temporarily (enforceOkfConformance)", () => {
@@ -1461,7 +1483,7 @@ section("field reference - covers the header fields and frames base_iri as an id
   const baseIri = byName.get("base_iri") ?? "";
   expect(
     "base_iri is framed as an identifier that need not resolve",
-    /identifier/i.test(baseIri) && /need not resolve/i.test(baseIri),
+    /identifier/i.test(baseIri) && /not a hyperlink|need not resolve/i.test(baseIri),
     baseIri
   );
   expect("every field doc carries a non-empty description", LOKF_FIELD_DOCS.every((f) => f.description.trim().length > 0), "empty description");
