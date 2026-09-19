@@ -5,6 +5,7 @@ This covenant establishes community norms for responsible AI use in the project.
 It applies to the following repos central to the linked open knowledge mission:
 
 - <https://github.com/noelmcloughlin/obsidian-lokf-registrar>
+- <https://github.com/noelmcloughlin/obsidian-lokf-curator>
 - <https://github.com/noelmcloughlin/knowledge-trust-ladder>
 
 ## Core Principle: You Own Your Contributions
