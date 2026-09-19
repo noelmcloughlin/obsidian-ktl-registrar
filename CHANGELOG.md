@@ -6,6 +6,8 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+## [1.2.3] - 2026-09-19
+
 ### Added
 
 - **The family logo**, `.assets/knowledge-trust-ladder-logo.svg`: a ladder rising out of an open book, its top rung the check mark, the rungs grey then amber then the curator's blue. Shared byte-for-byte with the other two repositories; beside the README title, and the mark to use as the repository avatar.
