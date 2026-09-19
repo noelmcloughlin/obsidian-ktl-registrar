@@ -6,6 +6,11 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+### Changed
+
+- **The scheduled librarian installs `v0.19.7`**, up from `v0.19.2`, so it runs the current skill rather than one five releases behind.
+- **`LOKF_SKILLS_REPO`/`LOKF_SKILLS_REF` are now `TRUST_LADDER_SKILLS_REPO`/`TRUST_LADDER_SKILLS_REF`**, following the skills repository's own rename: the names said "LOKF" for a repository now called `knowledge-trust-ladder`. The skills keep their `lokf-*` names.
+
 ## [1.2.3] - 2026-09-19
 
 ### Added
