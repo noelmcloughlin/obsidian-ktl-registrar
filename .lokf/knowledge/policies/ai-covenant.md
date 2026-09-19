@@ -13,7 +13,7 @@ status: draft
 # Overview
 
 Adopted verbatim (aside from repo-specific links) from the sibling
-[lokf-agent-skills](https://github.com/noelmcloughlin/lokf-agent-skills)
+[knowledge-trust-ladder](https://github.com/noelmcloughlin/knowledge-trust-ladder)
 repository's own `AI_COVENANT.md`, so both projects hold contributors to one
 standard. Its "Repository-Owned Agent Automation" section is the part this
 repository's own CI actually implements: see

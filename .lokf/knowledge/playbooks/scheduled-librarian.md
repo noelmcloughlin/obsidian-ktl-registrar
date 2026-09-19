@@ -75,14 +75,14 @@ required status checks are deliberately off here. What that gate checks on a
 person's own PR is [Knowledge registrar gate](knowledge-registrar-gate.md).
 
 **Whose design this is.** Both files are copies of the `lokf-sidecar`
-template in `lokf-agent-skills`. As of 2026-09-14 this repository's
+template in `knowledge-trust-ladder`. As of 2026-09-14 this repository's
 [SECURITY.md](../../../SECURITY.md) names it only as one row of a
 `Surface | What holds it` table - the deployed copy's one local edit
 (`persist-credentials: false` on the read-only checkouts, stricter than the
 template), the `KNOWLEDGE_LIBRARIAN_ENABLED` / `AGENT_CLI` switches, and what
 the librarian reads here - and links out for the guard design itself: the
 skills repository's shared
-[threat model](https://github.com/noelmcloughlin/lokf-agent-skills/blob/main/docs/threat-model.md#prompt-injection-guards),
+[threat model](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/threat-model.md#prompt-injection-guards),
 not restated here since a copy would go stale with nothing in CI to notice.
 Before this rewrite the same material sat in `SECURITY.md` itself, under a
 section called "The librarian workflow: what is inherited, what this

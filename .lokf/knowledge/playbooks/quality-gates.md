@@ -32,7 +32,7 @@ any is not pinned to a 40-hex-char commit SHA or an image digest -
 link-checking, then `codespell`) over every `**/*.md` file. It never touches
 the Node build (`build.yml`) or the LOKF bundle's own semantics (the separate
 `knowledge-registrar.yaml` workflow) - this is the CI-hardening pass
-backported from `lokf-agent-skills`'s own `validate.yml`. Each job repeats
+backported from `knowledge-trust-ladder`'s own `validate.yml`. Each job repeats
 the same `step-security/harden-runner` (audit mode) + `actions/checkout`
 (`persist-credentials: false`) preamble as `release.yml`, with
 `permissions: {}` at the workflow level and `contents: read` scoped per job;
