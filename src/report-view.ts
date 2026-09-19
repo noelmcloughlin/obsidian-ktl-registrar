@@ -6,6 +6,22 @@ import { issueMatchesFilter, topLevelKey } from "./report-filter";
 
 export const LOKF_VIEW_TYPE = "lokf-report-view";
 
+export const LOKF_REGISTRAR_ICON = "lokf-trust-ladder";
+
+// The trust ladder, drawn for a 16px ribbon. No check mark on top: the
+// registrar keeps every record well-formed and never vouches for one - that is
+// the curator's, whose icon is this ladder with the check. `addIcon` wants the
+// content of a `0 0 100 100` SVG, so the 64-unit mark is scaled to fit, and
+// `currentColor` lets the theme colour it. The full-colour mark is in .assets/.
+export const LOKF_REGISTRAR_ICON_SVG = `
+<g transform="scale(1.5625)" fill="none" stroke="currentColor" stroke-width="5.2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M19.75 10 V57"/>
+  <path d="M44.25 10 V57"/>
+  <path d="M19.75 19 H44.25"/>
+  <path d="M19.75 33 H44.25"/>
+  <path d="M19.75 47 H44.25"/>
+</g>`;
+
 // Ceilings so a first scan of a very large or very messy bundle can't paint
 // thousands of DOM nodes at once; the filter box narrows past either of them.
 const MAX_FILES = 300;
@@ -61,7 +77,7 @@ export class LokfReportView extends ItemView {
     return "LOKF conformance";
   }
   getIcon() {
-    return "shield-half";
+    return LOKF_REGISTRAR_ICON;
   }
 
   async onOpen() {
