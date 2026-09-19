@@ -6,6 +6,8 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+## [1.2.4] - 2026-09-19
+
 ### Changed
 
 - **The scheduled librarian installs `v0.19.7`**, up from `v0.19.2`, so it runs the current skill rather than one five releases behind.
