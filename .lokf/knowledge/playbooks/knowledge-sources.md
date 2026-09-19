@@ -23,15 +23,15 @@ generated:
 | `.github/workflows/knowledge-librarian.yaml`, `.lokf/scripts/knowledge-librarian.sh` | the scheduled-librarian playbook | diff the job split, permissions, and what the wrapper enforces; then diff both against the `lokf-sidecar` templates - the copies are meant to differ only by `persist-credentials: false`, and any other difference is drift to report, not fix |
 | `.github/workflows/knowledge-registrar.yaml` | the knowledge-registrar-gate playbook | diff the three jobs (`validate`, `provenance`, `attestation`) against the `lokf-sidecar` template the same way |
 | `SECURITY.md` | reporting, supported versions, the plugin's privacy promise, and (since 2026-09-14) a surface table replacing the file's former "what is inherited, what this repository owns" prose - the design itself moved to the skills repository's `docs/threat-model.md` | diff the surface table's rows and links, not a section heading - the old ones this bundle used to cite ("The librarian workflow: what is inherited...", "The attribution gate is installed") no longer exist |
-| `AI_COVENANT.md`, `CODE_OF_CONDUCT.md` | the two governance policy concepts | diff against the sibling `lokf-agent-skills` copies - both are meant to stay verbatim |
+| `AI_COVENANT.md`, `CODE_OF_CONDUCT.md` | the two governance policy concepts | diff against the sibling `knowledge-trust-ladder` copies - both are meant to stay verbatim |
 | `scripts/smoke-test.ts` | the plain-Node testability claim in the validator-engine concept, and what the suite actually asserts | confirm it still imports only from modules that are themselves import-free of Obsidian (`validator`, `locator`, `vocab`, `graph`, `suggest-context`, `fixes`, `propose`, `report-filter`, `affordances`, `fields`); a new Obsidian-bound import there would mean the suite no longer runs under plain Node |
 | `docs/for-the-curious.md` (new 2026-09-12, moved out of `README.md`'s former "For the curious" section) | the detailed reasoning behind the checks - what LOKF adds over plain OKF, the OKF v0.2 base-layer rationale, what is deliberately left unchecked, the four-tier trust model | diff against `explanation/why-lokf-registrar.md`'s `sources` list; re-read on every README/docs restructuring |
-| `.assets/*.svg` | the README's card and two-vaults pictures | decorative, consciously excluded as concepts; re-check only that the row still applies if an image starts carrying a claim the README does not |
+| `.assets/*.svg` | the README's card and two-vaults pictures, and the shared logo mark | decorative, consciously excluded as concepts; re-check only that the row still applies if an image starts carrying a claim the README does not |
 | `CHANGELOG.md`, `versions.json`, `git tag` | release history | see note below |
 | PyPI `lokf` package | `.lokf/pyproject.toml`'s `lokf[build]>=` floor | `pip index versions lokf`; bump the floor on a minor/patch release, ask the human first on a major one |
 
 **2026-09-14 (fifth pass)**, against this session's uncommitted working-tree
-change to `SECURITY.md` (staged for a commit matching `lokf-agent-skills`'
+change to `SECURITY.md` (staged for a commit matching `knowledge-trust-ladder`'s
 `b94a299` and `obsidian-lokf-curator`'s `96cf5fe`): the file shrank from
 ~1,600 to 721 words, replacing its "This repository's own automation" prose -
 including the two named subsections `playbooks/scheduled-librarian.md` and
@@ -71,12 +71,12 @@ the suite actually imports). Corrected `playbooks/contributing.md` (rewritten
 to match) and `playbooks/quality-gates.md` (trigger and the new pin-check
 step). Re-verified, no content change: `playbooks/releasing.md` (its
 `resource`, `CONTRIBUTING.md`, now only summarizes and points at
-`lokf-agent-skills`' `docs/releasing.md`/`docs/signing-commits.md` - both
+`knowledge-trust-ladder`'s `docs/releasing.md`/`docs/signing-commits.md` - both
 confirmed present - but the underlying facts still come from
 `semantic-release.yml`/`release.yml`, which this session left untouched).
 Added a small addition to `explanation/why-lokf-registrar.md`: the README's
 new **three lines of defence** framing places this plugin on the second
-line, per `lokf-agent-skills`' `docs/three-lines.md`. Added a row above for
+line, per `knowledge-trust-ladder`'s `docs/three-lines.md`. Added a row above for
 `eslint.config.mts` and extended the `package.json` row to cover npm
 scripts. Orphan sweep: `src/`, `docs/`, `.github/workflows/`, and the
 repository root carry no file this map or the bundle doesn't already
@@ -124,7 +124,7 @@ differs from its template in comments beyond the deliberate
 **2026-09-13 (evening) re-check**: swept the 1.1.0 release commits and the
 session's uncommitted working tree - the README rewritten around usage,
 `SECURITY.md` restructured to inherit the guard design from
-`lokf-agent-skills`, `knowledge-registrar.yaml` gaining the template's
+`knowledge-trust-ladder`, `knowledge-registrar.yaml` gaining the template's
 `provenance` and `attestation` jobs, and the `if:` guard on the `refresh`
 job's write-scope step. Added the three rows above (the registrar gate had
 no row and no concept - now `playbooks/knowledge-registrar-gate.md`) and

@@ -59,7 +59,7 @@ attestation.
 
 The releasing walkthrough (signing, the `release` Environment, repository
 settings) moved out of this file entirely on 2026-09-14 to
-[lokf-agent-skills' docs/releasing.md](https://github.com/noelmcloughlin/lokf-agent-skills/blob/main/docs/releasing.md)
+[knowledge-trust-ladder's docs/releasing.md](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/releasing.md)
 and `docs/signing-commits.md`, both confirmed present; this bundle's own
 [Releasing](releasing.md) concept still describes the pipeline directly from
 `semantic-release.yml`/`release.yml`, which did not change.

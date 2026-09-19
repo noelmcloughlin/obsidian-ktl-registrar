@@ -29,10 +29,10 @@ controlled type vocabulary, typed RDF-backed relationships, and
 id/IRI-minting consistency - real, new surface worth its own validator, and
 one that has to run *as a person writes*, in the editor, because an Obsidian
 vault has no CI gate to catch a malformed record after the fact. That is the
-registrar's half of the job the `lokf-agent-skills` README names: keeping
+registrar's half of the job the `knowledge-trust-ladder` README names: keeping
 records well-formed, never judging whether they are true. Since 2026-09-14
 the README also places that job on the **three lines of defence** the family
-reads its cast through ([lokf-agent-skills' docs/three-lines.md](https://github.com/noelmcloughlin/lokf-agent-skills/blob/main/docs/three-lines.md)):
+reads its cast through ([knowledge-trust-ladder's docs/three-lines.md](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/three-lines.md)):
 this plugin and `lokf validate` are the **second line** - compliance, not
 content, ensuring every record is well-formed without owning or judging what
 it claims - alongside the CI gate `knowledge-registrar.yaml` runs; the
@@ -51,7 +51,7 @@ README.md itself (the credits, the alternatives footnote beneath them, and
 the sibling-plugin framing), so both files are recorded as sources. The
 README was rewritten around usage on 2026-09-13 - two vaults, a quick
 start, the commands, which folder is the bundle - and now points at the
-`lokf-agent-skills` README for the role table and the trust ladder rather
+`knowledge-trust-ladder` README for the role table and the trust ladder rather
 than restating them; none of the claims here changed with it.
 
 # Why it checks the OKF v0.2 base layer itself
@@ -76,7 +76,7 @@ alternatives for that layer - never as companions or dependencies.
 
 Until 2026-09-12 the plugin was *LOKF Enforcer*; it was renamed before any
 release, for two reasons. The job it does is the registrar's - the clerical
-role in the `lokf-agent-skills` taxonomy, alongside `lokf validate` and CI's
+role in the `knowledge-trust-ladder` taxonomy, alongside `lokf validate` and CI's
 `knowledge-registrar.yaml` gate - and a registrar keeps records well-formed
 and says what it finds, where an enforcer would block: the longest section
 of `docs/for-the-curious.md` is on why almost everything here is a warning. And the old name
