@@ -31,7 +31,7 @@ generated:
 | PyPI `lokf` package | `.lokf/pyproject.toml`'s `lokf[build]>=` floor | `pip index versions lokf`; bump the floor on a minor/patch release, ask the human first on a major one |
 
 **2026-09-14 (fifth pass)**, against this session's uncommitted working-tree
-change to `SECURITY.md` (staged for a commit matching `knowledge-trust-ladder`'
+change to `SECURITY.md` (staged for a commit matching `knowledge-trust-ladder`'s
 `b94a299` and `obsidian-lokf-curator`'s `96cf5fe`): the file shrank from
 ~1,600 to 721 words, replacing its "This repository's own automation" prose -
 including the two named subsections `playbooks/scheduled-librarian.md` and
@@ -71,12 +71,12 @@ the suite actually imports). Corrected `playbooks/contributing.md` (rewritten
 to match) and `playbooks/quality-gates.md` (trigger and the new pin-check
 step). Re-verified, no content change: `playbooks/releasing.md` (its
 `resource`, `CONTRIBUTING.md`, now only summarizes and points at
-`knowledge-trust-ladder`' `docs/releasing.md`/`docs/signing-commits.md` - both
+`knowledge-trust-ladder`'s `docs/releasing.md`/`docs/signing-commits.md` - both
 confirmed present - but the underlying facts still come from
 `semantic-release.yml`/`release.yml`, which this session left untouched).
 Added a small addition to `explanation/why-lokf-registrar.md`: the README's
 new **three lines of defence** framing places this plugin on the second
-line, per `knowledge-trust-ladder`' `docs/three-lines.md`. Added a row above for
+line, per `knowledge-trust-ladder`'s `docs/three-lines.md`. Added a row above for
 `eslint.config.mts` and extended the `package.json` row to cover npm
 scripts. Orphan sweep: `src/`, `docs/`, `.github/workflows/`, and the
 repository root carry no file this map or the bundle doesn't already

@@ -1511,7 +1511,7 @@ section("field reference - covers the header fields and frames base_iri as an id
 });
 // (a) the lokf-sidecar skeleton, with its <PLACEHOLDER> tokens filled in as
 // a real project would. scripts/fixtures/sidecar-skeleton is a frozen copy
-// of knowledge-trust-ladder' skills/lokf-sidecar/templates/knowledge - a golden
+// of knowledge-trust-ladder's skills/lokf-sidecar/templates/knowledge - a golden
 // fixture, refreshed deliberately from a tagged release, never read live from
 // an installed (and git-ignored) skill.
 validateBundle("lokf-sidecar template skeleton", join(repoRoot, "scripts", "fixtures", "sidecar-skeleton"), {
