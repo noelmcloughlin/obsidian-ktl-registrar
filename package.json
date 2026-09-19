@@ -1,7 +1,7 @@
 {
   "name": "@noelmcloughlin/lokf-registrar",
   "version": "1.2.7",
-  "description": "Catch broken note links, missing properties, invalid note types in your frontmatter as you write, so your vault stays a clean shared knowledge graph. Fills a Registrar role for Linked Open Knowledge Format (LOKF), a semantic OKF layer.",
+  "description": "Catch broken note links, missing properties and invalid note types in your frontmatter as you write, so the vault stays a well-formed knowledge graph. The registrar role for Linked Open Knowledge Format (LOKF), a semantic profile of OKF.",
   "main": "main.js",
   "type": "module",
   "scripts": {
