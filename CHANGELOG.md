@@ -6,6 +6,8 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+## [1.2.6] - 2026-09-19
+
 ### Fixed
 
 - **An external `source` or `definedBy` is no longer flagged as dangling.** Both slots are documented as taking an off-site URL, but the audit reported any untyped IRI target as missing. Nothing in this bundle tripped it - every target happens to point at a concept.
