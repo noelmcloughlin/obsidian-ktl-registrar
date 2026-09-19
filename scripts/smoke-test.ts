@@ -1511,7 +1511,7 @@ section("field reference - covers the header fields and frames base_iri as an id
 });
 // (a) the lokf-sidecar skeleton, with its <PLACEHOLDER> tokens filled in as
 // a real project would. scripts/fixtures/sidecar-skeleton is a frozen copy
-// of lokf-agent-skills' skills/lokf-sidecar/templates/knowledge - a golden
+// of knowledge-trust-ladder' skills/lokf-sidecar/templates/knowledge - a golden
 // fixture, refreshed deliberately from a tagged release, never read live from
 // an installed (and git-ignored) skill.
 validateBundle("lokf-sidecar template skeleton", join(repoRoot, "scripts", "fixtures", "sidecar-skeleton"), {
@@ -1541,7 +1541,7 @@ validateBundle("lokf-registrar's own .lokf/knowledge", join(repoRoot, ".lokf", "
 // (c) any other real bundle, opt-in so this suite stays hermetic - its result
 // must not depend on what happens to sit next to the checkout. Point it at a
 // curated bundle to check the rules against one:
-//   LOKF_EXTRA_BUNDLE=../lokf-agent-skills/.lokf/knowledge npm run smoke-test
+//   LOKF_EXTRA_BUNDLE=../knowledge-trust-ladder/.lokf/knowledge npm run smoke-test
 const extraBundle = process.env["LOKF_EXTRA_BUNDLE"];
 if (extraBundle) validateBundle(`external bundle (${extraBundle})`, extraBundle, { required: true });
 

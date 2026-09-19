@@ -1,5 +1,14 @@
 # Change Log
 
+## 2026-09-19
+
+* **Skills repository renamed to `knowledge-trust-ladder`**, from
+  `lokf-agent-skills`, because upstream LOKF now ships its own bundled skills.
+  Every deep link and the scheduled librarian's `LOKF_SKILLS_REPO` follow it,
+  in one mechanical pass; no `verified` event changed. This plugin's own name,
+  id and `base_iri` are untouched - only references to the skills repository
+  moved. Concepts naming it in prose were rewritten by the same pass.
+
 ## 2026-09-18
 
 * **Sidecar brought up to the skills templates**: the scripts here were the
@@ -12,7 +21,7 @@
 ## 2026-09-14
 
 * **Steady-state refresh**, against this session's uncommitted `SECURITY.md`
-  rewrite (matching the same change already committed in `lokf-agent-skills`
+  rewrite (matching the same change already committed in `knowledge-trust-ladder`
   and `obsidian-lokf-curator`): its design content moved to the skills
   repository's new `docs/threat-model.md`. Two concepts had cited it by a
   now-gone section heading - `playbooks/scheduled-librarian.md` ("The
@@ -49,7 +58,7 @@
   against this session's further uncommitted working-tree change on top of
   the earlier pass below: `CONTRIBUTING.md` rewritten again, this time from a
   design log back into a checklist under a 1000-word budget, with the
-  release walkthrough moved out to `lokf-agent-skills`' `docs/releasing.md`
+  release walkthrough moved out to `knowledge-trust-ladder`' `docs/releasing.md`
   and `docs/signing-commits.md` (both confirmed present); `npm run check`
   added (`build && lint && smoke-test`, matching `build.yml`); four
   `obsidianmd` settings-tab/`createEl` lint rules promoted from warning to
@@ -116,7 +125,7 @@
   1.1.0 release commits and this session's uncommitted working tree: the
   README rewritten around usage (two vaults, quick start, commands, *Which
   folder is the bundle*), `SECURITY.md` restructured to inherit the guard
-  design from `lokf-agent-skills`, and `knowledge-registrar.yaml` gaining the
+  design from `knowledge-trust-ladder`, and `knowledge-registrar.yaml` gaining the
   template's `provenance` and `attestation` jobs. Added
   `playbooks/knowledge-registrar-gate.md` for that gate - a real gap: the
   workflow had no source-map row and no concept. Corrected
@@ -287,7 +296,7 @@
   prose but nothing in the bundle traced back to it.
 * **Added** `policies/ai-covenant.md`, `policies/code-of-conduct.md` (both
   `status: draft`): two governance documents new since the last pass,
-  adopted verbatim from the sibling `lokf-agent-skills` repository.
+  adopted verbatim from the sibling `knowledge-trust-ladder` repository.
 * **Extended** `playbooks/quality-gates.md`: added `.github/dependabot.yml`,
   the mechanism that actually keeps the gate's own SHA pins from going
   stale (`actionlint` catches syntax drift, never staleness).
@@ -332,7 +341,7 @@
 
 * **Corrected** the bundle header's `publisher.id`: it declared `type: Person`
   but minted under `org/` (`.../knowledge/org/noelmcloughlin`); now
-  `person/noelmcloughlin`, the convention the sibling `lokf-agent-skills`
+  `person/noelmcloughlin`, the convention the sibling `knowledge-trust-ladder`
   bundle uses. The plugin's own scaffold template (`src/main.ts`,
   `scaffold-root-header`) carried the same mismatch and was fixed alongside.
 

@@ -26,11 +26,11 @@ verified:
 `.github/workflows/knowledge-registrar.yaml` is the registrar's job in CI -
 keeping records well-formed and their provenance paperwork straight, never
 judging whether a claim is true. It is a copy of the `lokf-sidecar` template
-in `lokf-agent-skills`, unchanged here except for `persist-credentials:
+in `knowledge-trust-ladder`, unchanged here except for `persist-credentials:
 false` on its checkout and the wording of the `provenance` job's signing
 comment; the design and its stated limits are documented once, in the
 skills repository's shared
-[threat model](https://github.com/noelmcloughlin/lokf-agent-skills/blob/main/docs/threat-model.md#human-attribution-human-is-a-claim-not-a-credential)
+[threat model](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/threat-model.md#human-attribution-human-is-a-claim-not-a-credential)
 (this repository's own `SECURITY.md` links there rather than restating it -
 before 2026-09-14 the same material sat under a `SECURITY.md` section called
 "The attribution gate is installed", now gone). It runs on a pull request that touches
