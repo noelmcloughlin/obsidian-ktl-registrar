@@ -1,4 +1,7 @@
-<img src=".assets/knowledge-trust-ladder-logo.svg" alt="" width="56" align="right" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".assets/knowledge-trust-ladder-logo-dark.svg">
+  <img src=".assets/knowledge-trust-ladder-logo.svg" alt="" width="56" align="right" />
+</picture>
 
 # LOKF Registrar
 
@@ -10,7 +13,10 @@
 An Obsidian plugin that keeps a **LOKF knowledge bundle** well-formed as you edit it. Open the bundle as a vault, and a status-bar icon says where things stand, the offending frontmatter is underlined as you type, and a side panel names each finding in plain words. Nothing to configure, no network, no servers.
 
 <p align="center">
-  <img src=".assets/lokf-obsidian-plugins-card.svg" alt="The five LOKF roles, and which two are Obsidian plugins" width="720" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset=".assets/lokf-obsidian-plugins-card-dark.svg">
+    <img src=".assets/lokf-obsidian-plugins-card.svg" alt="The five LOKF roles, and which two are Obsidian plugins" width="720" />
+  </picture>
 </p>
 
 A bundle is a folder of Markdown notes in the [Linked Open Knowledge Format](https://lokf.nolan-nichols.com/) (LOKF): one concept per note, a few properties on each, and an `index.md` at the root that names the bundle. The [`knowledge-trust-ladder`](https://github.com/noelmcloughlin/knowledge-trust-ladder) skills build one beside whatever they are run on - a code repository, a vault of notes, a folder of documents. This plugin is the **registrar** of that family: it checks that every record is well-formed. Its sibling [LOKF Curator](https://github.com/noelmcloughlin/obsidian-lokf-curator) records what a person decides about each record. Neither reaches a verdict of its own; the judging stays with the person. The whole cast is in the skills' README under [the fifth role](https://github.com/noelmcloughlin/knowledge-trust-ladder#the-fifth-role-which-is-not-a-skill); for anyone who works under the **three lines of defence**, this plugin is second-line work, keeping the format and never judging truth, and [docs/three-lines.md](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/three-lines.md) says where the rest sit. Obsidian is optional in both directions: the skills rely on `lokf validate`, not on this plugin, and the plugin works on any LOKF bundle however it was made. The format is all they share.
@@ -22,7 +28,10 @@ A bundle is a folder of Markdown notes in the [Linked Open Knowledge Format](htt
 Your everyday vault is the **workshop**. The bundle is the **exhibition**: a second, smaller vault that you open through the `knowledge_bundle` link the skills leave at the root of the host. The two never index the same file, so nothing here touches your notes.
 
 <p align="center">
-  <img src=".assets/lokf-two-vaults.svg" alt="Workshop vault and exhibition vault, one folder, no shared index" width="720" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset=".assets/lokf-two-vaults-dark.svg">
+    <img src=".assets/lokf-two-vaults.svg" alt="Workshop vault and exhibition vault, one folder, no shared index" width="720" />
+  </picture>
 </p>
 
 How the link behaves on each host - Windows junctions, synced drives that drop links, what Obsidian's file reconciler does with it - is the skills' business, and recorded once in their playbook [Open the knowledge bundle in Obsidian](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/.lokf/knowledge/playbooks/open-bundle-in-obsidian.md). If the link is missing, `ln -s .lokf/knowledge knowledge_bundle` (or `mklink /J knowledge_bundle .lokf\knowledge` on Windows) makes it, or open `.lokf/knowledge` by path.

@@ -6,6 +6,10 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+### Changed
+
+- **The README's logo and both diagrams have a dark counterpart**, chosen by `prefers-color-scheme`, so none of them sits as a pale image on a dark page.
+
 ## [1.2.7] - 2026-09-19
 
 ### Fixed
