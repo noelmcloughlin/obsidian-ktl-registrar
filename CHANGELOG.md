@@ -6,6 +6,12 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+### Changed
+
+- **The ribbon and tab carry the trust ladder**, not Lucide's `shield-half`. No check mark on top: this plugin keeps every record well-formed and never vouches for one, so the check belongs to LOKF Curator, whose icon is this ladder with it. Line art at Lucide's weight, in `currentColor`, so it sits with Obsidian's own icons and follows any theme.
+
+## [1.3.0] - 2026-09-20
+
 ### Added
 
 - **A dark counterpart for all three diagrams**, `*-dark.svg` beside each original. Same geometry and wording; only the palette differs, re-toned role for role from the light one. Shared byte-for-byte with the other repositories.
@@ -14,7 +20,6 @@ No version below has been published as a GitHub release yet, so entries describe
 ### Changed
 
 - **The registrar's logo has no check mark.** Its ladder stops at the amber rung, checked by automation; the blue tick, a named person's confirmation, is the curator's alone. The logo is no longer shared byte-for-byte with the other repositories.
-- **The ribbon and tab carry the trust ladder**, not Lucide's `shield-half`. No check mark on top: this plugin keeps every record well-formed and never vouches for one, so the check belongs to LOKF Curator, whose icon is this ladder with it. Line art at Lucide's weight, in `currentColor`, so it sits with Obsidian's own icons and follows any theme.
 
 ### Fixed
 
