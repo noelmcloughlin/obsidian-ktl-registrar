@@ -11,6 +11,10 @@ No version below has been published as a GitHub release yet, so entries describe
 - **A dark counterpart for all three diagrams**, `*-dark.svg` beside each original. Same geometry and wording; only the palette differs, re-toned role for role from the light one. Shared byte-for-byte with the other repositories.
 - **The README picks by theme.** Each diagram is a `<picture>` with a `prefers-color-scheme: dark` source over the existing file, so the light original stays the fallback and its path is unchanged.
 
+### Changed
+
+- **The registrar's logo has no check mark.** Its ladder stops at the amber rung, checked by automation; the blue tick, a named person's confirmation, is the curator's alone. The logo is no longer shared byte-for-byte with the other repositories.
+
 ### Fixed
 
 - **A dark copy carries no stale content credential.** The originals embed a C2PA manifest that signs their own bytes; recolouring changes those, so the copies ship without one rather than with a signature that cannot verify.
