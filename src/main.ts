@@ -1,5 +1,5 @@
 // main.ts - LOKF Registrar plugin entry point
-import { MarkdownView, Notice, Plugin, TFile, TFolder, type EditorPosition, type TAbstractFile, type WorkspaceLeaf, debounce, parseYaml } from "obsidian";
+import { MarkdownView, Notice, Plugin, TFile, TFolder, type EditorPosition, type TAbstractFile, type WorkspaceLeaf, addIcon, debounce, parseYaml } from "obsidian";
 import {
   type LokfSettings,
   type LokfIssue,
@@ -24,7 +24,13 @@ import {
   VISIBLE_BUNDLE_FOLDER,
   mintExpectedId,
 } from "./validator";
-import { LokfReportView, LOKF_VIEW_TYPE, type FileResult } from "./report-view";
+import {
+  LokfReportView,
+  LOKF_REGISTRAR_ICON,
+  LOKF_REGISTRAR_ICON_SVG,
+  LOKF_VIEW_TYPE,
+  type FileResult,
+} from "./report-view";
 import { locateFrontmatterKey } from "./locator";
 import { LokfSettingTab } from "./settings";
 import { lokfInlineExtension } from "./inline";
@@ -198,6 +204,8 @@ export default class LokfPlugin extends Plugin {
   async onload(): Promise<void> {
     await this.loadSettings();
 
+    addIcon(LOKF_REGISTRAR_ICON, LOKF_REGISTRAR_ICON_SVG);
+
     this.registerView(LOKF_VIEW_TYPE, (leaf) => new LokfReportView(leaf, this));
 
     this.statusEl = this.addStatusBarItem();
@@ -350,7 +358,7 @@ export default class LokfPlugin extends Plugin {
     this.addSettingTab(new LokfSettingTab(this.app, this));
 
     // A ribbon shortcut to bring up the conformance report.
-    this.addRibbonIcon("shield-half", "LOKF conformance report", () => void this.activateView());
+    this.addRibbonIcon(LOKF_REGISTRAR_ICON, "LOKF conformance report", () => void this.activateView());
 
     // The read-only surface a sibling plugin or agent may read validation state
     // from, without either plugin depending on the other.
