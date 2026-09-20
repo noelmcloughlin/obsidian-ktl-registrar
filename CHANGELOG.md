@@ -8,7 +8,28 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ### Changed
 
-- **The README's logo and both diagrams have a dark counterpart**, chosen by `prefers-color-scheme`, so none of them sits as a pale image on a dark page.
+- **The ribbon and tab carry the trust ladder**, not Lucide's `shield-half`. No check mark on top: this plugin keeps every record well-formed and never vouches for one, so the check belongs to LOKF Curator, whose icon is this ladder with it. Line art at Lucide's weight, in `currentColor`, so it sits with Obsidian's own icons and follows any theme.
+
+## [1.3.0] - 2026-09-20
+
+### Added
+
+- **A dark counterpart for all three diagrams**, `*-dark.svg` beside each original. Same geometry and wording; only the palette differs, re-toned role for role from the light one. Shared byte-for-byte with the other repositories.
+- **The README picks by theme.** Each diagram is a `<picture>` with a `prefers-color-scheme: dark` source over the existing file, so the light original stays the fallback and its path is unchanged.
+
+### Changed
+
+- **The registrar's logo has no check mark.** Its ladder stops at the amber rung, checked by automation; the blue tick, a named person's confirmation, is the curator's alone. The logo is no longer shared byte-for-byte with the other repositories.
+
+### Fixed
+
+- **A dark copy carries no stale content credential.** The originals embed a C2PA manifest that signs their own bytes; recolouring changes those, so the copies ship without one rather than with a signature that cannot verify.
+
+## [1.2.8] - 2026-09-20
+
+### Fixed
+
+- **The type-check survives a TypeScript 7 / `@types/node` 26 bump.** `moduleResolution: "bundler"` drops the `"node"` package.json export condition by design; a newer `@types/node` gates its `node:fs`/`node:path`/`node:url`/`node:module` subpaths on that condition, so `scripts/smoke-test.ts`'s plain-Node imports stopped resolving. `customConditions: ["node"]` in `tsconfig.json` re-adds it. `lib` moves to `ES2022` for `Array.prototype.at()` in `src/main.ts`; `esbuild.config.mjs`'s own output target is unaffected.
 
 ## [1.2.7] - 2026-09-19
 

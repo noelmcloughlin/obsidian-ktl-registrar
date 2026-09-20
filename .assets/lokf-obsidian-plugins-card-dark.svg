@@ -22,17 +22,17 @@
 <rect x="274" y="262" width="294" height="132" rx="18" fill="#30302C" stroke="#E6E4DC" stroke-width="1.5"/>
 <rect x="329" y="250" width="184" height="22" rx="11" fill="#E6E4DC"/>
 <text x="421" y="265" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#30302C">in Obsidian - the plugins</text>
-<rect x="32" y="276" width="108" height="104" rx="12" fill="#2B2B28" stroke="#5A5954" stroke-width="1"/>
-<g transform="translate(86,302)" stroke="#9A998F" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M-10 -6 h7 l3 3 h10 v11 h-20 z"/><line x1="0" y1="1" x2="0" y2="6"/><line x1="-2.5" y1="3.5" x2="2.5" y2="3.5"/></g>
-<text x="86" y="334" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#9A998F">Sidecar</text>
-<text x="86" y="351" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#9A998F">lays the network</text>
-<text x="86" y="368" text-anchor="middle" font-family="Arial, sans-serif" font-size="9.5" fill="#9A998F">agent skill · terminal</text>
+<rect x="32" y="276" width="108" height="104" rx="12" fill="#333330" stroke="#565550" stroke-width="1"/>
+<g transform="translate(86,302)" stroke="#9A988F" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M-10 -6 h7 l3 3 h10 v11 h-20 z"/><line x1="0" y1="1" x2="0" y2="6"/><line x1="-2.5" y1="3.5" x2="2.5" y2="3.5"/></g>
+<text x="86" y="334" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#9A988F">Sidecar</text>
+<text x="86" y="351" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#9A988F">lays the network</text>
+<text x="86" y="368" text-anchor="middle" font-family="Arial, sans-serif" font-size="9.5" fill="#8F8E86">agent skill · terminal</text>
 <line x1="143" y1="328" x2="151" y2="328" stroke="#8F8E86" stroke-width="1.3"/><path d="M144.4 332.5 L151 328 L144.4 323.5" fill="none" stroke="#8F8E86" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-<rect x="154" y="276" width="118" height="104" rx="12" fill="#2B2B28" stroke="#5A5954" stroke-width="1"/>
-<g transform="translate(213,302)" stroke="#9A998F" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="-10" y="-8" width="20" height="16" rx="2"/><line x1="0" y1="-8" x2="0" y2="8"/></g>
-<text x="213" y="334" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#9A998F">Librarian</text>
-<text x="213" y="351" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#9A998F">binds it into order</text>
-<text x="213" y="368" text-anchor="middle" font-family="Arial, sans-serif" font-size="9.5" fill="#9A998F">agent skill · terminal</text>
+<rect x="154" y="276" width="118" height="104" rx="12" fill="#333330" stroke="#565550" stroke-width="1"/>
+<g transform="translate(213,302)" stroke="#9A988F" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="-10" y="-8" width="20" height="16" rx="2"/><line x1="0" y1="-8" x2="0" y2="8"/></g>
+<text x="213" y="334" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#9A988F">Librarian</text>
+<text x="213" y="351" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#9A988F">binds it into order</text>
+<text x="213" y="368" text-anchor="middle" font-family="Arial, sans-serif" font-size="9.5" fill="#8F8E86">agent skill · terminal</text>
 <line x1="275" y1="328" x2="283" y2="328" stroke="#8F8E86" stroke-width="1.3"/><path d="M276.4 332.5 L283 328 L276.4 323.5" fill="none" stroke="#8F8E86" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
 <rect x="286" y="276" width="128" height="104" rx="12" fill="#33290F" stroke="#C99A3E" stroke-width="3"/>
 <g transform="translate(350,302)" stroke="#E4BD6E" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="-8" y="-8" width="16" height="18" rx="2"/><path d="M-3 -10 h6 v3 h-6 z" fill="#33290F"/><path d="M-4 2 l3 3 l5 -6"/></g>
@@ -46,11 +46,11 @@
 <text x="492" y="351" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#93C0F2">holds the scales</text>
 <text x="492" y="368" text-anchor="middle" font-family="Arial, sans-serif" font-size="9.5" font-weight="700" fill="#93C0F2">plugin · at the desk</text>
 <line x1="559" y1="328" x2="567" y2="328" stroke="#8F8E86" stroke-width="1.3"/><path d="M560.4 332.5 L567 328 L560.4 323.5" fill="none" stroke="#8F8E86" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-<rect x="570" y="276" width="118" height="104" rx="12" fill="#2B2B28" stroke="#5A5954" stroke-width="1"/>
-<g transform="translate(629,302)" stroke="#9A998F" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="0" cy="0" r="10"/><polygon points="0,-6 3,0 0,6 -3,0" fill="#9A998F" stroke="none"/></g>
-<text x="629" y="334" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#9A998F">Docent</text>
-<text x="629" y="351" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#9A998F">guides the visitors</text>
-<text x="629" y="368" text-anchor="middle" font-family="Arial, sans-serif" font-size="9.5" fill="#9A998F">agent skill · terminal</text>
+<rect x="570" y="276" width="118" height="104" rx="12" fill="#333330" stroke="#565550" stroke-width="1"/>
+<g transform="translate(629,302)" stroke="#9A988F" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="0" cy="0" r="10"/><polygon points="0,-6 3,0 0,6 -3,0" fill="#9A988F" stroke="none"/></g>
+<text x="629" y="334" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#9A988F">Docent</text>
+<text x="629" y="351" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#9A988F">guides the visitors</text>
+<text x="629" y="368" text-anchor="middle" font-family="Arial, sans-serif" font-size="9.5" fill="#8F8E86">agent skill · terminal</text>
 <path d="M629 380 v20 H213 v-6" fill="none" stroke="#8F8E86" stroke-width="1.3" stroke-dasharray="3 3"/>
 <path d="M492 380 v20" fill="none" stroke="#8F8E86" stroke-width="1.3" stroke-dasharray="3 3"/>
 <path d="M207 388 L213 380 L219 388" fill="none" stroke="#8F8E86" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
