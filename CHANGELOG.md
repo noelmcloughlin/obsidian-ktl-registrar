@@ -6,6 +6,8 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+## [1.2.8] - 2026-09-20
+
 ### Fixed
 
 - **The type-check survives a TypeScript 7 / `@types/node` 26 bump.** `moduleResolution: "bundler"` drops the `"node"` package.json export condition by design; a newer `@types/node` gates its `node:fs`/`node:path`/`node:url`/`node:module` subpaths on that condition, so `scripts/smoke-test.ts`'s plain-Node imports stopped resolving. `customConditions: ["node"]` in `tsconfig.json` re-adds it. `lib` moves to `ES2022` for `Array.prototype.at()` in `src/main.ts`; `esbuild.config.mjs`'s own output target is unaffected.
