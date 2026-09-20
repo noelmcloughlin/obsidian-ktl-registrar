@@ -6,6 +6,10 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+### Changed
+
+- **The ribbon and tab carry the trust ladder**, not Lucide's `shield-half`. No check mark on top: this plugin keeps every record well-formed and never vouches for one, so the check belongs to LOKF Curator, whose icon is this ladder with it. Line art at Lucide's weight, in `currentColor`, so it sits with Obsidian's own icons and follows any theme.
+
 ## [1.3.0] - 2026-09-20
 
 ### Added
