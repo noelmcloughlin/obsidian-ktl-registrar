@@ -6,6 +6,8 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+## [1.4.1] - 2026-09-20
+
 ### Fixed
 
 - **The description names the role as the project does.** LOKF is "a semantic profile of OKF", and the registrar keeps a vault well-formed. The manifest, the package and the community listing entry carry the same sentence.
