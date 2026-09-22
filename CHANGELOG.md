@@ -6,6 +6,8 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-09-22
+
 ### Added
 
 - **A dimmed counterpart for all three diagrams**, `*-dimmed.svg` beside each original: the same geometry on warm grey paper rather than a dark one. The two shared diagrams are byte-for-byte with the other repositories; the logo keeps this repository's own ladder, which stops at the amber rung.
