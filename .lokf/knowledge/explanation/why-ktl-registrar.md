@@ -1,24 +1,24 @@
 ---
 type: Explanation
-id: https://lokf-registrar.example/knowledge/explanation/why-lokf-registrar
-title: Why LOKF Registrar
+id: https://ktl-registrar.example/knowledge/explanation/why-ktl-registrar
+title: Why KTL Registrar
 genre: explanation
-description: Why the LOKF semantic layer needs its own in-editor check, why the plugin checks the OKF v0.2 base layer itself instead of leaning on a separate validator, why it names no other plugin but its sibling LOKF Curator, and why it is called the registrar.
+description: Why the LOKF semantic layer needs its own in-editor check, why the plugin checks the OKF v0.2 base layer itself instead of leaning on a separate validator, why it names no other plugin but its sibling KTL Curator, and why it is called the registrar. Formerly why-ktl-registrar.md.
 resource: README.md
 sources:
   - resource: README.md
   - resource: docs/for-the-curious.md
 about:
-  - https://lokf-registrar.example/knowledge/references/okf-specification
-  - https://lokf-registrar.example/knowledge/references/lokf-specification
+  - https://ktl-registrar.example/knowledge/references/okf-specification
+  - https://ktl-registrar.example/knowledge/references/lokf-specification
 relatedTo:
-  - https://lokf-registrar.example/knowledge/services/lokf-registrar-plugin
+  - https://ktl-registrar.example/knowledge/services/ktl-registrar-plugin
 generated:
-  by: process:lokf-librarian
+  by: process:ktl-librarian
   at: "2026-09-13T19:00:00Z"
 status: draft
 verified:
-  - by: process:lokf-librarian
+  - by: process:ktl-librarian
     at: "2026-09-14T15:00:00Z"
 ---
 
@@ -74,24 +74,17 @@ alternatives for that layer - never as companions or dependencies.
 
 # Why the name
 
-Until 2026-09-12 the plugin was *LOKF Enforcer*; it was renamed before any
-release, for two reasons. The job it does is the registrar's - the clerical
+The job the plugin does is the registrar's - the clerical
 role in the `knowledge-trust-ladder` taxonomy, alongside `lokf validate` and CI's
 `knowledge-registrar.yaml` gate - and a registrar keeps records well-formed
 and says what it finds, where an enforcer would block: the longest section
-of `docs/for-the-curious.md` is on why almost everything here is a warning. And the old name
-differed by one letter from an unrelated OKF validator in the community
-directory, inviting the reading that this was a fork of it, when the two
-share nothing but the base specification. The id (`lokf-registrar`), the
-repository (`obsidian-lokf-registrar`), this bundle's namespace, and the
-`generated.by` actor on the Diátaxis map all changed with it; nothing had
-been published under the old ones.
+of `docs/for-the-curious.md` is on why almost everything here is a warning.
 
 # What it still leaves out
 
 The credibility *depth* of the §5 trust fields - who vouched, whether a
 source is right, which tier a concept has reached - is the sibling
-**LOKF Curator**'s surface; this plugin checks only that those fields are
+**KTL Curator**'s surface; this plugin checks only that those fields are
 well-shaped. Neither plugin detects, loads, or calls into the other; the
 one point of contact is a read-only `api` this plugin offers and nobody is
 required to use.

@@ -21,7 +21,7 @@ import {
 import { LOKF_VOCAB } from "./vocab";
 import { detectSuggestContext, withinFrontmatter, type LineReader, type SuggestKind } from "./suggest-context";
 
-export interface LokfSuggestion {
+export interface RegistrarSuggestion {
   value: string;
   detail?: string;
 }
@@ -62,7 +62,7 @@ function rank(value: string, query: string): number {
   return value.toLowerCase().startsWith(query) ? 0 : 1;
 }
 
-export class LokfSuggest extends EditorSuggest<LokfSuggestion> {
+export class KtlRegistrarSuggest extends EditorSuggest<RegistrarSuggestion> {
   private host: SuggestHost;
   private kind: SuggestKind = "type";
 
@@ -82,12 +82,12 @@ export class LokfSuggest extends EditorSuggest<LokfSuggestion> {
     return { start: { line: cursor.line, ch: ctx.startCh }, end: cursor, query: ctx.query };
   }
 
-  getSuggestions(context: EditorSuggestContext): LokfSuggestion[] {
+  getSuggestions(context: EditorSuggestContext): RegistrarSuggestion[] {
     const file = context.file;
     if (!file) return [];
     const vocab = this.host.suggestVocabularyFor(file);
     if (!vocab) return [];
-    let items: LokfSuggestion[];
+    let items: RegistrarSuggestion[];
     switch (this.kind) {
       case "type":
         items = vocab.types.map((t) => ({ value: t, detail: CLASS_ALIASES.get(t)?.join(", ") }));
@@ -112,12 +112,12 @@ export class LokfSuggest extends EditorSuggest<LokfSuggestion> {
       .slice(0, 50);
   }
 
-  renderSuggestion(item: LokfSuggestion, el: HTMLElement): void {
+  renderSuggestion(item: RegistrarSuggestion, el: HTMLElement): void {
     el.createDiv({ text: item.value });
-    if (item.detail) el.createEl("small", { cls: "lokf-suggest-meta", text: item.detail });
+    if (item.detail) el.createEl("small", { cls: "ktl-suggest-meta", text: item.detail });
   }
 
-  selectSuggestion(item: LokfSuggestion): void {
+  selectSuggestion(item: RegistrarSuggestion): void {
     const ctx = this.context;
     if (!ctx) return;
     ctx.editor.replaceRange(item.value, ctx.start, ctx.end);

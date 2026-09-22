@@ -30,11 +30,11 @@ export class ConceptSuggestModal extends SuggestModal<ConceptRecord> {
   }
 
   renderSuggestion(r: ConceptRecord, el: HTMLElement): void {
-    el.createDiv({ cls: "lokf-suggest-title", text: r.path.split("/").pop() ?? r.path });
+    el.createDiv({ cls: "ktl-suggest-title", text: r.path.split("/").pop() ?? r.path });
     const inbound = (this.graph.inbound.get(r.path) ?? []).length;
     const outbound = (this.graph.outbound.get(r.path) ?? []).length;
     el.createEl("small", {
-      cls: "lokf-suggest-meta",
+      cls: "ktl-suggest-meta",
       text: `${r.type ?? "untyped"} · ${r.path} · in ${inbound} / out ${outbound}`,
     });
   }

@@ -1,24 +1,24 @@
 ---
 type: Service
-id: https://lokf-registrar.example/knowledge/services/settings-tab
+id: https://ktl-registrar.example/knowledge/services/settings-tab
 title: Settings Tab
-description: Declarative settings tab (Obsidian 1.13.0 getSettingDefinitions API) for LOKF Registrar's configuration.
+description: Declarative settings tab (Obsidian 1.13.0 getSettingDefinitions API) for KTL Registrar's configuration.
 resource: src/settings.ts
 isPartOf:
-  - https://lokf-registrar.example/knowledge/services/lokf-registrar-plugin
+  - https://ktl-registrar.example/knowledge/services/ktl-registrar-plugin
 about:
-  - https://lokf-registrar.example/knowledge/references/commands-and-settings
+  - https://ktl-registrar.example/knowledge/references/commands-and-settings
 generated:
-  by: process:lokf-librarian
+  by: process:ktl-librarian
   at: "2026-09-14T14:58:54Z"
 verified:
-  - by: process:lokf-librarian
+  - by: process:ktl-librarian
     at: "2026-09-14T14:58:54Z"
 ---
 
 # Overview
 
-`LokfSettingTab` returns declarative `SettingDefinitionItem` groups from
+`KtlRegistrarSettingTab` returns declarative `SettingDefinitionItem` groups from
 `getSettingDefinitions()` rather than building DOM in `display()` - the
 imperative form is deprecated since Obsidian 1.13.0 and excluded from
 settings search, which is why `manifest.json` sets `minAppVersion` to

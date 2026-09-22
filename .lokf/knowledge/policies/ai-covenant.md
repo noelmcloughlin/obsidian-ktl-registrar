@@ -1,11 +1,11 @@
 ---
 type: Policy
-id: https://lokf-registrar.example/knowledge/policies/ai-covenant
+id: https://ktl-registrar.example/knowledge/policies/ai-covenant
 title: AI Covenant
 description: Contributors own what they submit regardless of which tools helped write it; AI may support but never proxy discussion; a repository-owned agent commits under a bot identity through a reviewed PR and never self-awards a human verdict.
 resource: AI_COVENANT.md
 generated:
-  by: process:lokf-librarian
+  by: process:ktl-librarian
   at: "2026-09-11T12:00:00Z"
 status: draft
 ---

@@ -1,26 +1,26 @@
 ---
 lokf_version: "0.2"
 okf_version: "0.2"
-base_iri: https://lokf-registrar.example/knowledge/
+base_iri: https://ktl-registrar.example/knowledge/
 context: https://w3id.org/lokf/context.jsonld
-title: LOKF Registrar Knowledge Bundle
+title: KTL Registrar Knowledge Bundle
 description: Validate the Linked Open Knowledge Format (LOKF) semantic layer on top of OKF v0.2 in Obsidian.
 license: https://creativecommons.org/licenses/by/4.0/
 publisher:
   type: Person
-  id: https://lokf-registrar.example/knowledge/person/noelmcloughlin
+  id: https://ktl-registrar.example/knowledge/person/noelmcloughlin
   name: Noel McLoughlin
 ---
 
-# LOKF Registrar Knowledge Bundle
+# KTL Registrar Knowledge Bundle
 
-A [LOKF](https://lokf.nolan-nichols.com) knowledge base for the **LOKF Registrar** Obsidian plugin. Every Markdown file under `knowledge/` is one concept; together they form a queryable knowledge graph, derived from this repository's code and docs.
+A [LOKF](https://lokf.nolan-nichols.com) knowledge base for the **KTL Registrar** Obsidian plugin. Every Markdown file under `knowledge/` is one concept; together they form a queryable knowledge graph, derived from this repository's code and docs.
 
-`base_iri` is a placeholder (`lokf-registrar.example`, an RFC 2606 reserved domain) pending a real, owned namespace — see [Knowledge sources](playbooks/knowledge-sources.md).
+`base_iri` is a placeholder (`ktl-registrar.example`, an RFC 2606 reserved domain) pending a real, owned namespace — see [Knowledge sources](playbooks/knowledge-sources.md).
 
 # Services
 
-* [LOKF Registrar plugin](services/lokf-registrar-plugin.md) - the plugin's lifecycle, commands, and status bar.
+* [KTL Registrar plugin](services/ktl-registrar-plugin.md) - the plugin's lifecycle, commands, and status bar.
 * [Validator engine](services/validator-engine.md) - the import-free LOKF rule engine.
 * [Report view](services/report-view.md) - the side-panel conformance report.
 * [Settings tab](services/settings-tab.md) - the declarative settings UI.
@@ -56,4 +56,4 @@ A [LOKF](https://lokf.nolan-nichols.com) knowledge base for the **LOKF Registrar
 
 # Explanation
 
-* [Why LOKF Registrar](explanation/why-lokf-registrar.md)
+* [Why KTL Registrar](explanation/why-ktl-registrar.md)

@@ -1,16 +1,16 @@
 ---
 type: Playbook
-id: https://lokf-registrar.example/knowledge/playbooks/releasing
+id: https://ktl-registrar.example/knowledge/playbooks/releasing
 title: Releasing
 description: Semantic-release computes the version and promotes CHANGELOG.md on merge to main, behind a required-reviewer Environment; the resulting tag invokes the same hardened build-and-attest workflow a hand-pushed tag always has.
 resource: CONTRIBUTING.md
 dependsOn:
-  - https://lokf-registrar.example/knowledge/references/obsidian-plugin-guidelines
+  - https://ktl-registrar.example/knowledge/references/obsidian-plugin-guidelines
 generated:
-  by: process:lokf-librarian
+  by: process:ktl-librarian
   at: "2026-09-13T19:00:00Z"
 verified:
-  - by: process:lokf-librarian
+  - by: process:ktl-librarian
     at: "2026-09-14T15:00:00Z"
 ---
 

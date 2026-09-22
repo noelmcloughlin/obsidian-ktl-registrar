@@ -29,7 +29,7 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ### Changed
 
-- **The ribbon and tab carry the trust ladder**, not Lucide's `shield-half`. No check mark on top: this plugin keeps every record well-formed and never vouches for one, so the check belongs to LOKF Curator, whose icon is this ladder with it. Line art at Lucide's weight, in `currentColor`, so it sits with Obsidian's own icons and follows any theme.
+- **The ribbon and tab carry the trust ladder**, not Lucide's `shield-half`. No check mark on top: this plugin keeps every record well-formed and never vouches for one, so the check belongs to KTL Curator, whose icon is this ladder with it. Line art at Lucide's weight, in `currentColor`, so it sits with Obsidian's own icons and follows any theme.
 
 ## [1.3.0] - 2026-09-20
 
@@ -129,7 +129,7 @@ No version below has been published as a GitHub release yet, so entries describe
 - **The smoke test asserts more and characterises less.** The two golden fixtures pin their warning counts, so a rule that starts or stops firing fails the build, and a drift guard catches a settings control naming a setting that does not exist.
 - **The *Known LOKF types* setting is documented as the extension point** for a bundle validated against a domain schema (`lokf validate --schema <file>`): list that schema's classes there, since the plugin cannot read a schema outside the vault. Settings tab, README and `docs/for-the-curious.md`; no behaviour change.
 - **README rewritten around how to use the plugin**, as an extension of the [`lokf-agent-skills`](https://github.com/noelmcloughlin/lokf-agent-skills): the two-vault story, a four-step *Quick start*, *Using it*, the command table, *Which folder is the bundle*, *Install* and *Settings*. Shared material - the role table, the library metaphor, the trust ladder - now lives in the skills' README and is linked once; no plugin change.
-- **This repository's own sidecar repaired** by `lokf-sidecar`: the `knowledge_bundle` doorway link is now committed at the root, `.lokf/justfile` regains the template's `lokf-check-refs` recipe, and markdownlint and lychee skip the link's duplicate path. No plugin change.
+- **This repository's own sidecar repaired** by `ktl-sidecar`: the `knowledge_bundle` doorway link is now committed at the root, `.lokf/justfile` regains the template's `lokf-check-refs` recipe, and markdownlint and lychee skip the link's duplicate path. No plugin change.
 - **`CONTRIBUTING.md` is a checklist again**, with the release pipeline and the signing guide documented once in the skills repository's `docs/` and linked from here. `npm run check` runs build, lint and smoke test together, the settings-tab and `createEl` lint rules are errors rather than warnings, and CI fails an action not pinned to a commit; no plugin change.
 - The README says which line of defence this plugin's work is, and points readers who work under that model at the skills' page on the rest; no plugin change.
 - **The registrar gate checks what `lokf validate` cannot**: `.lokf/scripts/knowledge-conventions.sh` from the sidecar templates (one ISO-date log heading per day, quoted timestamps, `verified` as a list, open questions in the curator's shape) and the justfile's `lokf-check-refs`, on every `.lokf/**` pull request; no plugin change.
@@ -141,7 +141,7 @@ No version below has been published as a GitHub release yet, so entries describe
 
 - **"Insert the bundle's semantic header" now asks** in a vault with no bundle - *make this vault the exhibition*, or *create a `knowledge_bundle` folder* - instead of always nesting a folder. A two-choice modal (`src/scaffold-modal.ts`) suggests by what the vault holds: the root for a vault with nothing but an `index.md`, the folder otherwise. The palette name drops its parenthetical.
 - **README restructured for the two-vault story.** An early notice says the plugin works on the exhibition, never the workshop vault you already keep, and that it pairs with the [`lokf-agent-skills`](https://github.com/noelmcloughlin/lokf-agent-skills) without needing them. *Where it works* replaces *How this fits*: three arrangements, the bundle as its own vault first, with the cost of a bundle folder inside your vault stated plainly. Host-by-host layouts moved to `docs/for-the-curious.md`.
-- **This repository's own sidecar follows the current `lokf-sidecar` templates**: `just lokf-link` creates the `knowledge_bundle` doorway link, and the wrapper and both workflows describe the bundle's second name as the templates do. No plugin change.
+- **This repository's own sidecar follows the current `ktl-sidecar` templates**: `just lokf-link` creates the `knowledge_bundle` doorway link, and the wrapper and both workflows describe the bundle's second name as the templates do. No plugin change.
 
 ## [1.0.0] - 2026-09-12
 
@@ -169,10 +169,10 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ### Changed
 
-- **Renamed LOKF Registrar** - id `lokf-registrar`, repository `obsidian-lokf-registrar` - for the role the READMEs already gave it, and to stop shadowing an unrelated community plugin one letter away. Nothing was published under the old name, so there is no migration: settings live in `.obsidian/plugins/lokf-registrar/` and the read-only API at `app.plugins.plugins["lokf-registrar"].api`. A `diataxis.md` map stamped by an earlier build is still recognised as this plugin's own.
+- **Renamed KTL Registrar** - id `ktl-registrar`, repository `obsidian-ktl-registrar` - for the role the READMEs already gave it, and to stop shadowing an unrelated community plugin one letter away. Nothing was published under the old name, so there is no migration: settings live in `.obsidian/plugins/ktl-registrar/` and the read-only API at `app.plugins.plugins["ktl-registrar"].api`. A `diataxis.md` map stamped by an earlier build is still recognised as this plugin's own.
 - **A dot-folder bundle root is accepted, not refused** - a community plugin can expose one to Obsidian's index. The scan checks the live index first and explains an absent root instead of assuming.
-- **"How this fits" rewritten** around one desk that is always the person's: this plugin is the registrar there, LOKF Curator the curator's assistant. It covers both ways of reaching a bundle - the doorway opened as its own vault, or a real `knowledge_bundle/` folder inside your own vault - and names the vault the **workshop**, the bundle the **exhibition**.
-- The frozen template fixture is now `scripts/fixtures/sidecar-skeleton/`, matching the upstream skill's rename from `lokf-scaffolding`.
+- **"How this fits" rewritten** around one desk that is always the person's: this plugin is the registrar there, KTL Curator the curator's assistant. It covers both ways of reaching a bundle - the doorway opened as its own vault, or a real `knowledge_bundle/` folder inside your own vault - and names the vault the **workshop**, the bundle the **exhibition**.
+- The frozen template fixture is now `scripts/fixtures/sidecar-skeleton/`, named for the upstream `ktl-sidecar` skill.
 
 ### Removed
 
@@ -201,7 +201,7 @@ No version below has been published as a GitHub release yet, so entries describe
 - **Report filter + finding navigation**: filter box (`sev:error`, `rule:lokf/2`, ANDed, debounced) plus go-to-next/previous commands.
 - **Report context menu, finding grouping, render caps**: right-click actions, grouping by top-level key, and a 300-file/100-finding-per-file cap with a filter hint.
 - **Ribbon icon** to open the report; last scan is retained across reopens.
-- **Read-only public API** at `app.plugins.plugins["lokf-enforcer"].api`: `getReport()`, `validatePath(path)`, `onValidated(cb)`.
+- **Read-only public API** at `app.plugins.plugins["ktl-registrar"].api`: `getReport()`, `validatePath(path)`, `onValidated(cb)`.
 - **Field aliasing** (advanced, off by default): `user=canonical` pairs rename a vault's own keys onto LOKF ones before validation.
 - **Node-tested throughout**: locator, vocabulary manifest, concept graph, §5 checks, autocomplete, safe fixes, body-link promotion, opt-out, severity escalation, report filter, grouping, and field aliasing all carry smoke-test coverage.
 

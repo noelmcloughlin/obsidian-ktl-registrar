@@ -23,14 +23,14 @@ export class ProposeModal extends Modal {
     const { contentEl, titleEl } = this;
     titleEl.setText("Promote body links to typed relations");
     contentEl.createEl("p", {
-      cls: "lokf-propose-intro",
+      cls: "ktl-propose-intro",
       text: "Each markdown link in this note's body that points to another concept, with a relation guessed from the surrounding sentence. Choose which to add to the frontmatter - nothing is written until you confirm.",
     });
 
     const selected = new Set<Proposal>();
-    const list = contentEl.createDiv({ cls: "lokf-propose-list" });
+    const list = contentEl.createDiv({ cls: "ktl-propose-list" });
     for (const p of this.proposals) {
-      const label = list.createEl("label", { cls: "lokf-propose-row" });
+      const label = list.createEl("label", { cls: "ktl-propose-row" });
       const cb = label.createEl("input", { attr: { type: "checkbox" } });
       cb.checked = p.confidence >= DEFAULT_CHECK_THRESHOLD;
       if (cb.checked) selected.add(p);
@@ -38,18 +38,18 @@ export class ProposeModal extends Modal {
         if (cb.checked) selected.add(p);
         else selected.delete(p);
       });
-      const body = label.createDiv({ cls: "lokf-propose-body" });
-      const head = body.createDiv({ cls: "lokf-propose-head" });
-      head.createSpan({ cls: "lokf-propose-predicate", text: p.predicate });
-      head.createSpan({ cls: "lokf-propose-arrow", text: " → " });
-      head.createSpan({ cls: "lokf-propose-target", text: p.targetBundle });
+      const body = label.createDiv({ cls: "ktl-propose-body" });
+      const head = body.createDiv({ cls: "ktl-propose-head" });
+      head.createSpan({ cls: "ktl-propose-predicate", text: p.predicate });
+      head.createSpan({ cls: "ktl-propose-arrow", text: " → " });
+      head.createSpan({ cls: "ktl-propose-target", text: p.targetBundle });
       body.createEl("small", {
-        cls: "lokf-propose-detail",
+        cls: "ktl-propose-detail",
         text: `“${p.text}” · ${Math.round(p.confidence * 100)}% · ${p.rationale}`,
       });
     }
 
-    const buttons = contentEl.createDiv({ cls: "lokf-propose-buttons" });
+    const buttons = contentEl.createDiv({ cls: "ktl-propose-buttons" });
     const apply = buttons.createEl("button", { cls: "mod-cta", text: "Add selected relations" });
     apply.addEventListener("click", () => {
       const chosen = this.proposals.filter((p) => selected.has(p));

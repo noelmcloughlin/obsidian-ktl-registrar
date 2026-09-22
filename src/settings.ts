@@ -1,10 +1,10 @@
-// settings.ts - the LOKF Registrar settings tab.
+// settings.ts - the KTL Registrar settings tab.
 //
 // Declarative (Obsidian 1.13.0+): the tab returns definitions rather than
 // building DOM, so every setting is indexed by Obsidian's settings search.
 import { App, Notice, PluginSettingTab, TFolder } from "obsidian";
 import type { SettingDefinitionItem } from "obsidian";
-import type LokfPlugin from "./main";
+import type KtlRegistrarPlugin from "./main";
 import type { LokfSettings } from "./validator";
 import { joinCsv, parseCsv, hiddenRootSegment } from "./validator";
 import { SCHEMA_VERSION } from "./vocab";
@@ -35,10 +35,10 @@ function isCsvKey(key: string): key is SettingKey {
   return CSV_KEYS.has(key as SettingKey);
 }
 
-export class LokfSettingTab extends PluginSettingTab {
-  plugin: LokfPlugin;
+export class KtlRegistrarSettingTab extends PluginSettingTab {
+  plugin: KtlRegistrarPlugin;
 
-  constructor(app: App, plugin: LokfPlugin) {
+  constructor(app: App, plugin: KtlRegistrarPlugin) {
     super(app, plugin);
     this.plugin = plugin;
   }
@@ -103,7 +103,7 @@ export class LokfSettingTab extends PluginSettingTab {
         heading: "This device",
         items: [
           {
-            name: "Disable LOKF Registrar on this device",
+            name: "Disable KTL Registrar on this device",
             desc: "Silence the status bar, inline underlines, autocomplete, and scanning on this device only. Stored per-device and never synced, so the same vault opened on another device keeps its own setting - useful when a vault is synced to a phone.",
             aliases: ["disable", "device", "off", "mobile", "phone", "local", "turn off"],
             control: { type: "toggle", key: "disabledOnDevice" },
@@ -138,7 +138,7 @@ export class LokfSettingTab extends PluginSettingTab {
               SCHEMA_VERSION
                 ? `Comma-separated recognized LOKF classes. Defaults track the pinned LOKF schema ${SCHEMA_VERSION}; an untouched list is refreshed automatically on upgrade.`
                 : "Comma-separated list of recognized LOKF classes."
-            } A bundle validated against a domain schema (lokf validate --schema <file>) lists that schema's classes here too - the plugin cannot read the schema, which sits outside the vault - so they stop warning and appear in autocomplete. Keep the list the same as LOKF Curator's.`,
+            } A bundle validated against a domain schema (lokf validate --schema <file>) lists that schema's classes here too - the plugin cannot read the schema, which sits outside the vault - so they stop warning and appear in autocomplete. Keep the list the same as KTL Curator's.`,
             aliases: ["vocabulary", "classes", "domain schema", "custom type", "knownTypes"],
             control: { type: "textarea", key: "knownTypes", rows: 3 },
           },
