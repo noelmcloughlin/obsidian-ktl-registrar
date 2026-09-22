@@ -1,6 +1,6 @@
 ---
 type: Reference
-id: https://lokf-registrar.example/knowledge/references/lokf-toolkit
+id: https://ktl-registrar.example/knowledge/references/lokf-toolkit
 title: LOKF Toolkit
 description: The `lokf` PyPI package this sidecar's tooling actually depends on and invokes - distinct from the specification website.
 resource: https://pypi.org/project/lokf/
@@ -8,12 +8,12 @@ sources:
   - resource: https://raw.githubusercontent.com/nicholsn/lokf/main/lokf.yaml
     title: lokf.yaml (raw LinkML schema, no-Python fallback)
 relatedTo:
-  - https://lokf-registrar.example/knowledge/references/lokf-specification
+  - https://ktl-registrar.example/knowledge/references/lokf-specification
 generated:
-  by: process:lokf-librarian
+  by: process:ktl-librarian
   at: "2026-09-08T02:00:00Z"
 verified:
-  - by: process:lokf-librarian
+  - by: process:ktl-librarian
     at: "2026-09-11T00:00:00Z"
 ---
 
@@ -34,7 +34,7 @@ JSON Schema/SHACL checks, just enough to catch an obviously wrong class or
 field name.
 
 **Not to be confused with** [Validator Engine](../services/validator-engine.md)
-(`src/validator.ts`) - the LOKF Registrar *plugin*'s own independent TypeScript
+(`src/validator.ts`) - the KTL Registrar *plugin*'s own independent TypeScript
 reimplementation of the same Golden Rules, used at vault-scan time and having
 no runtime dependency on this Python package at all. This toolkit is used only
 to maintain *this* `.lokf/` sidecar bundle itself.

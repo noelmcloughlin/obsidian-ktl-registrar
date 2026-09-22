@@ -1,7 +1,7 @@
 {
-  "id": "lokf-registrar",
-  "name": "LOKF Registrar",
+  "id": "ktl-registrar",
+  "name": "KTL Registrar",
   "author": "Noel McLoughlin",
   "description": "Catch broken note links, missing properties and invalid note types in your frontmatter as you write, so the vault stays a well-formed knowledge graph. The registrar role for Linked Open Knowledge Format (LOKF), a semantic profile of OKF.",
-  "repo": "noelmcloughlin/obsidian-lokf-registrar"
+  "repo": "noelmcloughlin/obsidian-ktl-registrar"
 }

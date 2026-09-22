@@ -1,26 +1,26 @@
 ---
 type: Service
-id: https://lokf-registrar.example/knowledge/services/report-view
+id: https://ktl-registrar.example/knowledge/services/report-view
 title: Report View
 description: Collapsible side-panel view rendering the vault-wide LOKF conformance report.
 resource: src/report-view.ts
 isPartOf:
-  - https://lokf-registrar.example/knowledge/services/lokf-registrar-plugin
+  - https://ktl-registrar.example/knowledge/services/ktl-registrar-plugin
 generated:
-  by: process:lokf-librarian
+  by: process:ktl-librarian
   at: "2026-09-11T12:00:00Z"
 verified:
-  - by: process:lokf-librarian
+  - by: process:ktl-librarian
     at: "2026-09-11T12:00:00Z"
 ---
 
 # Overview
 
-`LokfReportView` (view type `lokf-report-view`) renders the results of a
+`KtlRegistrarView` (view type `ktl-registrar-view`) renders the results of a
 vault scan: the active note pinned at the top, remaining results
 folder-grouped, and a summary chip row. It exposes `setProgress`/`clearProgress`
 for a progress bar during a scan, but the batching itself - `processQueue` in
-[the plugin lifecycle](lokf-registrar-plugin.md), size drawn from the
+[the plugin lifecycle](ktl-registrar-plugin.md), size drawn from the
 user-configurable `batchSize` setting (default 50) - lives outside this file;
 this view only renders what it's driven with. Clicking a file name opens it.
 

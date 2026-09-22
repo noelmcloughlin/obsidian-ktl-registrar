@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "../lokf-agent-skills"
+		},
+		{
+			"path": "../obsidian-lokf-curator"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "../ai-linkmo"
+		}
+	],
+	"settings": {}
+}

@@ -1,20 +1,20 @@
 ---
 type: Service
-id: https://lokf-registrar.example/knowledge/services/validator-engine
+id: https://ktl-registrar.example/knowledge/services/validator-engine
 title: Validator Engine
 description: Import-free LOKF semantic-layer rule engine - bundle-root header, type vocabulary, typed relationships, and id/IRI-minting consistency.
 resource: src/validator.ts
 isPartOf:
-  - https://lokf-registrar.example/knowledge/services/lokf-registrar-plugin
+  - https://ktl-registrar.example/knowledge/services/ktl-registrar-plugin
 about:
-  - https://lokf-registrar.example/knowledge/references/lokf-specification
+  - https://ktl-registrar.example/knowledge/references/lokf-specification
 relatedTo:
-  - https://lokf-registrar.example/knowledge/references/lokf-toolkit
+  - https://ktl-registrar.example/knowledge/references/lokf-toolkit
 generated:
-  by: process:lokf-librarian
+  by: process:ktl-librarian
   at: "2026-09-12T21:00:00Z"
 verified:
-  - by: process:lokf-librarian
+  - by: process:ktl-librarian
     at: "2026-09-12T21:00:00Z"
 ---
 
@@ -33,7 +33,7 @@ fields a bundle uses (`validateTrustLifecycle`). It deliberately does **not**
 reimplement anything OKF v0.2 already covers - required `type`, Attested
 Computation, `index.md`/`log.md` structure, or the credibility *depth* of the
 §5 fields - that is the installed OKF validator's job (see
-[Why LOKF Registrar](../explanation/why-lokf-registrar.md)).
+[Why KTL Registrar](../explanation/why-ktl-registrar.md)).
 
 Frontmatter values are never assumed to be strings: a scalar (string, number,
 or boolean) is coerced to text for messages, while a mapping or list is named
@@ -60,7 +60,7 @@ at all. The `base_iri` authority-denylist check compares the URL's
 (`https://github.com:8080/...`) can no longer slip past it.
 
 `implicitBundleRoots(rootHasHeader, hasVisibleBundleFolder, treatVaultRootAsBundle)`
-(the function `services/lokf-registrar-plugin.md` calls `autoBundleRoot`
+(the function `services/ktl-registrar-plugin.md` calls `autoBundleRoot`
 under its pre-2026-09-12 name) is the pure decision behind bundle-root
 detection: header wins over folder, folder wins over the break-glass
 setting, and with all three false it returns an **empty array** - a vault

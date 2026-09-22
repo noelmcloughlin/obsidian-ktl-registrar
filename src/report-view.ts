@@ -1,19 +1,19 @@
 // report-view.ts - compact, collapsible LOKF conformance report pane
 import { ItemView, Menu, TFile, setIcon, debounce, type WorkspaceLeaf } from "obsidian";
-import type LokfPlugin from "./main";
+import type KtlRegistrarPlugin from "./main";
 import { type LokfIssue } from "./validator";
 import { issueMatchesFilter, topLevelKey } from "./report-filter";
 
-export const LOKF_VIEW_TYPE = "lokf-report-view";
+export const KTL_REGISTRAR_VIEW_TYPE = "ktl-registrar-view";
 
-export const LOKF_REGISTRAR_ICON = "lokf-trust-ladder";
+export const KTL_REGISTRAR_ICON = "ktl-trust-ladder";
 
 // The trust ladder, drawn for a 16px ribbon. No check mark on top: the
 // registrar keeps every record well-formed and never vouches for one - that is
 // the curator's, whose icon is this ladder with the check. `addIcon` wants the
 // content of a `0 0 100 100` SVG, so the 64-unit mark is scaled to fit, and
 // `currentColor` lets the theme colour it. The full-colour mark is in .assets/.
-export const LOKF_REGISTRAR_ICON_SVG = `
+export const KTL_REGISTRAR_ICON_SVG = `
 <g transform="scale(1.5625)" fill="none" stroke="currentColor" stroke-width="5.2" stroke-linecap="round" stroke-linejoin="round">
   <path d="M19.75 10 V57"/>
   <path d="M44.25 10 V57"/>
@@ -47,8 +47,8 @@ function hasError(r: FileResult): boolean {
   return r.issues.some((i) => i.severity === "error");
 }
 
-export class LokfReportView extends ItemView {
-  plugin: LokfPlugin;
+export class KtlRegistrarView extends ItemView {
+  plugin: KtlRegistrarPlugin;
   results: FileResult[] = [];
   scanned = 0;
   private expanded = new Set<string>();
@@ -65,19 +65,19 @@ export class LokfReportView extends ItemView {
   private activeEl: HTMLElement | null = null;
   private listEl: HTMLElement | null = null;
 
-  constructor(leaf: WorkspaceLeaf, plugin: LokfPlugin) {
+  constructor(leaf: WorkspaceLeaf, plugin: KtlRegistrarPlugin) {
     super(leaf);
     this.plugin = plugin;
   }
 
   getViewType() {
-    return LOKF_VIEW_TYPE;
+    return KTL_REGISTRAR_VIEW_TYPE;
   }
   getDisplayText() {
     return "LOKF conformance";
   }
   getIcon() {
-    return LOKF_REGISTRAR_ICON;
+    return KTL_REGISTRAR_ICON;
   }
 
   async onOpen() {
@@ -90,14 +90,14 @@ export class LokfReportView extends ItemView {
   private buildSkeleton() {
     const c = this.contentEl;
     c.empty();
-    c.addClass("lokf-report");
+    c.addClass("ktl-report");
 
-    const toolbar = c.createDiv({ cls: "lokf-toolbar" });
+    const toolbar = c.createDiv({ cls: "ktl-toolbar" });
     const rescan = toolbar.createEl("button", { text: "Rescan" });
     rescan.addEventListener("click", () => void this.plugin.scanVault());
 
     const filterInput = toolbar.createEl("input", {
-      cls: "lokf-filter",
+      cls: "ktl-filter",
       attr: { type: "search", placeholder: "Filter findings (try sev:error)", "aria-label": "Filter findings" },
     });
     filterInput.value = this.filter;
@@ -108,15 +108,15 @@ export class LokfReportView extends ItemView {
     }, 150);
     filterInput.addEventListener("input", () => onFilter(filterInput.value));
 
-    this.progressWrap = c.createDiv({ cls: "lokf-progress-wrap" });
+    this.progressWrap = c.createDiv({ cls: "ktl-progress-wrap" });
     this.progressWrap.hide();
-    this.progressLabel = this.progressWrap.createDiv({ cls: "lokf-progress-label" });
-    const track = this.progressWrap.createDiv({ cls: "lokf-progress-track" });
-    this.progressBar = track.createDiv({ cls: "lokf-progress-bar" });
+    this.progressLabel = this.progressWrap.createDiv({ cls: "ktl-progress-label" });
+    const track = this.progressWrap.createDiv({ cls: "ktl-progress-track" });
+    this.progressBar = track.createDiv({ cls: "ktl-progress-bar" });
 
-    this.summaryEl = c.createDiv({ cls: "lokf-summary" });
+    this.summaryEl = c.createDiv({ cls: "ktl-summary" });
     this.activeEl = c.createDiv();
-    this.listEl = c.createDiv({ cls: "lokf-body" });
+    this.listEl = c.createDiv({ cls: "ktl-body" });
   }
 
   showProgress(label: string) {
@@ -204,9 +204,9 @@ export class LokfReportView extends ItemView {
     // part of `scanned`, so counting it here would undercount "clean".
     const fileResults = this.results.filter((r) => !r.synthetic).length;
     const cleanCount = Math.max(0, this.scanned - fileResults);
-    el.createSpan({ cls: "lokf-chip lokf-chip-ok", text: `${cleanCount} clean` });
-    el.createSpan({ cls: "lokf-chip lokf-chip-warn", text: `${warnFiles} warnings` });
-    el.createSpan({ cls: "lokf-chip lokf-chip-err", text: `${errFiles} errors` });
+    el.createSpan({ cls: "ktl-chip ktl-chip-ok", text: `${cleanCount} clean` });
+    el.createSpan({ cls: "ktl-chip ktl-chip-warn", text: `${warnFiles} warnings` });
+    el.createSpan({ cls: "ktl-chip ktl-chip-err", text: `${errFiles} errors` });
   }
 
   private renderActive() {
@@ -215,13 +215,13 @@ export class LokfReportView extends ItemView {
     el.empty();
     if (!this.activePath) {
       // Otherwise the section's border-bottom lingers as a stray rule.
-      el.removeClass("lokf-active");
+      el.removeClass("ktl-active");
       return;
     }
-    el.addClass("lokf-active");
+    el.addClass("ktl-active");
     el.createEl("h4", { text: "Active note" });
     if (this.activeIssues.length === 0) {
-      el.createDiv({ cls: "lokf-active-ok", text: `${this.activePath} - clean.` });
+      el.createDiv({ cls: "ktl-active-ok", text: `${this.activePath} - clean.` });
       return;
     }
     this.renderFileBlock(el, { path: this.activePath, issues: this.activeIssues }, true);
@@ -234,7 +234,7 @@ export class LokfReportView extends ItemView {
 
     if (this.results.length === 0) {
       el.createDiv({
-        cls: "lokf-empty",
+        cls: "ktl-empty",
         text: this.scanned === 0 ? "Run “Rescan” to check this vault." : "No LOKF findings.",
       });
       return;
@@ -249,7 +249,7 @@ export class LokfReportView extends ItemView {
       : this.results;
 
     if (results.length === 0) {
-      el.createDiv({ cls: "lokf-empty", text: `No findings match “${this.filter.trim()}”.` });
+      el.createDiv({ cls: "ktl-empty", text: `No findings match “${this.filter.trim()}”.` });
       return;
     }
 
@@ -270,15 +270,15 @@ export class LokfReportView extends ItemView {
       const items = byFolder.get(folder)!.sort((a, b) => a.path.localeCompare(b.path));
       const isCollapsed = this.collapsed.has(folder);
 
-      const group = el.createDiv({ cls: "lokf-group" });
-      const header = group.createDiv({ cls: "lokf-group-header" });
+      const group = el.createDiv({ cls: "ktl-group" });
+      const header = group.createDiv({ cls: "ktl-group-header" });
       header.setAttribute("role", "button");
       header.setAttribute("tabindex", "0");
       header.setAttribute("aria-expanded", String(!isCollapsed));
       header.setAttribute("aria-label", `${folder || "/"} (${items.length}) - ${isCollapsed ? "expand" : "collapse"}`);
-      header.createSpan({ cls: "lokf-caret", text: isCollapsed ? "▸" : "▾" });
+      header.createSpan({ cls: "ktl-caret", text: isCollapsed ? "▸" : "▾" });
       header.createSpan({ text: folder || "/" });
-      header.createSpan({ cls: "lokf-count", text: String(items.length) });
+      header.createSpan({ cls: "ktl-count", text: String(items.length) });
       const toggleFolder = () => {
         if (isCollapsed) this.collapsed.delete(folder);
         else this.collapsed.add(folder);
@@ -293,14 +293,14 @@ export class LokfReportView extends ItemView {
       });
 
       if (!isCollapsed) {
-        const list = group.createDiv({ cls: "lokf-list" });
+        const list = group.createDiv({ cls: "ktl-list" });
         for (const r of items) this.renderFileBlock(list, r, false);
       }
     }
 
     if (truncated) {
       el.createDiv({
-        cls: "lokf-empty",
+        cls: "ktl-empty",
         text: `+${results.length - MAX_FILES} more file(s) hidden - use the filter to narrow the list.`,
       });
     }
@@ -308,12 +308,12 @@ export class LokfReportView extends ItemView {
 
   private renderFileBlock(parent: HTMLElement, r: FileResult, alwaysOpen: boolean) {
     const isOpen = alwaysOpen || this.expanded.has(r.path);
-    const block = parent.createDiv({ cls: "lokf-file-block" });
-    const head = block.createDiv({ cls: "lokf-file-head" });
+    const block = parent.createDiv({ cls: "ktl-file-block" });
+    const head = block.createDiv({ cls: "ktl-file-head" });
 
     // The active block has nothing to collapse, but still reserves the caret's
     // width so its name lines up with the rows in the list below.
-    const caret = head.createSpan({ cls: "lokf-caret", text: alwaysOpen ? "" : isOpen ? "▾" : "▸" });
+    const caret = head.createSpan({ cls: "ktl-caret", text: alwaysOpen ? "" : isOpen ? "▾" : "▸" });
     if (!alwaysOpen) {
       caret.setAttribute("role", "button");
       caret.setAttribute("tabindex", "0");
@@ -333,10 +333,10 @@ export class LokfReportView extends ItemView {
       });
     }
 
-    head.createSpan({ cls: `lokf-dot ${hasError(r) ? "lokf-dot-err" : "lokf-dot-warn"}` });
+    head.createSpan({ cls: `ktl-dot ${hasError(r) ? "ktl-dot-err" : "ktl-dot-warn"}` });
 
     const name = head.createSpan({
-      cls: "lokf-file-name",
+      cls: "ktl-file-name",
       text: r.path.split("/").pop() || r.path,
     });
     name.setAttribute("aria-label", `Open ${r.path}`);
@@ -345,10 +345,10 @@ export class LokfReportView extends ItemView {
       this.openFile(r.path);
     });
 
-    head.createSpan({ cls: "lokf-count", text: String(r.issues.length) });
+    head.createSpan({ cls: "ktl-count", text: String(r.issues.length) });
 
     if (isOpen) {
-      const issuesEl = block.createDiv({ cls: "lokf-issues" });
+      const issuesEl = block.createDiv({ cls: "ktl-issues" });
       const fileExists = this.app.vault.getAbstractFileByPath(r.path) instanceof TFile;
       const shown = r.issues.slice(0, MAX_ISSUES_PER_FILE);
       // Group a file's findings by their top-level key (base_iri, publisher,
@@ -363,8 +363,8 @@ export class LokfReportView extends ItemView {
           byKey.get(k)!.push(issue);
         }
         for (const [k, groupIssues] of byKey) {
-          const keyGroup = issuesEl.createDiv({ cls: "lokf-key-group" });
-          keyGroup.createDiv({ cls: "lokf-key-label", text: k || "(note)" });
+          const keyGroup = issuesEl.createDiv({ cls: "ktl-key-group" });
+          keyGroup.createDiv({ cls: "ktl-key-label", text: k || "(note)" });
           for (const issue of groupIssues) this.renderIssueRow(keyGroup, r, issue, fileExists);
         }
       } else {
@@ -372,7 +372,7 @@ export class LokfReportView extends ItemView {
       }
       if (r.issues.length > shown.length) {
         issuesEl.createDiv({
-          cls: "lokf-empty",
+          cls: "ktl-empty",
           text: `+${r.issues.length - shown.length} more finding(s) - use the filter to narrow.`,
         });
       }
@@ -380,11 +380,11 @@ export class LokfReportView extends ItemView {
   }
 
   private renderIssueRow(container: HTMLElement, r: FileResult, issue: LokfIssue, fileExists: boolean) {
-    const row = container.createDiv({ cls: "lokf-issue" });
-    const sev = row.createSpan({ cls: `lokf-sev lokf-sev-${issue.severity}` });
+    const row = container.createDiv({ cls: "ktl-issue" });
+    const sev = row.createSpan({ cls: `ktl-sev ktl-sev-${issue.severity}` });
     setIcon(sev, issue.severity === "error" ? "alert-circle" : "alert-triangle");
     sev.setAttribute("aria-label", issue.severity);
-    row.createSpan({ cls: "lokf-rule", text: issue.rule });
+    row.createSpan({ cls: "ktl-rule", text: issue.rule });
     row.createSpan({ text: issue.message });
 
     // Copy is useful even for a synthetic bundle-level finding (no file to
@@ -406,7 +406,7 @@ export class LokfReportView extends ItemView {
     // A synthetic bundle-level finding names a file that doesn't exist, so
     // there is nothing to open; leave the rest of the row inert.
     if (!fileExists) return;
-    row.addClass("lokf-issue-clickable");
+    row.addClass("ktl-issue-clickable");
     row.setAttribute("role", "button");
     row.setAttribute("tabindex", "0");
     row.setAttribute("aria-label", issue.key ? `Jump to ${issue.key} in ${r.path}` : `Open ${r.path}`);

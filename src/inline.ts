@@ -88,7 +88,7 @@ export function lokfInlineExtension(host: InlineHost) {
             span.from,
             span.to,
             Decoration.mark({
-              class: `lokf-diag lokf-diag-${span.severity}`,
+              class: `ktl-diag ktl-diag-${span.severity}`,
               attributes: { title: span.message },
             })
           );

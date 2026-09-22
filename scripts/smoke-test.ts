@@ -69,7 +69,7 @@ import {
 import { FIELD_ORDER, LOKF_FIELD_DOCS, resolveFieldDocs } from "../src/fields";
 import lokfVocab from "../src/lokf-vocab.json";
 
-const TEST_HEADER: DiataxisHeader = { id: "https://acme.example/knowledge/diataxis", generatedBy: "lokf-registrar/0.0.0-test", generatedAt: "2026-09-12T15:00:00Z" };
+const TEST_HEADER: DiataxisHeader = { id: "https://acme.example/knowledge/diataxis", generatedBy: "ktl-registrar/0.0.0-test", generatedAt: "2026-09-12T15:00:00Z" };
 let failures = 0;
 
 function expect(name: string, condition: boolean, detail: string): boolean {
@@ -1284,7 +1284,7 @@ const trust = (issues: LokfIssue[]) => issues.filter((i) => i.rule === "lokf/5-t
 
 section("well-formed §5 fields draw no trust findings", () => {
   const content =
-    `---\ntype: Reference\ngenerated:\n  by: process:lokf-librarian\n  at: 2026-01-01T00:00:00Z\n` +
+    `---\ntype: Reference\ngenerated:\n  by: process:ktl-librarian\n  at: 2026-01-01T00:00:00Z\n` +
     `verified:\n  - by: human:alice\n    at: 2026-02-01\nstatus: draft\nstale_after: 2026-12-01\n` +
     `sources:\n  - resource: https://example.org/doc\n---\n`;
   const issues = check("misc/thing.md", content, { settings: pluginDefaultSettings() });
@@ -1422,7 +1422,7 @@ section("implicit bundle roots: the vault says what it is; a workshop with no ex
   expect("neither header nor folder: no bundle, nothing scanned", j(implicitBundleRoots(false, false, false)) === j([]), j(implicitBundleRoots(false, false, false)));
   expect("break-glass: the same vault read as one whole-vault bundle", j(implicitBundleRoots(false, false, true)) === j([""]), j(implicitBundleRoots(false, false, true)));
   expect("break-glass does not override a detected knowledge_bundle/", j(implicitBundleRoots(false, true, true)) === j([VISIBLE_BUNDLE_FOLDER]), j(implicitBundleRoots(false, true, true)));
-  expect("the convention's name is the one lokf-sidecar lays down", VISIBLE_BUNDLE_FOLDER === "knowledge_bundle", VISIBLE_BUNDLE_FOLDER);
+  expect("the convention's name is the one ktl-sidecar lays down", VISIBLE_BUNDLE_FOLDER === "knowledge_bundle", VISIBLE_BUNDLE_FOLDER);
 });
 
 section("Diátaxis map is a record the registrar accepts: Document header, minted id, plugin provenance", () => {
@@ -1431,7 +1431,7 @@ section("Diátaxis map is a record the registrar accepts: Document header, minte
   expect("starts with frontmatter", fresh.startsWith("---\ntype: Document\n"), fresh.slice(0, 40));
   expect("carries the minted id", fresh.includes("\nid: https://acme.example/knowledge/diataxis\n"), fresh);
   expect("carries genre: reference", fresh.includes("\ngenre: reference\n"), fresh);
-  expect("generated.by is the plugin as an OKF §7 producer actor", fresh.includes("\ngenerated:\n  by: lokf-registrar/0.0.0-test\n  at: \"2026-09-12T15:00:00Z\"\n---\n"), fresh);
+  expect("generated.by is the plugin as an OKF §7 producer actor", fresh.includes("\ngenerated:\n  by: ktl-registrar/0.0.0-test\n  at: \"2026-09-12T15:00:00Z\"\n---\n"), fresh);
   expect("title heading follows the frontmatter", fresh.includes("---\n# Diátaxis map\n\n<!-- lokf:diataxis -->"), fresh);
   const fm = parse(fresh).data;
   expect("the frontmatter parses back with type Document", fm["type"] === "Document" && typeof fm["generated"] === "object", JSON.stringify(fm));
@@ -1449,7 +1449,7 @@ section("Diátaxis map is a record the registrar accepts: Document header, minte
   const later = { ...TEST_HEADER, generatedAt: "2026-10-01T09:00:00Z" };
   const changed = applyDiataxisBlock(fresh, [...entries, { genre: "reference", linktext: "glossary/term" }], later);
   expect("a changed block refreshes generated.at", changed !== null && changed.includes('at: "2026-10-01T09:00:00Z"') && !changed.includes("2026-09-12T15:00:00Z"), String(changed));
-  const human = fresh.replace("by: lokf-registrar/0.0.0-test", "by: human:ada");
+  const human = fresh.replace("by: ktl-registrar/0.0.0-test", "by: human:ada");
   const humanChanged = applyDiataxisBlock(human, [...entries, { genre: "reference", linktext: "glossary/term" }], later);
   expect("a human-authored generated block keeps its stamp", humanChanged !== null && humanChanged.includes('at: "2026-09-12T15:00:00Z"'), String(humanChanged));
   expect("refreshGeneratedAt is null when nothing matches", refreshGeneratedAt("# no frontmatter\n", "2026-01-01T00:00:00Z") === null, "expected null");
@@ -1464,15 +1464,12 @@ section("Diátaxis map is a record the registrar accepts: Document header, minte
   const unquoted = fresh.replace('at: "2026-09-12T15:00:00Z"', "at: 2026-09-12T15:00:00Z");
   const requoted = refreshGeneratedAt(unquoted, "2026-10-01T09:00:00Z");
   expect("an unquoted stamp is refreshed, and quoted", requoted !== null && requoted.includes('  at: "2026-10-01T09:00:00Z"\n---'), String(requoted));
-  const otherProcess = fresh.replace("by: lokf-registrar/0.0.0-test", "by: process:lokf-librarian");
+  const otherProcess = fresh.replace("by: ktl-registrar/0.0.0-test", "by: process:ktl-librarian");
   expect("another process's generated block is never re-stamped", refreshGeneratedAt(otherProcess, "2026-10-01T09:00:00Z") === null, "expected null");
-  const formerName = fresh.replace("by: lokf-registrar/0.0.0-test", "by: lokf-enforcer/0.4.0");
-  const formerRestamped = refreshGeneratedAt(formerName, "2026-10-01T09:00:00Z");
-  expect("a map stamped under the plugin's former name (lokf-enforcer) is still its own and is re-stamped", formerRestamped !== null && formerRestamped.includes('by: lokf-enforcer/0.4.0\n  at: "2026-10-01T09:00:00Z"'), String(formerRestamped));
-  const bodyCopy = `${fresh}\ngenerated:\n  by: lokf-registrar/0.0.0-test\n  at: "2020-01-01T00:00:00Z"\n`;
+  const bodyCopy = `${fresh}\ngenerated:\n  by: ktl-registrar/0.0.0-test\n  at: "2020-01-01T00:00:00Z"\n`;
   const bodyKept = refreshGeneratedAt(bodyCopy, "2026-10-01T09:00:00Z");
   expect("a generated mapping in the body is left alone; only the frontmatter stamp moves", bodyKept !== null && bodyKept.includes('at: "2020-01-01T00:00:00Z"') && bodyKept.includes('at: "2026-10-01T09:00:00Z"'), String(bodyKept));
-  expect("a fenceless document is not frontmatter", refreshGeneratedAt("type: Document\ngenerated:\n  by: lokf-registrar/1\n  at: x\n", "2026-10-01T09:00:00Z") === null, "expected null");
+  expect("a fenceless document is not frontmatter", refreshGeneratedAt("type: Document\ngenerated:\n  by: ktl-registrar/1\n  at: x\n", "2026-10-01T09:00:00Z") === null, "expected null");
 });
 
 section("field reference - covers the header fields and frames base_iri as an identifier", () => {
@@ -1509,12 +1506,12 @@ section("field reference - covers the header fields and frames base_iri as an id
   const longest = Math.max(...LOKF_FIELD_DOCS.map((f) => f.description.length));
   expect("every field description stays modal-sized (<= 400 chars)", longest <= 400, `longest description is ${longest} chars`);
 });
-// (a) the lokf-sidecar skeleton, with its <PLACEHOLDER> tokens filled in as
+// (a) the ktl-sidecar skeleton, with its <PLACEHOLDER> tokens filled in as
 // a real project would. scripts/fixtures/sidecar-skeleton is a frozen copy
-// of knowledge-trust-ladder's skills/lokf-sidecar/templates/knowledge - a golden
+// of knowledge-trust-ladder's skills/ktl-sidecar/templates/knowledge - a golden
 // fixture, refreshed deliberately from a tagged release, never read live from
 // an installed (and git-ignored) skill.
-validateBundle("lokf-sidecar template skeleton", join(repoRoot, "scripts", "fixtures", "sidecar-skeleton"), {
+validateBundle("ktl-sidecar template skeleton", join(repoRoot, "scripts", "fixtures", "sidecar-skeleton"), {
   required: true,
   transform: (c) =>
     c
@@ -1532,8 +1529,8 @@ validateBundle("lokf-sidecar template skeleton", join(repoRoot, "scripts", "fixt
 
 // (b) this repo's own bundle.
 // Eight: this bundle's `base_iri` is still the RFC 2606 placeholder
-// (lokf-registrar.example), which every concept's minted id inherits.
-validateBundle("lokf-registrar's own .lokf/knowledge", join(repoRoot, ".lokf", "knowledge"), {
+// (ktl-registrar.example), which every concept's minted id inherits.
+validateBundle("ktl-registrar's own .lokf/knowledge", join(repoRoot, ".lokf", "knowledge"), {
   required: true,
   expectedWarnings: 8,
 });

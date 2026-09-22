@@ -1,4 +1,4 @@
-// main.ts - LOKF Registrar plugin entry point
+// main.ts - KTL Registrar plugin entry point
 import { MarkdownView, Notice, Plugin, TFile, TFolder, type EditorPosition, type TAbstractFile, type WorkspaceLeaf, addIcon, debounce, parseYaml } from "obsidian";
 import {
   type LokfSettings,
@@ -25,19 +25,19 @@ import {
   mintExpectedId,
 } from "./validator";
 import {
-  LokfReportView,
-  LOKF_REGISTRAR_ICON,
-  LOKF_REGISTRAR_ICON_SVG,
-  LOKF_VIEW_TYPE,
+  KtlRegistrarView,
+  KTL_REGISTRAR_ICON,
+  KTL_REGISTRAR_ICON_SVG,
+  KTL_REGISTRAR_VIEW_TYPE,
   type FileResult,
 } from "./report-view";
 import { locateFrontmatterKey } from "./locator";
-import { LokfSettingTab } from "./settings";
+import { KtlRegistrarSettingTab } from "./settings";
 import { lokfInlineExtension } from "./inline";
 import { mergeSavedSettings } from "./vocab";
 import { buildConceptGraph, type ConceptGraph, type ConceptRecord } from "./graph";
 import { ConceptSuggestModal } from "./concept-modal";
-import { LokfSuggest, type SuggestVocabulary } from "./suggest";
+import { KtlRegistrarSuggest, type SuggestVocabulary } from "./suggest";
 import { computeFix, computeFixes } from "./fixes";
 import { extractBodyLinks, buildProposals, type Proposal } from "./propose";
 import { FindingSuggestModal, type FindingItem } from "./finding-modal";
@@ -54,7 +54,7 @@ import {
   type DiataxisEntry,
   type DiataxisHeader,
 } from "./affordances";
-import type { LokfRegistrarApi, LokfFileFindings, LokfFinding } from "./public-api";
+import type { KtlRegistrarApi, LokfFileFindings, LokfFinding } from "./public-api";
 import { ProposeModal } from "./propose-modal";
 
 /** Not a LOKF rule - a file the vault refused to hand over. Reported rather
@@ -83,7 +83,7 @@ function missingBundleRootIssues(root: string): LokfIssue[] {
     {
       severity: "error",
       rule: "lokf/io-missing-root",
-      message: `Bundle root folder "${root}" does not exist in this vault, so nothing under it was scanned. Fix or remove it under Settings → LOKF Registrar → Bundle root folders (clear the list to treat the whole vault as one bundle).`,
+      message: `Bundle root folder "${root}" does not exist in this vault, so nothing under it was scanned. Fix or remove it under Settings → KTL Registrar → Bundle root folders (clear the list to treat the whole vault as one bundle).`,
     },
   ];
 }
@@ -97,12 +97,12 @@ interface ParsedNote {
   body?: string;
 }
 
-export default class LokfPlugin extends Plugin {
+export default class KtlRegistrarPlugin extends Plugin {
   settings: LokfSettings = { ...DEFAULT_SETTINGS };
   statusEl!: HTMLElement;
   /** Read-only surface for the sibling Curator or an agent; see public-api.ts.
-   *  Reachable as `app.plugins.plugins["lokf-registrar"].api`. */
-  api!: LokfRegistrarApi;
+   *  Reachable as `app.plugins.plugins["ktl-registrar"].api`. */
+  api!: KtlRegistrarApi;
   private busy = false;
   private hasVerdict = false;
   /** The most recent full scan, retained so reopening the report panel (or the
@@ -204,9 +204,9 @@ export default class LokfPlugin extends Plugin {
   async onload(): Promise<void> {
     await this.loadSettings();
 
-    addIcon(LOKF_REGISTRAR_ICON, LOKF_REGISTRAR_ICON_SVG);
+    addIcon(KTL_REGISTRAR_ICON, KTL_REGISTRAR_ICON_SVG);
 
-    this.registerView(LOKF_VIEW_TYPE, (leaf) => new LokfReportView(leaf, this));
+    this.registerView(KTL_REGISTRAR_VIEW_TYPE, (leaf) => new KtlRegistrarView(leaf, this));
 
     this.statusEl = this.addStatusBarItem();
     this.statusEl.setText("LOKF: —");
@@ -355,10 +355,10 @@ export default class LokfPlugin extends Plugin {
       name: "Go to previous finding",
       callback: () => void this.gotoAdjacentFinding(-1),
     });
-    this.addSettingTab(new LokfSettingTab(this.app, this));
+    this.addSettingTab(new KtlRegistrarSettingTab(this.app, this));
 
     // A ribbon shortcut to bring up the conformance report.
-    this.addRibbonIcon(LOKF_REGISTRAR_ICON, "LOKF conformance report", () => void this.activateView());
+    this.addRibbonIcon(KTL_REGISTRAR_ICON, "LOKF conformance report", () => void this.activateView());
 
     // The read-only surface a sibling plugin or agent may read validation state
     // from, without either plugin depending on the other.
@@ -381,7 +381,7 @@ export default class LokfPlugin extends Plugin {
     this.registerEditorExtension(lokfInlineExtension(this));
 
     // LOKF-aware value completions inside a concept's frontmatter.
-    this.registerEditorSuggest(new LokfSuggest(this.app, this));
+    this.registerEditorSuggest(new KtlRegistrarSuggest(this.app, this));
 
     // Debounced so that arrowing through a file list doesn't read and parse a
     // note per keystroke.
@@ -444,16 +444,16 @@ export default class LokfPlugin extends Plugin {
   /** Stored via app.loadLocalStorage/saveLocalStorage, which are per-vault and
    *  per-device and never synced - so a vault shared to a phone can silence the
    *  plugin there without changing its behaviour on the desktop. */
-  private static readonly DEVICE_DISABLED_KEY = "lokf-registrar:disabled-on-device";
+  private static readonly DEVICE_DISABLED_KEY = "ktl-registrar:disabled-on-device";
 
   isDisabledOnDevice(): boolean {
-    return this.app.loadLocalStorage(LokfPlugin.DEVICE_DISABLED_KEY) === true;
+    return this.app.loadLocalStorage(KtlRegistrarPlugin.DEVICE_DISABLED_KEY) === true;
   }
 
   setDisabledOnDevice(disabled: boolean): void {
     // Clearing to null (not false) removes the entry rather than leaving a
     // per-device flag behind once the plugin is re-enabled.
-    this.app.saveLocalStorage(LokfPlugin.DEVICE_DISABLED_KEY, disabled ? true : null);
+    this.app.saveLocalStorage(KtlRegistrarPlugin.DEVICE_DISABLED_KEY, disabled ? true : null);
     this.applyDeviceState();
   }
 
@@ -571,9 +571,9 @@ export default class LokfPlugin extends Plugin {
       );
   }
 
-  private getReportView(): LokfReportView | null {
-    const leaf = this.app.workspace.getLeavesOfType(LOKF_VIEW_TYPE).at(0);
-    return leaf && leaf.view instanceof LokfReportView ? leaf.view : null;
+  private getReportView(): KtlRegistrarView | null {
+    const leaf = this.app.workspace.getLeavesOfType(KTL_REGISTRAR_VIEW_TYPE).at(0);
+    return leaf && leaf.view instanceof KtlRegistrarView ? leaf.view : null;
   }
 
   /** `vaultPath` is translated to a path relative to `root` before reaching
@@ -1108,7 +1108,7 @@ export default class LokfPlugin extends Plugin {
     const baseIri = await this.findBaseIriFor(root);
     const header: DiataxisHeader = {
       id: baseIri ? mintExpectedId("diataxis.md", baseIri) : null,
-      generatedBy: `lokf-registrar/${this.manifest.version}`,
+      generatedBy: `ktl-registrar/${this.manifest.version}`,
       generatedAt: new Date().toISOString().replace(/\.\d{3}Z$/, "Z"),
     };
     const existing = this.app.vault.getAbstractFileByPath(mapPath);
@@ -1533,17 +1533,17 @@ export default class LokfPlugin extends Plugin {
   }
 
   async activateView(): Promise<void> {
-    const existing = this.app.workspace.getLeavesOfType(LOKF_VIEW_TYPE);
+    const existing = this.app.workspace.getLeavesOfType(KTL_REGISTRAR_VIEW_TYPE);
     let leaf: WorkspaceLeaf | null;
     if (existing.length) {
       leaf = existing[0] ?? null;
     } else {
       leaf = this.app.workspace.getRightLeaf(false);
-      await leaf?.setViewState({ type: LOKF_VIEW_TYPE, active: true });
+      await leaf?.setViewState({ type: KTL_REGISTRAR_VIEW_TYPE, active: true });
     }
     if (!leaf) return;
     void this.app.workspace.revealLeaf(leaf);
-    if (leaf.view instanceof LokfReportView) {
+    if (leaf.view instanceof KtlRegistrarView) {
       // Restore the retained report (kept, not consumed, so a later reopen still
       // shows it); incremental edits while it was closed are picked up by the
       // next scan.

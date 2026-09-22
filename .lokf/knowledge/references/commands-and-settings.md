@@ -1,14 +1,14 @@
 ---
 type: Reference
-id: https://lokf-registrar.example/knowledge/references/commands-and-settings
+id: https://ktl-registrar.example/knowledge/references/commands-and-settings
 title: Commands and Settings
 description: The plugin's commands, status-bar behavior, and settings-tab groups, as README.md documents them.
 resource: README.md
 generated:
-  by: process:lokf-librarian
+  by: process:ktl-librarian
   at: "2026-09-14T14:58:54Z"
 verified:
-  - by: process:lokf-librarian
+  - by: process:ktl-librarian
     at: "2026-09-14T14:58:54Z"
 ---
 
@@ -29,7 +29,7 @@ from what the source actually names.
 | `next-finding` / `previous-finding` | Go to next / previous finding |
 | `fix-active` / `fix-vault` | Fix safe issues in the active note / across the vault |
 | `propose-relations` | Promote body links to typed relations… |
-| `add-affordances-active` / `generate-affordances` / `generate-diataxis-map` | Add Obsidian affordances to the active note / across the vault / Generate the Diátaxis map (`diataxis.md`, written as a `Document` with a minted `id` and `generated.by: lokf-registrar/<version>` so `lokf validate` accepts it) |
+| `add-affordances-active` / `generate-affordances` / `generate-diataxis-map` | Add Obsidian affordances to the active note / across the vault / Generate the Diátaxis map (`diataxis.md`, written as a `Document` with a minted `id` and `generated.by: ktl-registrar/<version>` so `lokf validate` accepts it) |
 
 (Command ids other than the first three are as named in `src/main.ts`; the
 README documents them by display name. There is no command that checks for,
@@ -37,7 +37,7 @@ opens, or recommends any other plugin. In a vault with **no bundle**
 (neither a header on the root `index.md`, a detected `knowledge_bundle/`
 folder, nor the break-glass *Treat the vault root as the bundle* setting),
 every command other than `scaffold-root-header` explains why it did nothing
-instead of acting - see [LOKF Registrar plugin](../services/lokf-registrar-plugin.md).)
+instead of acting - see [KTL Registrar plugin](../services/ktl-registrar-plugin.md).)
 
 Clicking the status-bar item validates the active note, or runs a vault scan
 if none is open.
@@ -53,4 +53,4 @@ as the extension point for a bundle validated against a domain schema
 (`lokf validate --schema <file>`): list that schema's classes there, since
 the plugin cannot read the schema from the vault. Unlisted classes only
 warn unless `lokf/3-vocab` is escalated; an edited list is kept current by
-hand, and should match LOKF Curator's.
+hand, and should match KTL Curator's.

@@ -1,11 +1,11 @@
 ---
 type: Policy
-id: https://lokf-registrar.example/knowledge/policies/code-of-conduct
+id: https://ktl-registrar.example/knowledge/policies/code-of-conduct
 title: Code of Conduct
 description: Contributor Covenant 2.1 - a harassment-free-participation standard, shared verbatim with the sibling knowledge-trust-ladder repository.
 resource: CODE_OF_CONDUCT.md
 generated:
-  by: process:lokf-librarian
+  by: process:ktl-librarian
   at: "2026-09-11T12:00:00Z"
 status: draft
 ---

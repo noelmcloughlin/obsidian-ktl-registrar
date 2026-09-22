@@ -1,3 +1,3 @@
 # Explanation
 
-* [Why LOKF Registrar](why-lokf-registrar.md)
+* [Why KTL Registrar](why-ktl-registrar.md)

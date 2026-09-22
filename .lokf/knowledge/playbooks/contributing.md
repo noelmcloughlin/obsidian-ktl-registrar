@@ -1,14 +1,14 @@
 ---
 type: Playbook
-id: https://lokf-registrar.example/knowledge/playbooks/contributing
+id: https://ktl-registrar.example/knowledge/playbooks/contributing
 title: Contributing
-description: Local dev setup, layout, and pre-PR checklist for LOKF Registrar.
+description: Local dev setup, layout, and pre-PR checklist for KTL Registrar.
 resource: CONTRIBUTING.md
 generated:
-  by: process:lokf-librarian
+  by: process:ktl-librarian
   at: "2026-09-14T15:00:00Z"
 verified:
-  - by: process:lokf-librarian
+  - by: process:ktl-librarian
     at: "2026-09-14T15:00:00Z"
 ---
 

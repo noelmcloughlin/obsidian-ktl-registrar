@@ -252,7 +252,7 @@ export function normalizeBundleRoots(roots: string[]): string[] {
  * call once per candidate file during a scan.
  */
 /** The conventional visible name of a knowledge bundle at a host's root - the
- *  doorway `lokf-sidecar` lays down (a link onto `.lokf/knowledge` in a code
+ *  doorway `ktl-sidecar` lays down (a link onto `.lokf/knowledge` in a code
  *  repository; the real folder itself in a vault or shared-folder host). */
 export const VISIBLE_BUNDLE_FOLDER = "knowledge_bundle";
 
@@ -1015,7 +1015,7 @@ export function validateConceptId(data: Record<string, unknown>, path: string, b
 //
 // The §5 fields originated in OKF v0.2 but are defined in the LOKF schema and
 // are the load-bearing substrate of LOKF's curation ceremony (draft → verified
-// → stale), so their *shape* is LOKF Registrar's business - not the deep
+// → stale), so their *shape* is KTL Registrar's business - not the deep
 // credibility/tier interpretation, which stays an installed OKF validator's
 // job. Findings are warnings except the two fields OKF marks REQUIRED -
 // `generated.by` (§5.2) and a source's `resource` (§5.1) - which are errors

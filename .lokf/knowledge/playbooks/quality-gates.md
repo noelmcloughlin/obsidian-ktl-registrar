@@ -1,16 +1,16 @@
 ---
 type: Playbook
-id: https://lokf-registrar.example/knowledge/playbooks/quality-gates
+id: https://ktl-registrar.example/knowledge/playbooks/quality-gates
 title: Quality Gates
 description: The lint-and-docs CI workflow - shell, workflow, Markdown, link, and spelling checks that run on every push and PR, independent of the Node build and the LOKF bundle's own validation.
 resource: .github/workflows/lint-and-docs.yaml
 dependsOn:
-  - https://lokf-registrar.example/knowledge/references/obsidian-plugin-guidelines
+  - https://ktl-registrar.example/knowledge/references/obsidian-plugin-guidelines
 generated:
-  by: process:lokf-librarian
+  by: process:ktl-librarian
   at: "2026-09-14T15:00:00Z"
 verified:
-  - by: process:lokf-librarian
+  - by: process:ktl-librarian
     at: "2026-09-14T15:00:00Z"
 status: draft
 ---
@@ -43,7 +43,7 @@ repo's content, not because the underlying style guidance is wrong in
 general: `MD013` (SKILL.md/reference prose is deliberately unwrapped),
 `MD025` (every LOKF/OKF concept's frontmatter `title:` reads as an implicit
 H1, so the body's own top-level heading is not a real duplicate - see Golden
-Rule 2 in `lokf-librarian`'s own `SKILL.md`), `MD028` (adjacent `>` callouts
+Rule 2 in `ktl-librarian`'s own `SKILL.md`), `MD028` (adjacent `>` callouts
 separated by a blank line are intentionally distinct blockquotes),
 `MD033` (`<PROJ_NAME>`-style angle-bracket placeholders are template tokens,
 not HTML), and `MD041` (`templates/readme-for-ai-agents.md` is an insertable

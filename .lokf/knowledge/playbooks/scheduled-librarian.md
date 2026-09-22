@@ -1,25 +1,25 @@
 ---
 type: Playbook
-id: https://lokf-registrar.example/knowledge/playbooks/scheduled-librarian
+id: https://ktl-registrar.example/knowledge/playbooks/scheduled-librarian
 title: Scheduled Librarian
 description: The knowledge-librarian.yaml workflow's two-job privilege split - how a third-party agent proposes bundle changes without ever holding a write-scoped token.
 resource: .github/workflows/knowledge-librarian.yaml
 dependsOn:
-  - https://lokf-registrar.example/knowledge/references/lokf-toolkit
+  - https://ktl-registrar.example/knowledge/references/lokf-toolkit
 relatedTo:
-  - https://lokf-registrar.example/knowledge/playbooks/knowledge-registrar-gate
+  - https://ktl-registrar.example/knowledge/playbooks/knowledge-registrar-gate
 generated:
-  by: process:lokf-librarian
+  by: process:ktl-librarian
   at: "2026-09-14T17:45:00Z"
 status: draft
 verified:
-  - by: process:lokf-librarian
+  - by: process:ktl-librarian
     at: "2026-09-14T17:45:00Z"
 ---
 
 # Overview
 
-`.github/workflows/knowledge-librarian.yaml` runs the `lokf-librarian` skill
+`.github/workflows/knowledge-librarian.yaml` runs the `ktl-librarian` skill
 on a schedule (Mondays 05:00 UTC) to keep `.lokf/knowledge/` in step with the
 repository, then opens a review PR with whatever changed - never pushing to
 the default branch or auto-merging, and a no-op when nothing changed. It is
@@ -60,7 +60,7 @@ that never shared a workspace with the agent, it re-derives the same
 `.lokf/knowledge/` / `knowledge_bundle/` / `.lokf/feedback.md` allow-list
 from the patch's own `git apply --numstat` output, and separately refuses
 (`grep -Eq '^\+ *-? *by: *human:'`) a patch that adds a `by: human:` claim -
-this skill never writes one (see `lokf-librarian`'s `SKILL.md`) - before
+this skill never writes one (see `ktl-librarian`'s `SKILL.md`) - before
 applying anything. The first two checks run alongside the agent and are
 fail-fast conveniences, not the backstop.
 
@@ -74,7 +74,7 @@ checks above are this PR's real backstop; if branch protection requires
 required status checks are deliberately off here. What that gate checks on a
 person's own PR is [Knowledge registrar gate](knowledge-registrar-gate.md).
 
-**Whose design this is.** Both files are copies of the `lokf-sidecar`
+**Whose design this is.** Both files are copies of the `ktl-sidecar`
 template in `knowledge-trust-ladder`. As of 2026-09-14 this repository's
 [SECURITY.md](../../../SECURITY.md) names it only as one row of a
 `Surface | What holds it` table - the deployed copy's one local edit

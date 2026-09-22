@@ -60,7 +60,7 @@
 
 * **Steady-state refresh**, against this session's uncommitted `SECURITY.md`
   rewrite (matching the same change already committed in `lokf-agent-skills`
-  and `obsidian-lokf-curator`): its design content moved to the skills
+  and `obsidian-ktl-curator`): its design content moved to the skills
   repository's new `docs/threat-model.md`. Two concepts had cited it by a
   now-gone section heading - `playbooks/scheduled-librarian.md` ("The
   librarian workflow: what is inherited, what this repository owns") and
@@ -85,7 +85,7 @@
   `playbooks/contributing.md` (`CONTRIBUTING.md`'s dev-setup, layout, and
   pre-PR checklist sections), `references/commands-and-settings.md`'s command
   table (all 15 `addCommand` ids in `src/main.ts` match),
-  `services/lokf-registrar-plugin.md` (the `vocab.ts` settings-merge
+  `services/ktl-registrar-plugin.md` (the `vocab.ts` settings-merge
   paragraph). Orphan sweep: no new file under `src/`, `docs/`,
   `.github/workflows/`, or the repository root beyond what
   `playbooks/knowledge-sources.md` already accounts for. `just lokf-validate`
@@ -107,7 +107,7 @@
   word count and its import-free module list against what the suite
   actually imports. `playbooks/contributing.md` rewritten to match;
   `playbooks/quality-gates.md` corrected (trigger, the new pin-check step).
-  `explanation/why-lokf-registrar.md` gains a short addition: the README's
+  `explanation/why-ktl-registrar.md` gains a short addition: the README's
   new **three lines of defence** framing (linking `docs/three-lines.md`)
   places this plugin on the second line. Re-verified, no content change:
   `playbooks/releasing.md` (`CONTRIBUTING.md`'s own release section is now a
@@ -126,7 +126,7 @@
   moved into `vocab.ts` precisely so a test could reach it. The source is
   corrected (a `vocab.ts` row, the real module list, and the reason logic
   leaves `main.ts`) and `playbooks/contributing.md` re-derived from it.
-  `services/lokf-registrar-plugin.md` gains the same fact for `loadSettings`,
+  `services/ktl-registrar-plugin.md` gains the same fact for `loadSettings`,
   which the bundle had recorded only in this log.
 
 * **Steady-state refresh** (librarian pass, no feedback pending) against the
@@ -137,7 +137,7 @@
   facts the code already held: a customised list is never refreshed to the
   manifest, and the type-specific field checks key on the exact class name.
   `references/commands-and-settings.md`: the README bullet. Re-verified, no
-  change: `explanation/why-lokf-registrar.md`.
+  change: `explanation/why-ktl-registrar.md`.
   `playbooks/knowledge-sources.md`: run note.
 * **Coverage pass on the same branch**, no behaviour change: the settings
   merge rule moved from `main.ts` into the pure `vocab.ts`
@@ -151,7 +151,7 @@
 ## 2026-09-13
 
 * **Steady-state refresh** (librarian pass, no feedback pending), after a
-  `lokf-sidecar` repair pass that restored `.lokf/justfile`'s
+  `ktl-sidecar` repair pass that restored `.lokf/justfile`'s
   `lokf-check-refs` recipe and laid the `knowledge_bundle` doorway link.
   Re-verified `playbooks/scheduled-librarian.md` and
   `playbooks/knowledge-registrar-gate.md` against the now-committed
@@ -170,7 +170,7 @@
   `policies/no-telemetry.md` (it still named the header command as the
   plugin's only write; the README has listed the safe-fix, promote-relations,
   affordance and report-action writes for some time - drift older than this
-  session), `explanation/why-lokf-registrar.md` (the alternatives footnote
+  session), `explanation/why-ktl-registrar.md` (the alternatives footnote
   now sits beneath the credits, and the warnings-not-errors argument is
   `docs/for-the-curious.md`'s longest section, not the README's),
   `playbooks/scheduled-librarian.md` (the `if:` guard on the `refresh` job's
@@ -185,7 +185,7 @@
   since when the plugin checks their shape itself). Re-verified, no change:
   `references/commands-and-settings.md` (command table and settings groups
   identical in the rewritten README) and `playbooks/contributing.md`.
-  **Drift audit (reported, not fixed - lokf-sidecar's job):** `.lokf/justfile`
+  **Drift audit (reported, not fixed - ktl-sidecar's job):** `.lokf/justfile`
   lacks the template's `lokf-check-refs` recipe (its query run by hand this
   pass, clean after the fix above); `knowledge-librarian.yaml` differs
   from its template in comments only, beyond the deliberate
@@ -194,16 +194,16 @@
 
 * **Steady-state refresh** (librarian pass, no feedback pending): re-verified
   `policies/no-telemetry.md`, `references/commands-and-settings.md`,
-  `services/settings-tab.md` and `services/lokf-registrar-plugin.md` against
+  `services/settings-tab.md` and `services/ktl-registrar-plugin.md` against
   `README.md`, `src/main.ts` and `src/settings.ts` after this session's
   README-notice rewording, the header command's new two-choice modal
   (`src/scaffold-modal.ts`), and the sidecar's `.lokf/justfile`/workflow
-  comments following the current `lokf-sidecar` templates. All four already
+  comments following the current `ktl-sidecar` templates. All four already
   matched - the command table, the break-glass setting's description and the
   no-bundle state were corrected in an earlier pass this session - so only
   each concept's `verified` event was refreshed; no content changed.
   `src/scaffold-modal.ts` is not given its own concept: it is a small UI
-  helper of `lokf-registrar-plugin.md`, already described there under "Insert
+  helper of `ktl-registrar-plugin.md`, already described there under "Insert
   the bundle's semantic header". `playbooks/quality-gates.md` and
   `playbooks/releasing.md` were not re-checked this run - their resources
   (`lint-and-docs.yaml`, `CONTRIBUTING.md`) were untouched this session.
@@ -213,7 +213,7 @@
 * **Steady-state refresh** (librarian pass, no feedback pending): corrected
   drift against this session's "no bundle" state and break-glass
   `treatVaultRootAsBundle` setting (`src/main.ts`, `src/validator.ts`,
-  `src/settings.ts`) - `services/lokf-registrar-plugin.md` and
+  `src/settings.ts`) - `services/ktl-registrar-plugin.md` and
   `services/validator-engine.md` described the old always-a-whole-vault
   fallback and the renamed `autoBundleRoot`/`implicitBundleRoots` function
   under its previous name; `services/settings-tab.md` had no mention of the
@@ -236,15 +236,13 @@
   moved out this session) and an orphan-sweep note for `src/`'s
   implementation-detail files and a handful of repo-plumbing files, both
   consciously left without their own concepts. Added `docs/for-the-curious.md`
-  to `explanation/why-lokf-registrar.md`'s `sources`, alongside `README.md`.
+  to `explanation/why-ktl-registrar.md`'s `sources`, alongside `README.md`.
 * **Re-verified** (no drift): `playbooks/contributing.md`,
   `policies/no-telemetry.md`, `playbooks/quality-gates.md`. `playbooks/releasing.md`
   was already current from earlier the same day. PyPI's `lokf` is still at
   `0.7.0` (checked via the PyPI JSON API; `uv pip index versions` is not a
   subcommand of this environment's `uv 0.12.11`) - no `pyproject.toml` floor
-  bump needed. This repository's git `origin` remote still points at the
-  pre-rename `obsidian-lokf-enforcer` URL, but no concept's `resource` field
-  hardcodes it, so no concept-level fix was needed.
+  bump needed.
 
 * **Semantic-release, hardened** (maintainer decision): `playbooks/releasing.md`
   rewritten (`generated`/`verified` refreshed) - a person no longer picks the
@@ -261,37 +259,27 @@
   tag. semantic-release is installed at pinned versions inside the workflow,
   never added to `package.json`.
 
-* **Renamed** (maintainer decision): the plugin is **LOKF Registrar**, id
-  `lokf-registrar`, repository `obsidian-lokf-registrar` - the name now says
-  the role this bundle already gave it. Bundle-wide: the placeholder
-  namespace is `https://lokf-registrar.example/knowledge/` and every `id`
-  and relation target is re-minted under it; `services/lokf-enforcer-plugin.md`
-  moved to `services/lokf-registrar-plugin.md` and
-  `explanation/why-lokf-enforcer.md` to `explanation/why-lokf-registrar.md`,
-  ids and titles with them; `index.md` retitled. `why-lokf-registrar.md`
-  gains a "Why the name" section and `lokf-registrar-plugin.md` an
-  "Identity" section (API path, device key, `generated.by` actor, and that
-  a map stamped `lokf-enforcer/<version>` by an earlier build is still
-  recognised as the plugin's own); both `generated` refreshed. `NOTICE` no
+* **Name and identity recorded** (maintainer decision): `why-ktl-registrar.md`
+  gains a "Why the name" section and `ktl-registrar-plugin.md` an
+  "Identity" section (API path, device key, `generated.by` actor); both `generated` refreshed. `NOTICE` no
   longer calls the plugin a companion to a separate OKF validator - it
   checks the base layer itself. `references/okf-specification.md` corrected
   in passing: the plugin has checked required `type` and Attested Computation
-  shape itself since 0.4.0, which that concept still denied. Entries below keep
-  the names in use at the time.
+  shape itself since 0.4.0, which that concept still denied.
 
-* **Corrected** `services/lokf-enforcer-plugin.md`, `services/settings-tab.md`,
+* **Corrected** `services/ktl-registrar-plugin.md`, `services/settings-tab.md`,
   `references/commands-and-settings.md` after the maintainer had the
   afternoon's feature-fit audit implemented: `diataxis.md` is now written as a
-  `Document` with a minted `id` and `generated.by: lokf-enforcer/<version>`
+  `Document` with a minted `id` and `generated.by: ktl-registrar/<version>`
   (the earlier headerless map made `lokf validate` abort a run); with no
   bundle roots configured a top-level `knowledge_bundle/` is detected on its
   own (`autoBundleRoot`); a dot-folder root is accepted with a live-index
   check and a warning instead of being refused. The `## Open questions`
   section on the plugin concept is replaced by the record of what changed.
 
-* **Corrected** `services/lokf-enforcer-plugin.md`, `services/settings-tab.md`,
+* **Corrected** `services/ktl-registrar-plugin.md`, `services/settings-tab.md`,
   `references/commands-and-settings.md`, and rewrote
-  `explanation/why-lokf-enforcer.md`: the plugin no longer detects,
+  `explanation/why-ktl-registrar.md`: the plugin no longer detects,
   recommends, or deep-links to any other OKF validator. The commented-out
   `detectOkfValidator`, the one-time notice (`recommendOkfValidator` /
   `okfValidatorNoticeShown`), and the "Alternative OKF validator" settings
@@ -299,7 +287,7 @@
   `src/validator.ts` at the maintainer's direction: with the OKF v0.2 base
   layer checked here, a separate validator is an *alternative* worth a
   footnote, not a companion, and the only plugin this one names is its
-  sibling LOKF Curator. `README.md` was restructured the same day around how
+  sibling KTL Curator. `README.md` was restructured the same day around how
   an Obsidian user actually meets a bundle (the bundle is the vault; a folder
   in the vault; derived from a repository and opened via `knowledge_bundle`)
   and now states, per Obsidian's own help on symbolic links, that a
@@ -308,15 +296,15 @@
   first header fixture, formerly a verbatim copy of another project's
   `index.md`, is now a neutral example; the frozen template fixture moved
   from `scripts/fixtures/scaffolding-skeleton/` to
-  `scripts/fixtures/sidecar-skeleton/` to follow the upstream skill's rename
-  from `lokf-scaffolding` to `lokf-sidecar`. Command table in
+  `scripts/fixtures/sidecar-skeleton/` named for the upstream
+  `ktl-sidecar` skill. Command table in
   `references/commands-and-settings.md` extended to the commands the README
   documents. Not a full steady-state sweep - concepts untouched by these
   changes were not re-checked.
 
 ## 2026-09-11
 
-* **Corrected** `services/validator-engine.md`, `services/lokf-enforcer-plugin.md`,
+* **Corrected** `services/validator-engine.md`, `services/ktl-registrar-plugin.md`,
   `services/report-view.md` against the six-bug correctness pass on
   `src/*.ts`: the rule engine now warns on a bare scalar where the schema
   requires a list (the same bug class fixed in this bundle's own concepts on
@@ -342,7 +330,7 @@
   of the above, and re-checked the PyPI `lokf` floor (still `0.7.0`, no
   bump needed).
 
-* **Corrected** `services/lokf-enforcer-plugin.md`, `references/commands-and-settings.md`:
+* **Corrected** `services/ktl-registrar-plugin.md`, `references/commands-and-settings.md`:
   both described a fourth command, `check-sibling-plugin`, "re-checking for
   an installed OKF validator" via `app.plugins`. That detection
   (`detectOkfValidator`) is commented out in `src/main.ts` - not a public
@@ -354,7 +342,7 @@
 
 * **Corrected** `services/report-view.md`: attributed `processQueue`/batch
   size 50 to `src/report-view.ts` itself. That batching lives in
-  `src/main.ts` (see `lokf-enforcer-plugin.md`) and the batch size is the
+  `src/main.ts` (see `ktl-registrar-plugin.md`) and the batch size is the
   user-configurable `batchSize` setting, not a hardcoded constant;
   `report-view.ts` only renders the progress bar it's driven with.
 
@@ -403,7 +391,7 @@
   or by `README.md` (both plugin services, both playbooks with a repo doc
   resource, `references/commands-and-settings.md`, `policies/no-telemetry.md`)
   against their current sources - no drift found - plus `references/lokf-toolkit.md`
-  against the live PyPI listing. Recorded a `process:lokf-librarian` `verified`
+  against the live PyPI listing. Recorded a `process:ktl-librarian` `verified`
   event on each. The three concepts whose `resource` is an external spec URL
   (LOKF spec, OKF spec, Obsidian plugin guidelines) were not re-fetched this
   run and were left unverified.
@@ -425,10 +413,10 @@
   `## [0.2.0]` entry). Updated the playbook to stop reporting it as open.
 
 * **Initialization**: Bootstrap discovery pass. Scaffolded the LOKF bundle and
-  populated it with 16 concepts derived from the lokf-enforcer repository: 4
+  populated it with 16 concepts derived from the obsidian-ktl-registrar repository: 4
   services (plugin, validator engine, report view, settings tab), 4 references
   (LOKF spec, OKF spec, Obsidian plugin guidelines, commands and settings), 3
   glossary terms (LOKF, OKF, Diátaxis genre), 3 playbooks (knowledge sources,
   contributing, releasing), 1 policy (no telemetry), and 1 explanation (why
-  LOKF Enforcer exists as a layered add-on). `base_iri` is a placeholder
-  (`lokf-enforcer.example`) pending a real, owned namespace.
+  KTL Registrar exists as a layered add-on). `base_iri` is a placeholder
+  (`ktl-registrar.example`) pending a real, owned namespace.

@@ -18,7 +18,7 @@ export class ConfirmModal extends Modal {
   onOpen(): void {
     const { contentEl } = this;
     contentEl.createEl("p", { text: this.message });
-    const buttons = contentEl.createDiv({ cls: "lokf-confirm-buttons" });
+    const buttons = contentEl.createDiv({ cls: "ktl-confirm-buttons" });
     const confirm = buttons.createEl("button", { cls: "mod-cta", text: this.confirmLabel });
     confirm.addEventListener("click", () => {
       this.close();

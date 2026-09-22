@@ -30,9 +30,9 @@ export class FindingSuggestModal extends SuggestModal<FindingItem> {
   }
 
   renderSuggestion(it: FindingItem, el: HTMLElement): void {
-    el.createDiv({ cls: "lokf-suggest-title", text: it.issue.message });
+    el.createDiv({ cls: "ktl-suggest-title", text: it.issue.message });
     el.createEl("small", {
-      cls: "lokf-suggest-meta",
+      cls: "ktl-suggest-meta",
       text: `${it.issue.severity} · ${it.issue.rule} · ${it.path}`,
     });
   }

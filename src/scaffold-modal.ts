@@ -34,13 +34,13 @@ export class ScaffoldChoiceModal extends Modal {
       text: `Create a ${this.folderName} folder inside it: the header goes there, and the notes around it are left alone.`,
     });
     contentEl.createEl("p", {
-      cls: "lokf-scaffold-hint",
+      cls: "ktl-scaffold-hint",
       text:
         this.suggest === "vault-root"
           ? "Suggested: make this vault the exhibition - it holds nothing but an index.md."
           : "Suggested: create the folder - this vault already holds notes that were never LOKF concepts.",
     });
-    const buttons = contentEl.createDiv({ cls: "lokf-confirm-buttons" });
+    const buttons = contentEl.createDiv({ cls: "ktl-confirm-buttons" });
     const root = buttons.createEl("button", { text: "Make this vault the exhibition" });
     const folder = buttons.createEl("button", { text: `Create a ${this.folderName} folder` });
     const suggested = this.suggest === "vault-root" ? root : folder;
