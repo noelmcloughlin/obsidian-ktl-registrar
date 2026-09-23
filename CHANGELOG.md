@@ -10,6 +10,10 @@ No version below has been published as a GitHub release yet, so entries describe
 
 - **The README and `docs/for-the-curious.md` are restyled for the reader**: shorter sentences, plain statements, labels set off with a colon, the OKF base layer as a table. The section *Philosophy: warnings, not errors, almost everywhere* is now *Why almost everything is a warning*, and the host-by-host layouts live once in the skills' `docs/obsidian.md`.
 
+### Fixed
+
+- **The scheduled librarian installs its skill from `v0.22.0`**, the first tag with `skills/ktl-librarian`; the weekly run had failed at that step since the plugin took the KTL name.
+
 ## [1.5.0] - 2026-09-22
 
 ### Added
