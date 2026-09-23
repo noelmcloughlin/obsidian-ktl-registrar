@@ -6,3 +6,7 @@ lokf-tables/
 
 # Obsidian's per-vault config, written when knowledge/ is opened as a vault
 knowledge/.obsidian/
+
+# knowledge-feedback.sh rewrites feedback.md through a temporary file and a
+# lock directory beside it; a run killed outright can leave either behind.
+feedback.md.*
