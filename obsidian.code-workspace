@@ -1,10 +1,10 @@
 {
 	"folders": [
 		{
-			"path": "../lokf-agent-skills"
+			"path": "../knowledge-trust-ladder"
 		},
 		{
-			"path": "../obsidian-lokf-curator"
+			"path": "../obsidian-ktl-curator"
 		},
 		{
 			"path": "."
