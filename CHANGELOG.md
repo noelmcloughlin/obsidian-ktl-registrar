@@ -10,6 +10,14 @@ No version below has been published as a GitHub release yet, so entries describe
 
 - **The README and `docs/for-the-curious.md` are restyled for the reader**: shorter sentences, plain statements, labels set off with a colon, the OKF base layer as a table. The section *Philosophy: warnings, not errors, almost everywhere* is now *Why almost everything is a warning*, and the host-by-host layouts live once in the skills' `docs/obsidian.md`.
 
+### Fixed
+
+- **The scheduled librarian installs its skill from `v0.23.0`.** The pin still named `v0.21.0`, which has no `skills/ktl-librarian`, so the weekly run had failed at that step since the plugin took the KTL name.
+
+### Security
+
+- **The sidecar carries `knowledge-feedback.sh`.** ktl-docent records a reader's gap through it and never opens `feedback.md`, so no other reader's text enters its session (Snyk W011). It comes from the `v0.23.0` templates, the release the pin now names.
+
 ## [1.5.0] - 2026-09-22
 
 ### Added
