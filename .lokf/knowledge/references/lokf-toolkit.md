@@ -14,7 +14,7 @@ generated:
   at: "2026-09-08T02:00:00Z"
 verified:
   - by: process:ktl-librarian
-    at: "2026-09-11T00:00:00Z"
+    at: "2026-09-10T23:07:52Z"
 ---
 
 # Overview

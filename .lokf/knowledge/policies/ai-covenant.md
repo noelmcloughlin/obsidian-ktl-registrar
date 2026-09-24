@@ -6,7 +6,7 @@ description: Contributors own what they submit regardless of which tools helped 
 resource: AI_COVENANT.md
 generated:
   by: process:ktl-librarian
-  at: "2026-09-11T12:00:00Z"
+  at: "2026-09-10T23:58:28Z"
 status: draft
 ---
 
