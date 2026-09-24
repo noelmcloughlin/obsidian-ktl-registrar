@@ -6,6 +6,10 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+### Security
+
+- **The sidecar's preflight and skills pin match `v0.23.1`.** The preflight now compares a librarian workflow with the template's apart from `TRUST_LADDER_SKILLS_REF`, which each repository moves on its own schedule. This repository has no bare `skills/` directory for that check to compare against, so its output does not change; no plugin change.
+
 ## [1.5.1] - 2026-09-23
 
 ### Changed
