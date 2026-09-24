@@ -95,8 +95,9 @@ GitHub will not let anyone approve their own pull request, so on a
 one-person repository signing is the path: a GPG key, or the SSH key already
 used to push, registered on GitHub as a *signing* key (a separate list from
 authentication keys), `commit.gpgsign true`, and a commit email verified on
-the account. The skills' `ktl-sidecar/references/automation.md` has both
-setups and the trap between them. Without that, every confirmation LOKF
+the account. The skills' `ktl-sidecar/references/gate.md` has the SSH
+setup and the trap between the two key lists, and links to the GPG
+alternative. Without that, every confirmation LOKF
 Curator records is rejected at this gate - the intended failure: an
 unchecked concept is supposed to read as unchecked.
 
