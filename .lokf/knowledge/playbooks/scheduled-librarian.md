@@ -10,11 +10,11 @@ relatedTo:
   - https://ktl-registrar.example/knowledge/playbooks/knowledge-registrar-gate
 generated:
   by: process:ktl-librarian
-  at: "2026-09-14T17:45:00Z"
+  at: "2026-09-14T16:33:33Z"
 status: draft
 verified:
   - by: process:ktl-librarian
-    at: "2026-09-14T17:45:00Z"
+    at: "2026-09-14T16:33:33Z"
 ---
 
 # Overview

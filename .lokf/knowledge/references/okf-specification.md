@@ -6,7 +6,7 @@ description: The Open Knowledge Format specification - a directory of Markdown +
 resource: https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md
 generated:
   by: process:ktl-librarian
-  at: "2026-09-12T17:00:00Z"
+  at: "2026-09-12T15:51:01Z"
 ---
 
 # Overview
