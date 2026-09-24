@@ -6,6 +6,8 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+## [1.5.4] - 2026-09-24
+
 ### Security
 
 - **The sidecar copies and the skills pin match `v0.26.0`.** Conventions rule 11 rejects an `at:` later than the commit that recorded it; the six librarian times in this bundle that broke it now carry that commit's time. `knowledge-librarian.yaml` matches its template apart from the pin. No plugin change.

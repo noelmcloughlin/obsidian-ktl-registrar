@@ -1,6 +1,6 @@
 {
   "name": "@noelmcloughlin/ktl-registrar",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "Catch broken note links, missing properties and invalid note types in your frontmatter as you write, so the vault stays a well-formed knowledge graph. The registrar role for Linked Open Knowledge Format (LOKF), a semantic profile of OKF.",
   "main": "main.js",
   "type": "module",
