@@ -20,10 +20,10 @@ A [LOKF](https://lokf.nolan-nichols.com) knowledge base for the **KTL Registrar*
 
 # Services
 
-* [KTL Registrar plugin](services/ktl-registrar-plugin.md) - the plugin's lifecycle, commands, and status bar.
-* [Validator engine](services/validator-engine.md) - the import-free LOKF rule engine.
-* [Report view](services/report-view.md) - the side-panel conformance report.
-* [Settings tab](services/settings-tab.md) - the declarative settings UI.
+* [KTL Registrar Plugin](services/ktl-registrar-plugin.md) - Obsidian plugin lifecycle - commands, status bar, vault-wide scanning, bundle-root resolution, and the read-only API the sibling KTL Curator may read.
+* [Validator Engine](services/validator-engine.md) - Import-free LOKF semantic-layer rule engine - bundle-root header, type vocabulary, typed relationships, and id/IRI-minting consistency.
+* [Report View](services/report-view.md) - Collapsible side-panel view rendering the vault-wide LOKF conformance report.
+* [Settings Tab](services/settings-tab.md) - Declarative settings tab (Obsidian 1.13.0 getSettingDefinitions API) for KTL Registrar's configuration.
 
 # References
 
@@ -46,7 +46,7 @@ A [LOKF](https://lokf.nolan-nichols.com) knowledge base for the **KTL Registrar*
 * [Releasing](playbooks/releasing.md)
 * [Quality gates](playbooks/quality-gates.md)
 * [Scheduled librarian](playbooks/scheduled-librarian.md)
-* [Knowledge registrar gate](playbooks/knowledge-registrar-gate.md) - what a new `human:` confirmation must be backed by before it merges
+* [Knowledge registrar gate](playbooks/knowledge-registrar-gate.md) - The knowledge-registrar.yaml workflow - validates the bundle on every pull request that touches it, and ties every newly added human: confirmation to evidence GitHub holds (that person's approval of the pull request, or their verified signature on the commit that introduced it), with an environment-reviewer attestation as the escape hatch for a repository that cannot sign.
 
 # Policies
 
