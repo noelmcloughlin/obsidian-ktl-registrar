@@ -6,6 +6,10 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+### Security
+
+- **The sidecar copies and the skills pin match `v0.34.1`.** The Copilot docent's instructions, `.lokf/m365/ktl-docent-m365.md`, label a concept as the report script does. A retired concept carries no other label, *edited since a person last confirmed it* takes the place of *confirmed by a person*, and an empty `verified` list reads as *nobody has checked this yet*. A Miss in its gap report starts with the reader's question and says whether a concept looked relevant from `index.md`. No plugin change.
+
 ## [1.5.7] - 2026-10-05
 
 ### Security
