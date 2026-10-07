@@ -130,6 +130,13 @@ export const DEFAULT_GENRE_VALUES = ["tutorial", "how-to", "reference", "explana
 
 export const DEFAULT_CONCEPT_STATUSES = ["draft", "stable", "deprecated"];
 
+// The relation fields: every slot the LOKF schema ranges over Concept, apart
+// from two structural ones, `concepts` (the bundle's own list) and `target` (a
+// reified relation's). The schema declares each of them multivalued, which the
+// must-be-a-list rule in validateRelationships relies on. This module stays
+// import-free, so the list is hand-kept here and the smoke test holds it to
+// the pinned manifest (src/lokf-vocab.json), as the skills repository's
+// contract holds its report script's copy to the schema.
 export const RELATION_FIELDS = [
   "isPartOf",
   "hasPart",
@@ -141,12 +148,21 @@ export const RELATION_FIELDS = [
   "relatedTo",
   "definedBy",
   "source",
+  "measures",
+  "memberOf",
+  "holder",
 ] as const;
 
-// The fixed predicates above, plus the documented example of one outside that
-// set. The full RelationType vocabulary lives in the LOKF schema, so the check
-// that uses this list is off by default rather than guessing at completeness.
-export const DEFAULT_KNOWN_PREDICATES = [...RELATION_FIELDS, "joinsWith"];
+// The built-in default for `knownPredicates` before the manifest supplied the
+// schema's RelationType enum: the first ten relation fields plus the
+// documented example of a predicate outside them. Frozen as a literal, not
+// derived from RELATION_FIELDS, because mergeSavedSettings (vocab.ts) compares
+// a saved list with it to tell an untouched setting, safe to refresh from the
+// schema, from one a person edited. The manifest supplies the real default.
+export const DEFAULT_KNOWN_PREDICATES = [
+  "isPartOf", "hasPart", "references", "dependsOn", "derivedFrom", "about", "sameAs",
+  "relatedTo", "definedBy", "source", "joinsWith",
+];
 
 export const DEFAULT_AUTHORITY_DENYLIST = [
   "github.com",
@@ -647,7 +663,7 @@ export function validateRootHeader(
 const CONCEPT_SIGNAL_FIELDS = new Set<string>([
   ...RELATION_FIELDS,
   "relations", "sources", "generated", "verified", "stale_after",
-  "distribution", "fields", "measures", "formula", "definition",
+  "distribution", "fields", "formula", "definition",
   "runtime", "parameters", "computation", "executor", "attester",
 ]);
 
@@ -891,8 +907,8 @@ export function validateRelationships(
 ): LokfIssue[] {
   const issues: LokfIssue[] = [];
 
-  // `mustBeList` applies only to the ten named RELATION_FIELDS below, never to
-  // a single relations[].target: the generated schema declares those ten
+  // `mustBeList` applies only to the named RELATION_FIELDS, never to a single
+  // relations[].target: the generated schema declares every one of those
   // slots multivalued (Rule 4), so a bare scalar there - natural to write,
   // and semantically a single target either way - fails real `lokf validate`
   // even though this function would happily resolve it. A real audit of this

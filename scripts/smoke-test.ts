@@ -36,6 +36,7 @@ import {
   applySeverityOverrides,
   applyFieldAliases,
   DEFAULT_SETTINGS,
+  RELATION_FIELDS,
   type LokfIssue,
   type LokfSettings,
   implicitBundleRoots,
@@ -463,7 +464,7 @@ section("relationships: a sibling-relative target resolves without a false warni
 
 // A real audit of this bundle found this mistake in roughly half its concepts
 // (see .lokf/knowledge/log.md, 2026-09-09): the generated schema requires a
-// list for all ten RELATION_FIELDS, so a bare scalar - natural to write, and
+// list for every named relation field, so a bare scalar - natural to write, and
 // semantically a single target either way - fails real `lokf validate` even
 // though this plugin previously validated it clean.
 section("relationships: a bare scalar on a named relation field is flagged (schema requires a list)", () => {
@@ -480,6 +481,16 @@ section("relationships: a bare scalar on a named relation field is flagged (sche
 
   const list = check("services/a.md", `---\ntype: Reference\ndependsOn:\n  - ${target}\n---\n`, { baseIri, exists });
   expect("list form of the same target is clean", warnings(list) === 0, show(list));
+
+  // The three fields the schema added after the first ten follow the same rule.
+  // Only the relation rule is under test: the suite's default settings predate
+  // the manifest, so `Role` draws a vocabulary warning, and a Metric without
+  // its recommended fields draws field warnings.
+  const relation = (issues: LokfIssue[]) => issues.filter((i) => i.rule === "lokf/4-relations");
+  const role = relation(check("roles/a.md", `---\ntype: Role\nmemberOf: ${target}\nholder: ${target}\n---\n`, { baseIri, exists }));
+  expect("memberOf and holder as scalars each warn", role.length === 2 && role.every((i) => i.message.includes("list")), show(role));
+  const metric = relation(check("metrics/a.md", `---\ntype: Metric\nmeasures:\n  - ${target}\n---\n`, { baseIri, exists }));
+  expect("a measures list is clean", metric.length === 0, show(metric));
 
   // relations[].target is a single reified relation's own target, never
   // itself multivalued - the "must be a list" rule must not reach it.
@@ -1188,6 +1199,23 @@ section("computeFixes - base_iri terminator, type alias, scalar relation", () =>
   const relDoc = `---\ntype: Reference\ndependsOn: ./other.md\n---\n`;
   const relFixed = applyFixEdits(relDoc, computeFixes(check("r.md", relDoc, { baseIri: "https://x.example/knowledge/", exists: () => false }), relDoc, parse(relDoc).data));
   expect("converts a bare-scalar relation to a one-item list", /dependsOn:\n {2}- \.\/other\.md/.test(relFixed), relFixed);
+
+  const roleDoc = `---\ntype: Role\nholder: ./ada.md\n---\n`;
+  const roleFixed = applyFixEdits(roleDoc, computeFixes(check("o.md", roleDoc, { baseIri: "https://x.example/knowledge/", exists: () => false }), roleDoc, parse(roleDoc).data));
+  expect("converts a bare-scalar holder to a one-item list", /holder:\n {2}- \.\/ada\.md/.test(roleFixed), roleFixed);
+});
+
+section("validator.ts - RELATION_FIELDS is the pinned schema's list", () => {
+  // The slots the schema ranges over Concept, apart from the bundle's own
+  // `concepts` and a reified relation's `target`: the rule the skills
+  // repository's contract applies to its report script. The list is hand-kept
+  // in validator.ts, which stays import-free, and held to the manifest here.
+  const slots = (lokfVocab as { slots?: { name: string; range?: string; multivalued?: boolean }[] }).slots ?? [];
+  const fromSchema = slots.filter((s) => s.range === "Concept" && s.name !== "concepts" && s.name !== "target");
+  const names = fromSchema.map((s) => s.name);
+  expect("the manifest carries each slot's range (else re-run scripts/build-vocab.mjs)", slots.some((s) => s.range !== undefined), "no range on any slot");
+  expect("RELATION_FIELDS matches the schema", [...RELATION_FIELDS].join(",") === names.join(","), `code: ${RELATION_FIELDS.join(",")} | schema: ${names.join(",")}`);
+  expect("every relation field is multivalued, as the must-be-a-list rule assumes", fromSchema.every((s) => s.multivalued === true), fromSchema.filter((s) => s.multivalued !== true).map((s) => s.name).join(","));
 });
 
 section("computeFixes - only unambiguous fixes; owned/unknown values left alone", () => {
