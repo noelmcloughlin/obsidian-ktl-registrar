@@ -6,6 +6,8 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+## [1.5.10] - 2026-10-07
+
 ### Fixed
 
 - **The relation rules cover `measures`, `memberOf` and `holder`.** The LOKF schema ranges thirteen slots over `Concept`, and the plugin's list had the first ten. A bare scalar in one of the three went unflagged, with no *Make it a list* fix, no target completion, and no edge in the concept graph or in the proposals. The smoke test now holds the list to the pinned schema manifest, as the skills repository's contract holds its report script's copy to the schema, and `scripts/build-vocab.mjs` keeps each slot's range and cardinality in the manifest. The built-in `knownPredicates` default stays as it was, so an untouched setting is still refreshed from the schema on upgrade.
