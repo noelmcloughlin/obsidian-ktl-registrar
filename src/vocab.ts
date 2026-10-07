@@ -38,8 +38,10 @@ export interface LokfVocabManifest {
   conceptStatuses: string[];
   subsets: string[];
   /** Field-slot descriptions for the "Look up a LOKF field" reference; optional
-   *  so an older manifest without them still validates (fields.ts falls back). */
-  slots?: { name: string; description: string }[];
+   *  so an older manifest without them still validates (fields.ts falls back).
+   *  A row carries the slot's range and cardinality when the schema gives them;
+   *  the smoke test reads the relation fields off the rows ranged Concept. */
+  slots?: { name: string; description: string; range?: string; multivalued?: boolean }[];
 }
 
 function stringArray(value: unknown): string[] | null {
