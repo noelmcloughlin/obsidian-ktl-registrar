@@ -6,6 +6,10 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+### Changed
+
+- **The sidecar's README links OKF's specification in its own repository.** Google moved the Open Knowledge Format to `GoogleCloudPlatform/open-knowledge-format` and froze the copy under `knowledge-catalog/okf/`.
+
 ## [1.5.11] - 2026-10-07
 
 ### Security
