@@ -23,7 +23,7 @@ A bundle is a folder of Markdown notes in the [Linked Open Knowledge Format](htt
 
 This plugin is the **registrar** of that family: it checks that every record is well-formed. Its sibling [KTL Curator](https://github.com/noelmcloughlin/obsidian-ktl-curator) records what a person decides about each record. Neither reaches a verdict of its own; the judging stays with the person.
 
-All the roles are in the skills' README under [the fifth role](https://github.com/noelmcloughlin/knowledge-trust-ladder#the-fifth-role-which-is-not-a-skill). For anyone who works under the **three lines of defence**, this plugin is second-line work, keeping the format and never judging truth; [docs/three-lines.md](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/three-lines.md) says where the rest sit.
+All the roles are on the skills' [architecture page](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/architecture.md#four-skills-three-lines-of-the-poem), and the two plugins under [the fifth role](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/architecture.md#the-fifth-role-which-is-not-a-skill). For anyone who works under the **three lines of defence**, this plugin is second-line work, keeping the format and never judging truth; [docs/three-lines.md](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/three-lines.md) says where the rest sit.
 
 Obsidian is optional in both directions: the skills rely on `lokf validate`, not on this plugin, and the plugin works on any LOKF bundle however it was made. The format is all they share.
 
