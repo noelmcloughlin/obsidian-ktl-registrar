@@ -6,6 +6,10 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+### Changed
+
+- **The README is a doorway, in the style of Knowledge Trust Ladder's.** It keeps the poem, the opening paragraph and the agents note, and links the quick start, the architecture and the usage pages. What a bundle is, the two vaults, which folder is the bundle, privacy, the development layout and the credits moved to `docs/architecture.md`; the quick start and the install routes to `docs/install.md`; the report panel, the commands, the settings and the read-only API to `docs/using.md`. No plugin change.
+
 ## [1.5.13] - 2026-10-14
 
 ### Security

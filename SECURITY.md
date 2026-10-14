@@ -15,7 +15,7 @@ Only the latest release line receives fixes. A security fix ships as a patch rel
 KTL Registrar runs inside Obsidian, on the vault you open it in, and nowhere else.
 
 - **No network, no telemetry, no remote code.** It makes no outward call and loads nothing while validating a note.
-- **Reads until you ask it to write.** It reads the vault's Markdown and YAML, and writes only when you run a command that edits a note; [Privacy](README.md#privacy) lists them.
+- **Reads until you ask it to write.** It reads the vault's Markdown and YAML, and writes only when you run a command that edits a note; [Privacy](docs/architecture.md#privacy) lists them.
 - **Vault content is data, never instructions.** There is no AI model, and nothing in a note is executed - not as a command, a script, a template or a URL. Frontmatter and paths are inspected by deterministic rules.
 - **No dependency on another plugin.** It detects nothing and calls into nothing else installed in the vault.
 

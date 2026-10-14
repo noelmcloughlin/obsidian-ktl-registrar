@@ -1,6 +1,6 @@
 # For the curious: how the checking works
 
-[The README](../README.md) says everything you need to use KTL Registrar. This page says what is checked, and why.
+[Install](install.md) and [Using it](using.md) say everything you need to use KTL Registrar. This page says what is checked, and why.
 
 ## What LOKF adds over plain OKF
 
