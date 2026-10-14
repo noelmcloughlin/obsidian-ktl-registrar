@@ -26,7 +26,7 @@ This page lists the report panel, the in-editor diagnostics, the commands, the s
 | Find an orphan concept (nothing links to it) | Lists the concepts nothing else links to |
 | Look up a LOKF field | Searchable reference of the LOKF frontmatter fields |
 | Insert the bundle's semantic header | Adds a starter header to the bundle's `index.md`. In a vault with no bundle it asks whether this vault *is* the bundle or should hold a `knowledge_bundle/` folder |
-| Promote body links to typed relations… | Guesses a typed relation for each `[[wikilink]]` and lets you confirm each one - the hand-authoring aid for a bundle no agent maintains |
+| Promote body links to typed relations… | Guesses a typed relation for each `[[wikilink]]` and lets you confirm each one: the hand-authoring aid for a bundle no agent maintains |
 | Add Obsidian affordances to the active note | Tags the note with its Diátaxis `genre` and lists its typed relations as wikilinks in one managed block, so the tag pane, graph and backlinks see them |
 | Generate Obsidian affordances across the vault | Does that for every concept, plus a Diátaxis map per bundle, after a confirmation |
 | Generate the Diátaxis map for this bundle | Builds or refreshes `diataxis.md`, grouping concepts by `genre` |
