@@ -50,7 +50,7 @@ There is no dependency in either direction. This plugin reads Markdown and YAML 
 
 ## Where the bundle lives, host by host
 
-The plugin sees a vault. Where that vault's folder sits is the **sidecar**'s business, and the skills' page [The bundle in Obsidian](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/obsidian.md#where-the-bundle-lives-host-by-host) walks through the layouts: a code repository, a vault kept in git, a shared drive, and many hosts in one vault. Two of them touch this plugin. A bundle rearranged into a real `knowledge_bundle/` folder inside a vault is detected as a bundle inside that vault (README, *Which folder is the bundle*). Several repositories' bundles linked into one vault are listed under *Bundle root folders*; keep such links out of Obsidian Sync, which does not carry them.
+The plugin sees a vault. Where that vault's folder sits is the **sidecar**'s business, and the skills' page [The bundle in Obsidian](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/obsidian.md#where-the-bundle-lives-host-by-host) walks through the layouts: a code repository, a vault kept in git, a shared drive, and many hosts in one vault. Two of them touch this plugin. A bundle rearranged into a real `knowledge_bundle/` folder inside a vault is detected as a bundle inside that vault ([Which folder is the bundle](architecture.md#which-folder-is-the-bundle)). Several repositories' bundles linked into one vault are listed under *Bundle root folders*; keep such links out of Obsidian Sync, which does not carry them.
 
 ## Why almost everything is a warning
 

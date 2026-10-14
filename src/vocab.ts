@@ -141,7 +141,7 @@ function arraysEqual(a: string[], b: readonly string[]): boolean {
  * default is refreshed to the pinned schema's, so an upgrade picks up `Role`
  * and the wider predicate set, while a list the person actually edited is
  * left exactly as they left it (and so never gains a later core class on its
- * own - the README and the setting's own description say so).
+ * own - docs/using.md and the setting's own description say so).
  *
  * Pure, so `main.ts`'s `loadSettings` is a call plus an assignment and the
  * rule itself is testable under plain Node.

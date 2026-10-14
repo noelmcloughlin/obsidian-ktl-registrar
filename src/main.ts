@@ -157,7 +157,7 @@ export default class KtlRegistrarPlugin extends Plugin {
   /** With nothing configured, let the vault say what it is: a root index.md
    *  carrying a LOKF header makes the whole vault the bundle; a top-level
    *  `knowledge_bundle/` with its own index.md is a notes vault keeping a
-   *  bundle as a folder among its notes (at the cost the README names);
+   *  bundle as a folder among its notes (at the cost docs/architecture.md names);
    *  neither is a workshop with no exhibition, and the plugin stays out of it unless the
    *  break-glass setting says otherwise. Two index lookups and a
    *  metadata-cache read - cheap enough to run per call and never cached, so
