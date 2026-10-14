@@ -6,6 +6,8 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+## [1.5.14] - 2026-10-14
+
 ### Changed
 
 - **The architecture and for-the-curious pages lose their dead sentences.** The host-by-host section, the independence paragraph and the warnings section say each fact once, and link what the skills' pages already record. No plugin change.
