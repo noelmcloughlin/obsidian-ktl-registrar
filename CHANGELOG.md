@@ -6,6 +6,8 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+## [1.5.18] - 2026-10-15
+
 ### Fixed
 
 - **`.lokf/justfile` takes a domain schema as one variable.** It was the copy from before ktl-sidecar `v0.38.0`, which the sidecar sync never carried. No plugin change.
