@@ -2,6 +2,7 @@
 
 ## 2026-10-15
 
+* **Changed**: the OKF specification moved to `GoogleCloudPlatform/open-knowledge-format`, which still serves v0.2; the `knowledge-catalog/okf/` copy is frozen.
 * **Rewrite**: Why KTL Registrar, after the README became a doorway; the reasoning now comes from `docs/architecture.md` and `docs/for-the-curious.md`, and the history of removed designs is gone.
 * **Changed**: Why KTL Registrar now names `docs/for-the-curious.md` as its resource and the architecture and using pages as sources.
 * **Rewrite**: Contributing, from the current `CONTRIBUTING.md`: Node versions, the codemirror override, the skills pin with its SHA and sidecar copies, and the releasing pull request title.
