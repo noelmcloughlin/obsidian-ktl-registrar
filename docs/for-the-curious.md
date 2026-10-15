@@ -4,7 +4,7 @@
 
 ## What LOKF adds over plain OKF
 
-[OKF](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md) is a folder of Markdown files, one idea per file. Each file starts with a small YAML block whose only requirement is a `type`, such as `Service`, `Policy` or `GlossaryTerm`.
+[OKF](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md) is a folder of Markdown files, one idea per file. Each file starts with a small YAML block whose only requirement is a `type`, such as `Service`, `Policy` or `GlossaryTerm`.
 
 [LOKF](https://lokf.nolan-nichols.com/specification/) is the same folder held to a stricter dialect. Every field and relationship is bound to a public vocabulary (schema.org, DCAT, PROV-O), so the bundle can be turned into a knowledge graph without loss and queried like a database. That precision is what this plugin checks:
 
