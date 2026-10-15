@@ -2,11 +2,14 @@
 type: Reference
 id: https://ktl-registrar.example/knowledge/references/okf-specification
 title: OKF Specification (v0.2)
-description: The Open Knowledge Format specification - a directory of Markdown + YAML frontmatter, one concept per file, with a non-empty type as the only hard requirement.
+description: "The Open Knowledge Format v0.2 specification: a folder of Markdown files with YAML frontmatter, one concept per file, with a type as the only required field, plus the provenance, trust and lifecycle fields and attested computations."
 resource: https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md
 generated:
   by: process:ktl-librarian
-  at: "2026-09-12T15:51:01Z"
+  at: "2026-10-15T23:50:48Z"
+verified:
+- by: process:ktl-librarian
+  at: "2026-10-15T23:50:48Z"
 ---
 
 # Overview

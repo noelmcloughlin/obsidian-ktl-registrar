@@ -5,10 +5,14 @@ title: OKF
 definition: Open Knowledge Format - a directory of Markdown files with YAML frontmatter, one concept per file, whose only hard requirement is a non-empty type.
 abbreviation: OKF
 definedBy:
-  - https://ktl-registrar.example/knowledge/references/okf-specification
+- https://ktl-registrar.example/knowledge/references/okf-specification
 generated:
   by: process:ktl-librarian
-  at: "2026-09-08T00:00:00Z"
+  at: "2026-10-15T23:50:48Z"
+description: "OKF, the Open Knowledge Format: a folder of Markdown files with YAML frontmatter, one concept per file, whose only hard requirement is a type."
+verified:
+- by: process:ktl-librarian
+  at: "2026-10-15T23:50:48Z"
 ---
 
 # Overview

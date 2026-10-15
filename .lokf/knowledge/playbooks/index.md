@@ -1,8 +1,8 @@
 # Playbooks
 
-* [Knowledge sources](knowledge-sources.md)
-* [Contributing](contributing.md)
-* [Releasing](releasing.md)
-* [Quality gates](quality-gates.md)
-* [Scheduled librarian](scheduled-librarian.md)
-* [Knowledge registrar gate](knowledge-registrar-gate.md) - The knowledge-registrar.yaml workflow - validates the bundle on every pull request that touches it, and ties every newly added human: confirmation to evidence GitHub holds (that person's approval of the pull request, or their verified signature on the commit that introduced it), with an environment-reviewer attestation as the escape hatch for a repository that cannot sign.
+* [Knowledge Sources](knowledge-sources.md) - Map of the repository files and outside sources this bundle is derived from, which concepts each feeds, how a refresh re-checks each, which files are left out on purpose, and which have no concept yet.
+* [Contributing](contributing.md) - How to set up KTL Registrar for development, how src/ splits into pure and Obsidian-bound modules, and the checklist before a pull request: npm run check, the changelog entry, the skills pin with its sidecar copies, and a releasing pull request title.
+* [Releasing](releasing.md) - Semantic-release computes the version and promotes CHANGELOG.md on merge to main, behind a required-reviewer Environment; the resulting tag invokes the same hardened build-and-attest workflow a hand-pushed tag always has.
+* [Quality Gates](quality-gates.md) - The lint-and-docs.yaml workflow: ShellCheck, actionlint with a check that every action is pinned to a commit, markdownlint, a link check and codespell, on pushes to main, every pull request and a weekly schedule; plus the markdownlint rule overrides and the Dependabot updates that keep the pins current.
+* [Scheduled Librarian](scheduled-librarian.md) - The knowledge-librarian.yaml workflow: three jobs split by privilege, so the agent proposes bundle changes as a patch under a read-only token and only a job that runs no agent pushes the branch and opens the review pull request; how it is switched on, when a scheduled week runs no agent, and the checks publish makes.
+* [Knowledge registrar gate](knowledge-registrar-gate.md) - The knowledge-registrar.yaml workflow: it validates the bundle and its relation targets and checks the sidecar conventions on every pull request that touches the bundle, and ties every human: confirmation a change adds, alters or removes to that person's approving review or verified signature, with an environment reviewer's attestation as the fallback.

@@ -2,21 +2,21 @@
 type: Service
 id: https://ktl-registrar.example/knowledge/services/ktl-registrar-plugin
 title: KTL Registrar Plugin
-description: Obsidian plugin lifecycle - commands, status bar, vault-wide scanning, bundle-root resolution, and the read-only API the sibling KTL Curator may read.
+description: "The plugin lifecycle in src/main.ts: fifteen commands, the status bar, vault-wide scanning, bundle-root resolution, and the read-only API the sibling KTL Curator may read."
 documentation: https://github.com/noelmcloughlin/obsidian-ktl-registrar#readme
 resource: src/main.ts
 dependsOn:
-  - https://ktl-registrar.example/knowledge/services/validator-engine
-  - https://ktl-registrar.example/knowledge/services/report-view
-  - https://ktl-registrar.example/knowledge/services/settings-tab
+- https://ktl-registrar.example/knowledge/services/validator-engine
+- https://ktl-registrar.example/knowledge/services/report-view
+- https://ktl-registrar.example/knowledge/services/settings-tab
 about:
-  - https://ktl-registrar.example/knowledge/references/commands-and-settings
+- https://ktl-registrar.example/knowledge/references/commands-and-settings
 generated:
   by: process:ktl-librarian
-  at: "2026-09-14T12:15:00Z"
+  at: "2026-10-15T23:50:48Z"
 verified:
-  - by: process:ktl-librarian
-    at: "2026-09-14T12:15:00Z"
+- by: process:ktl-librarian
+  at: "2026-10-15T23:50:48Z"
 ---
 
 # Overview
@@ -94,8 +94,8 @@ validate` aborts a run on a note with no frontmatter, which the earlier map
 triggered. The feature-fit audit that stood here as open questions is
 resolved: the map defect fixed; the librarian skill told to leave the
 affordance blocks and the map alone; *Promote body links* described in the
-README as the hand-authoring aid it is; the dot-folder refusal replaced by
-the live check; and the README naming the plugin's writes for what they are.
+`docs/using.md` as the hand-authoring aid it is; the dot-folder refusal replaced by
+the live check; and `docs/architecture.md` naming the plugin's writes for what they are.
 
 # Identity
 

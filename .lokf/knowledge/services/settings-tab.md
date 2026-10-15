@@ -2,56 +2,37 @@
 type: Service
 id: https://ktl-registrar.example/knowledge/services/settings-tab
 title: Settings Tab
-description: Declarative settings tab (Obsidian 1.13.0 getSettingDefinitions API) for KTL Registrar's configuration.
+description: "The declarative settings tab in src/settings.ts (Obsidian 1.13.0 getSettingDefinitions API): its eleven groups, how list settings are stored and saved, bundle root folders and the break-glass whole-vault switch, and Known LOKF types as the domain-schema extension point."
 resource: src/settings.ts
 isPartOf:
-  - https://ktl-registrar.example/knowledge/services/ktl-registrar-plugin
+- https://ktl-registrar.example/knowledge/services/ktl-registrar-plugin
 about:
-  - https://ktl-registrar.example/knowledge/references/commands-and-settings
+- https://ktl-registrar.example/knowledge/references/commands-and-settings
 generated:
   by: process:ktl-librarian
-  at: "2026-09-14T14:58:54Z"
+  at: "2026-10-15T23:50:48Z"
 verified:
-  - by: process:ktl-librarian
-    at: "2026-09-14T14:58:54Z"
+- by: process:ktl-librarian
+  at: "2026-10-15T23:50:48Z"
+sources:
+- resource: src/settings.ts
+- resource: src/vocab.ts
 ---
 
 # Overview
 
-`KtlRegistrarSettingTab` returns declarative `SettingDefinitionItem` groups from
-`getSettingDefinitions()` rather than building DOM in `display()` - the
-imperative form is deprecated since Obsidian 1.13.0 and excluded from
-settings search, which is why `manifest.json` sets `minAppVersion` to
-`1.13.0`. Comma-separated list settings (known types, genre values, known
-predicates, authority denylist, placeholder domains, excluded folders) are
-joined/split in `getControlValue`/`setControlValue`, and persistence routes
-through the plugin's own `saveSettings()` so settings are written from one
-place. *Bundle root folders* no longer refuses a dot-folder entry: it is
-saved, and a `Notice` warns if Obsidian's index does not list that folder
-today (a plugin such as Hidden Folders Access can expose one); left empty, a
-top-level `knowledge_bundle/` is detected on its own - and with neither a
-header nor a `knowledge_bundle/` folder, the vault has no bundle at all
-(status bar `LOKF: no bundle`), unless *Scope & performance*'s break-glass
-**Treat the vault root as the bundle** toggle (`treatVaultRootAsBundle`, off
-by default and "not recommended" in its own description) is on, which reads
-a headerless whole vault as one bundle anyway without overriding a detected
-`knowledge_bundle/` folder. The tab's groups are: This device, In-editor
-diagnostics, Type vocabulary, Type-specific fields, Semantic header &
-base_iri, OKF v0.2 base layer, Trust & lifecycle, Relationships, Rule
-severity, Field aliasing, and Scope & performance. There is no group for any
-other plugin: the former "Alternative OKF validator" group (a deep link into
-the community-plugin browser plus a one-time-notice toggle) was removed on
-2026-09-12.
+`KtlRegistrarSettingTab` returns declarative `SettingDefinitionItem` groups from `getSettingDefinitions()` instead of building DOM, so Obsidian's settings search indexes every setting. The declarative form needs Obsidian 1.13.0, and `manifest.json` sets `minAppVersion` to `1.13.0`.
 
-*Known LOKF types* (`knownTypes`, under Type vocabulary) is the one setting
-that widens what the plugin accepts rather than tightening it, and since
-2026-09-14 its description says so: a bundle validated against a domain
-schema (`lokf validate --schema <file>`) lists that schema's classes there,
-the schema itself sitting outside the vault. Listed classes stop raising
-`lokf/3-vocab` and join frontmatter autocomplete (`suggestVocabularyFor`
-reads the same list). `loadSettings` refreshes the list to the pinned
-manifest only while it still equals the pre-schema hard-coded default, so an
-edited list is never overwritten - and never gains a later core class on its
-own. The type-specific field checks in `validateTypeVocabulary` key on the
-exact normalized class name, so a domain subclass of `Metric` is not held to
-its parent's recommended fields.
+The tab's groups, in order, are: This device, In-editor diagnostics, Type vocabulary, Type-specific fields, Semantic header and base IRI, OKF v0.2 base layer, Trust and lifecycle (OKF v0.2 §5), Relationships, Rule severity, Field aliasing (advanced), and Scope and performance. No group concerns any other plugin.
+
+Settings a person edits as comma-separated text are stored as string arrays: known types, genre values, known predicates, concept statuses, the authority denylist, placeholder domains, rule ids to escalate, field aliases, excluded folders and bundle root folders. `getControlValue` and `setControlValue` join and split them, and saving goes through the plugin's own `saveSettings()`. The device-local disable switch goes through the same two methods, since it lives in local storage and is never synced.
+
+# Bundle roots
+
+*Bundle root folders* accepts a folder inside a dot-folder. When a person saves one that Obsidian's index does not list today, a `Notice` warns that nothing under it will be scanned until a plugin exposes it (Hidden Folders Access, for one) or the folder is opened as its own vault. Left blank, the vault decides: a root `index.md` with a LOKF header makes the whole vault the bundle, otherwise a top-level `knowledge_bundle` folder with its own `index.md` is the bundle, and otherwise the vault has no bundle.
+
+*Treat the vault root as the bundle (break-glass)* (`treatVaultRootAsBundle`) is off by default, and its description says it is meant to stay off. Turned on, it has the whole vault checked anyway. It never overrides a detected `knowledge_bundle` folder, because `implicitBundleRoots` in `src/validator.ts` puts the folder first. Changing either setting tells the plugin that its scope changed.
+
+# Known LOKF types
+
+*Known LOKF types* (`knownTypes`, under Type vocabulary) defaults to the classes of the pinned LOKF schema, and an untouched list is refreshed on upgrade. Its description says that a bundle validated against a domain schema (`lokf validate --schema <file>`) lists that schema's classes here too, because the plugin cannot read the schema, which sits outside the vault, and that listed classes stop warning and appear in autocomplete. It asks that the list be kept the same as KTL Curator's. `mergeSavedSettings` in `src/vocab.ts` refreshes the list only while it still equals the pre-schema default, so an edited list is never overwritten and never gains a later core class on its own.

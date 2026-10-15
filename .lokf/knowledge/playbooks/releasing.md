@@ -5,13 +5,19 @@ title: Releasing
 description: Semantic-release computes the version and promotes CHANGELOG.md on merge to main, behind a required-reviewer Environment; the resulting tag invokes the same hardened build-and-attest workflow a hand-pushed tag always has.
 resource: CONTRIBUTING.md
 dependsOn:
-  - https://ktl-registrar.example/knowledge/references/obsidian-plugin-guidelines
+- https://ktl-registrar.example/knowledge/references/obsidian-plugin-guidelines
 generated:
   by: process:ktl-librarian
-  at: "2026-09-13T19:00:00Z"
+  at: "2026-10-15T23:50:48Z"
 verified:
-  - by: process:ktl-librarian
-    at: "2026-09-14T15:00:00Z"
+- by: process:ktl-librarian
+  at: "2026-10-15T23:50:48Z"
+sources:
+- resource: CONTRIBUTING.md
+- resource: .github/workflows/semantic-release.yml
+- resource: .github/workflows/release.yml
+- resource: .releaserc.json
+- resource: SECURITY.md
 ---
 
 # Overview
@@ -52,12 +58,6 @@ approval) in front of it.
 
 A `pull_request`-triggered `plan` job in `semantic-release.yml` previews
 every PR into `main` with `--dry-run` - no write scope, no commit, no tag -
-so a malformed commit message or a broken exec script surfaces in review.
+so a malformed commit message or a broken exec script surfaces in review. When the commits would release, the same job refuses an empty `## [Unreleased]` section and a pull request title with no releasing type (`feat:`, `fix:`, `security:` or a breaking `!`), because a squash merge takes its subject from the title.
 
-`main` is protected, but not by a merge gate (`CONTRIBUTING.md` and
-`SECURITY.md`, 2026-09-13): deletions and force-pushes are blocked and
-linear history is required, while a rule requiring pull requests or passing
-status checks is deliberately off - rulesets apply to direct pushes too, and
-the release job's own `[skip ci]` promotion commit would be rejected, with
-no bypass-list entry possible for `github-actions[bot]`. CI still runs on
-every pull request and is read before merge; access control is the gate.
+`main` is protected, but not by a merge gate. `SECURITY.md` says `main` blocks deletion and force-pushes and requires linear history, deliberately nothing more, and the skills repository's threat model gives the reasons under [Repository hardening](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/threat-model.md#repository-hardening).

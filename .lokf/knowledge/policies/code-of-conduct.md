@@ -2,18 +2,17 @@
 type: Policy
 id: https://ktl-registrar.example/knowledge/policies/code-of-conduct
 title: Code of Conduct
-description: Contributor Covenant 2.1 - a harassment-free-participation standard, shared verbatim with the sibling knowledge-trust-ladder repository.
+description: The project's code of conduct, adapted from Contributor Covenant 2.1, for harassment-free participation; the same file as the sibling knowledge-trust-ladder repository's.
 resource: CODE_OF_CONDUCT.md
 generated:
   by: process:ktl-librarian
-  at: "2026-09-10T23:58:28Z"
+  at: "2026-10-15T23:50:48Z"
 status: draft
+verified:
+- by: process:ktl-librarian
+  at: "2026-10-15T23:50:48Z"
 ---
 
 # Overview
 
-Standard [Contributor Covenant](https://www.contributor-covenant.org/)
-version 2.1, unmodified except for the enforcement contact. Kept
-byte-identical to
-[knowledge-trust-ladder](https://github.com/noelmcloughlin/knowledge-trust-ladder)'s
-own copy so both repositories hold contributors to the same standard.
+`CODE_OF_CONDUCT.md` is adapted from the [Contributor Covenant](https://www.contributor-covenant.org/), version 2.1, as its last line says, and reports go to the maintainer by email. It is byte-identical to the copy on the `main` branch of [knowledge-trust-ladder](https://github.com/noelmcloughlin/knowledge-trust-ladder), and `CONTRIBUTING.md` calls it the same one the sibling LOKF repositories use.
