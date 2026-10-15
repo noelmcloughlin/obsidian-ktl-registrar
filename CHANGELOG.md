@@ -6,6 +6,10 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+### Security
+
+- **The skills pin matches `v0.43.1`.** The release changed none of the sidecar copies this repository carries. No plugin change.
+
 ## [1.5.18] - 2026-10-15
 
 ### Fixed
