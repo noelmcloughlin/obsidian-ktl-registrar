@@ -1556,11 +1556,11 @@ validateBundle("ktl-sidecar template skeleton", join(repoRoot, "scripts", "fixtu
 });
 
 // (b) this repo's own bundle.
-// Eight: this bundle's `base_iri` is https://w3id.org/ktl/registrar/knowledge/,
-// which every concept's minted id inherits.
+// Seven: the four Service concepts lack the recommended `endpoint`, and three
+// of them `documentation`, since a plugin's parts have no address of their own.
 validateBundle("ktl-registrar's own .lokf/knowledge", join(repoRoot, ".lokf", "knowledge"), {
   required: true,
-  expectedWarnings: 8,
+  expectedWarnings: 7,
 });
 
 // (c) any other real bundle, opt-in so this suite stays hermetic - its result
