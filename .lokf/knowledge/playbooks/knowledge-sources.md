@@ -5,10 +5,10 @@ title: Knowledge Sources
 description: Map of the repository files and outside sources this bundle is derived from, which concepts each feeds, how a refresh re-checks each, which files are left out on purpose, and which have no concept yet.
 generated:
   by: process:ktl-librarian
-  at: "2026-10-15T23:50:48Z"
+  at: "2026-10-16T00:38:14Z"
 verified:
 - by: process:ktl-librarian
-  at: "2026-10-15T23:50:48Z"
+  at: "2026-10-16T00:38:14Z"
 ---
 
 # Sources
@@ -17,18 +17,20 @@ Each row names the files a concept is derived from, the concepts they feed, and 
 
 | Source | Feeds | Re-check by |
 | --- | --- | --- |
-| `README.md`, `docs/architecture.md`, `docs/for-the-curious.md` | `explanation/why-ktl-registrar.md`, `policies/no-telemetry.md` | re-read on any change to the README or the docs pages; the README is a doorway to the docs |
+| `README.md`, `docs/architecture.md`, `docs/for-the-curious.md` | `explanation/why-ktl-registrar.md`, `policies/no-telemetry.md` | re-read on any change to the README or the docs pages; the README links the docs pages on the website |
 | `docs/using.md`, `src/main.ts` | `references/commands-and-settings.md`, `services/ktl-registrar-plugin.md` | compare the command table and the settings list with the ids in `src/main.ts` and the groups in `src/settings.ts` |
 | `src/validator.ts`, `src/report-view.ts`, `src/settings.ts`, `src/vocab.ts` | the four Service concepts | re-read each file; a new or removed rule group, settings group or relation field is a gap |
 | `manifest.json`, `package.json` | plugin identity, `minAppVersion`, the npm scripts | compare with `playbooks/contributing.md` and `services/settings-tab.md` |
 | `CONTRIBUTING.md`, `scripts/smoke-test.ts`, `eslint.config.mts` | `playbooks/contributing.md` | compare the checklist and the import-free module list with what the smoke test imports |
 | `.github/workflows/semantic-release.yml`, `.github/workflows/release.yml`, `.releaserc.json` | `playbooks/releasing.md` | compare the jobs, permissions and triggers |
-| `.github/workflows/lint-and-docs.yaml`, `.markdownlint-cli2.jsonc`, `.github/dependabot.yml` | `playbooks/quality-gates.md` | compare the job steps, the disabled rules and the ecosystems |
+| `.github/workflows/lint-and-docs.yaml`, `.markdownlint-cli2.jsonc`, `.github/dependabot.yml` | `playbooks/quality-gates.md` | compare the job steps, the disabled rules, the ignored folders and the ecosystems |
 | `.github/workflows/knowledge-registrar.yaml`, `.lokf/justfile`, `.lokf/curators/` | `playbooks/knowledge-registrar-gate.md` | compare the three jobs with the `ktl-sidecar` template at the pinned release |
 | `.github/workflows/knowledge-librarian.yaml`, `.lokf/scripts/knowledge-librarian.sh` | `playbooks/scheduled-librarian.md` | compare the jobs and the wrapper with the template; `SECURITY.md` says the copy differs only in the pin |
+| `website/README.md`, `website/site.config.mjs`, `.github/workflows/knowledge-website.yaml` | `playbooks/knowledge-website.md` | compare what each page is built from, the preview commands, the options, the triggers, the two jobs and the deploy switch |
 | `SECURITY.md` | the gate, librarian, releasing and no-telemetry concepts | compare the surface table's rows and links |
 | `AI_COVENANT.md`, `CODE_OF_CONDUCT.md` | the two policy concepts | diff against knowledge-trust-ladder's copies; the code of conduct is identical and the covenant is adapted |
 | The OKF and LOKF specifications, the `lokf` toolkit, Obsidian's plugin guidelines | the four Reference concepts and the glossary | fetch the URL; for Obsidian's guidelines, read the Markdown in `obsidianmd/obsidian-developer-docs` |
+| `.lokf/pyproject.toml`, `.lokf/justfile` | `references/lokf-toolkit.md` | compare the `lokf[build]>=` floor and the recipes |
 | PyPI `lokf` | the `lokf[build]>=` floor in `.lokf/pyproject.toml` | `uvx --from pip pip index versions lokf` |
 
 # Left out on purpose
@@ -38,6 +40,8 @@ Each row names the files a concept is derived from, the concepts they feed, and 
 - `.assets/*.svg` holds the logo and the pictures in `docs/architecture.md`, which carry no claim of their own.
 
 - Repository plumbing with no claim of its own: `community-plugin-entry.json`, `NOTICE`, `LICENSE`, `lychee.toml`, `.editorconfig`, `esbuild.config.mjs`, `tsconfig.json`, `version-bump.mjs`, `versions.json`, `obsidian.code-workspace`, `.github/ISSUE_TEMPLATE/`, `.github/pull_request_template.md`, `.github/scripts/changelog-release.mjs` (described in `playbooks/releasing.md`), `scripts/build-vocab.mjs` and `scripts/fixtures/`.
+
+- The rest of `website/` (`astro.config.mjs`, `package.json`, `package-lock.json`, `tsconfig.json`, `NOTICE`, `.gitignore`, `scripts/` and `src/`), the site's build code and house style, which `website/README.md` describes and `playbooks/knowledge-website.md` covers.
 
 - The sidecar's own tooling under `.lokf/` (`scripts/`, `m365/`, `README.md`, `queries.http`), which are copies of the `ktl-sidecar` templates.
 

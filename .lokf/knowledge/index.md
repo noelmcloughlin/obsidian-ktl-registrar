@@ -28,7 +28,7 @@ A [LOKF](https://lokf.nolan-nichols.com) knowledge base for the **KTL Registrar*
 # References
 
 * [LOKF specification](references/lokf-specification.md)
-* [LOKF toolkit](references/lokf-toolkit.md)
+* [LOKF Toolkit](references/lokf-toolkit.md) - The `lokf` PyPI package that the `.lokf/` sidecar depends on (`lokf[build]>=0.8.0`) and runs through the justfile recipes and the website's sync; a separate resource from the LOKF specification website.
 * [OKF Specification (v0.2)](references/okf-specification.md) - The Open Knowledge Format v0.2 specification: a folder of Markdown files with YAML frontmatter, one concept per file, with a type as the only required field, plus the provenance, trust and lifecycle fields and attested computations.
 * [Obsidian Plugin Guidelines](references/obsidian-plugin-guidelines.md) - Obsidian's developer guidelines for community plugins, for example sentence case in UI text, setHeading in a settings tab, no innerHTML, no detaching leaves in onunload and no hardcoded styling, which eslint-plugin-obsidianmd enforces in this repository.
 * [Commands and Settings](references/commands-and-settings.md) - Every KTL Registrar command with its id and name, what the status-bar item does when clicked, and the settings groups under Settings → KTL Registrar, including Known LOKF types for a domain schema, from docs/using.md and src/main.ts.
@@ -47,6 +47,7 @@ A [LOKF](https://lokf.nolan-nichols.com) knowledge base for the **KTL Registrar*
 * [Quality Gates](playbooks/quality-gates.md) - The lint-and-docs.yaml workflow: ShellCheck, actionlint with a check that every action is pinned to a commit, markdownlint, a link check and codespell, on pushes to main, every pull request and a weekly schedule; plus the markdownlint rule overrides and the Dependabot updates that keep the pins current.
 * [Scheduled Librarian](playbooks/scheduled-librarian.md) - The knowledge-librarian.yaml workflow: three jobs split by privilege, so the agent proposes bundle changes as a patch under a read-only token and only a job that runs no agent pushes the branch and opens the review pull request; how it is switched on, when a scheduled week runs no agent, and the checks publish makes.
 * [Knowledge registrar gate](playbooks/knowledge-registrar-gate.md) - The knowledge-registrar.yaml workflow: it validates the bundle and its relation targets and checks the sidecar conventions on every pull request that touches the bundle, and ties every human: confirmation a change adds, alters or removes to that person's approving review or verified signature, with an environment reviewer's attestation as the fallback.
+* [Knowledge Website](playbooks/knowledge-website.md) - The website/ folder and the knowledge-website.yaml workflow: an Astro Starlight site built from the bundle, the README, docs/ and the changelog, how to preview it, what to edit, and how the workflow builds it on pull requests and deploys it to GitHub Pages at `https://noelmcloughlin.github.io/obsidian-ktl-registrar/` once KNOWLEDGE_WEBSITE_ENABLED is true.
 
 # Policies
 

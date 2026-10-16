@@ -8,10 +8,10 @@ dependsOn:
 - https://ktl-registrar.example/knowledge/references/obsidian-plugin-guidelines
 generated:
   by: process:ktl-librarian
-  at: "2026-10-15T23:50:48Z"
+  at: "2026-10-16T00:38:14Z"
 verified:
 - by: process:ktl-librarian
-  at: "2026-10-15T23:50:48Z"
+  at: "2026-10-16T00:38:14Z"
 status: draft
 sources:
 - resource: .github/workflows/lint-and-docs.yaml
@@ -43,7 +43,7 @@ It runs on a push to `main`, on every pull request against any branch, on a Mond
 - `MD033`: angle-bracket placeholders are template tokens, not HTML.
 - `MD041`: an insertable template fragment starts mid-document.
 - `MD060`: the GFM table convention pairs a padded header with a bare separator row.
-`MD024` is scoped to `siblings_only`, so `CHANGELOG.md`'s repeated Keep a Changelog headings pass while a real duplicate under the same parent still fails. The config ignores virtualenvs, `node_modules`, the run-time skill folders `.agents/` and `.claude/`, and the `knowledge_bundle` link, whose files are linted at their real path.
+`MD024` is scoped to `siblings_only`, so `CHANGELOG.md`'s repeated Keep a Changelog headings pass while a real duplicate under the same parent still fails. The config ignores virtualenvs, `node_modules`, the run-time skill folders `.agents/` and `.claude/`, and the `knowledge_bundle` link, whose files are linted at their real path. It also ignores the folders the knowledge website generates (`website/dist/`, `website/public/`, `website/src/content/` and `website/src/generated/`), because the files they come from are linted where they are.
 
 # Dependabot
 
