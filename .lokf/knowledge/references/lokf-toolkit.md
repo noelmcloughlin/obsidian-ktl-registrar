@@ -1,6 +1,6 @@
 ---
 type: Reference
-id: https://ktl-registrar.example/knowledge/references/lokf-toolkit
+id: https://w3id.org/ktl/registrar/knowledge/references/lokf-toolkit
 title: LOKF Toolkit
 description: The `lokf` PyPI package that the `.lokf/` sidecar depends on (`lokf[build]>=0.8.0`) and runs through the justfile recipes and the website's sync; a separate resource from the LOKF specification website.
 resource: https://pypi.org/project/lokf/
@@ -10,7 +10,7 @@ sources:
 - resource: .lokf/pyproject.toml
 - resource: .lokf/justfile
 relatedTo:
-- https://ktl-registrar.example/knowledge/references/lokf-specification
+- https://w3id.org/ktl/registrar/knowledge/references/lokf-specification
 generated:
   by: process:ktl-librarian
   at: "2026-10-16T00:38:14Z"

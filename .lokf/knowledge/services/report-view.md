@@ -1,11 +1,11 @@
 ---
 type: Service
-id: https://ktl-registrar.example/knowledge/services/report-view
+id: https://w3id.org/ktl/registrar/knowledge/services/report-view
 title: Report View
 description: Collapsible side-panel view rendering the vault-wide LOKF conformance report.
 resource: src/report-view.ts
 isPartOf:
-  - https://ktl-registrar.example/knowledge/services/ktl-registrar-plugin
+  - https://w3id.org/ktl/registrar/knowledge/services/ktl-registrar-plugin
 generated:
   by: process:ktl-librarian
   at: "2026-09-10T23:58:28Z"

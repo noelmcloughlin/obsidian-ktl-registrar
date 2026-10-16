@@ -1,6 +1,6 @@
 ---
 type: Policy
-id: https://ktl-registrar.example/knowledge/policies/no-telemetry
+id: https://w3id.org/ktl/registrar/knowledge/policies/no-telemetry
 title: No Telemetry
 description: KTL Registrar makes no network requests, has no telemetry and no external services, and loads no remote code; it reads the open vault and writes only when a person runs a command that edits a note.
 resource: docs/architecture.md

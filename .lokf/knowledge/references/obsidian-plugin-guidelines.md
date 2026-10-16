@@ -1,6 +1,6 @@
 ---
 type: Reference
-id: https://ktl-registrar.example/knowledge/references/obsidian-plugin-guidelines
+id: https://w3id.org/ktl/registrar/knowledge/references/obsidian-plugin-guidelines
 title: Obsidian Plugin Guidelines
 description: Obsidian's developer guidelines for community plugins, for example sentence case in UI text, setHeading in a settings tab, no innerHTML, no detaching leaves in onunload and no hardcoded styling, which eslint-plugin-obsidianmd enforces in this repository.
 resource: https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines

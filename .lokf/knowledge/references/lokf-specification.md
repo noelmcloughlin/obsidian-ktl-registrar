@@ -1,11 +1,11 @@
 ---
 type: Reference
-id: https://ktl-registrar.example/knowledge/references/lokf-specification
+id: https://w3id.org/ktl/registrar/knowledge/references/lokf-specification
 title: LOKF Specification
 description: The Linked Open Knowledge Format specification - a semantic profile of OKF binding fields and relationships to schema.org/DCAT/PROV-O.
 resource: https://lokf.nolan-nichols.com/specification/
 derivedFrom:
-  - https://ktl-registrar.example/knowledge/references/okf-specification
+  - https://w3id.org/ktl/registrar/knowledge/references/okf-specification
 generated:
   by: process:ktl-librarian
   at: "2026-09-13T19:00:00Z"

@@ -1,6 +1,6 @@
 ---
 type: Policy
-id: https://ktl-registrar.example/knowledge/policies/ai-covenant
+id: https://w3id.org/ktl/registrar/knowledge/policies/ai-covenant
 title: AI Covenant
 description: Contributors own what they submit, whichever tools helped write it; AI may support discussion but never take part on a person's behalf; a repository-owned agent commits under a bot identity, proposes every change as a reviewed pull request, runs with least privilege, and never records a person's verdict itself.
 resource: AI_COVENANT.md

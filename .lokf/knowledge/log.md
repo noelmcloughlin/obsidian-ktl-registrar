@@ -2,6 +2,7 @@
 
 ## 2026-10-16
 
+* **Changed**: the bundle's `base_iri` moved from the placeholder `https://ktl-registrar.example/knowledge/` to `https://w3id.org/ktl/registrar/knowledge/`, a namespace under Knowledge Trust Ladder's w3id.org authority, so the bundle can join a federation; every id and relation target moved with it, and no concept's text changed.
 * **Changed**: Quality Gates now says that `.markdownlint-cli2.jsonc` ignores the folders the knowledge website generates, as it does since #74.
 * **Changed**: LOKF Toolkit now gives the `>=0.8.0` floor that `.lokf/pyproject.toml` declares, not 0.7.0, and pins its fallback schema to the commit tagged v0.8.0 instead of `main`.
 * **Rewrite**: LOKF Toolkit now says that `lokf-install` runs `uv sync` while the other recipes run `uv run lokf`, and that the website's sync runs `lokf export`, from `.lokf/justfile` and `website/README.md`.

@@ -1,13 +1,13 @@
 ---
 type: Playbook
-id: https://ktl-registrar.example/knowledge/playbooks/scheduled-librarian
+id: https://w3id.org/ktl/registrar/knowledge/playbooks/scheduled-librarian
 title: Scheduled Librarian
 description: "The knowledge-librarian.yaml workflow: three jobs split by privilege, so the agent proposes bundle changes as a patch under a read-only token and only a job that runs no agent pushes the branch and opens the review pull request; how it is switched on, when a scheduled week runs no agent, and the checks publish makes."
 resource: .github/workflows/knowledge-librarian.yaml
 dependsOn:
-- https://ktl-registrar.example/knowledge/references/lokf-toolkit
+- https://w3id.org/ktl/registrar/knowledge/references/lokf-toolkit
 relatedTo:
-- https://ktl-registrar.example/knowledge/playbooks/knowledge-registrar-gate
+- https://w3id.org/ktl/registrar/knowledge/playbooks/knowledge-registrar-gate
 generated:
   by: process:ktl-librarian
   at: "2026-10-15T23:50:48Z"

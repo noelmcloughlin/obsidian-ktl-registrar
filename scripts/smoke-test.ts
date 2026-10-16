@@ -1556,8 +1556,8 @@ validateBundle("ktl-sidecar template skeleton", join(repoRoot, "scripts", "fixtu
 });
 
 // (b) this repo's own bundle.
-// Eight: this bundle's `base_iri` is still the RFC 2606 placeholder
-// (ktl-registrar.example), which every concept's minted id inherits.
+// Eight: this bundle's `base_iri` is https://w3id.org/ktl/registrar/knowledge/,
+// which every concept's minted id inherits.
 validateBundle("ktl-registrar's own .lokf/knowledge", join(repoRoot, ".lokf", "knowledge"), {
   required: true,
   expectedWarnings: 8,

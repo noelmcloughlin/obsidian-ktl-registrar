@@ -1,13 +1,13 @@
 ---
 type: Service
-id: https://ktl-registrar.example/knowledge/services/settings-tab
+id: https://w3id.org/ktl/registrar/knowledge/services/settings-tab
 title: Settings Tab
 description: "The declarative settings tab in src/settings.ts (Obsidian 1.13.0 getSettingDefinitions API): its eleven groups, how list settings are stored and saved, bundle root folders and the break-glass whole-vault switch, and Known LOKF types as the domain-schema extension point."
 resource: src/settings.ts
 isPartOf:
-- https://ktl-registrar.example/knowledge/services/ktl-registrar-plugin
+- https://w3id.org/ktl/registrar/knowledge/services/ktl-registrar-plugin
 about:
-- https://ktl-registrar.example/knowledge/references/commands-and-settings
+- https://w3id.org/ktl/registrar/knowledge/references/commands-and-settings
 generated:
   by: process:ktl-librarian
   at: "2026-10-15T23:50:48Z"

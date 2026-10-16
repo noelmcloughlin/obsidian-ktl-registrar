@@ -1,15 +1,15 @@
 ---
 type: Service
-id: https://ktl-registrar.example/knowledge/services/validator-engine
+id: https://w3id.org/ktl/registrar/knowledge/services/validator-engine
 title: Validator Engine
 description: "The import-free rule engine in src/validator.ts: the LOKF semantic layer (bundle header and base_iri, type vocabulary, typed relationships, id minting, trust and lifecycle shape), the OKF v0.2 base layer behind checkOkfBaseLayer, the errors lokf validate also raises, and pure bundle-root detection."
 resource: src/validator.ts
 isPartOf:
-- https://ktl-registrar.example/knowledge/services/ktl-registrar-plugin
+- https://w3id.org/ktl/registrar/knowledge/services/ktl-registrar-plugin
 about:
-- https://ktl-registrar.example/knowledge/references/lokf-specification
+- https://w3id.org/ktl/registrar/knowledge/references/lokf-specification
 relatedTo:
-- https://ktl-registrar.example/knowledge/references/lokf-toolkit
+- https://w3id.org/ktl/registrar/knowledge/references/lokf-toolkit
 generated:
   by: process:ktl-librarian
   at: "2026-10-15T23:50:48Z"
