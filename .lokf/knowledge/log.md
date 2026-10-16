@@ -2,6 +2,11 @@
 
 ## 2026-10-16
 
+* **Changed**: Quality Gates now says that `.markdownlint-cli2.jsonc` ignores the folders the knowledge website generates, as it does since #74.
+* **Changed**: LOKF Toolkit now gives the `>=0.8.0` floor that `.lokf/pyproject.toml` declares, not 0.7.0, and pins its fallback schema to the commit tagged v0.8.0 instead of `main`.
+* **Rewrite**: LOKF Toolkit now says that `lokf-install` runs `uv sync` while the other recipes run `uv run lokf`, and that the website's sync runs `lokf export`, from `.lokf/justfile` and `website/README.md`.
+* **Added**: Knowledge Website, from `website/README.md`, `website/site.config.mjs` and `.github/workflows/knowledge-website.yaml`, which #74 added.
+* **Changed**: the source map now lists `website/` and `knowledge-website.yaml` as the sources of Knowledge Website, `.lokf/pyproject.toml` and `.lokf/justfile` as the sources of LOKF Toolkit, and says the README links the docs pages on the website.
 * **Prose**: reworded 16 concept bodies in plain English. No fact, link, number or frontmatter changed.
 
 ## 2026-10-15
