@@ -6,6 +6,8 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+## [1.7.1] - 2026-10-16
+
 ### Security
 
 - **The skills pin matches `v0.44.0`.** The release changed none of the sidecar copies this repository carries. No plugin change.
