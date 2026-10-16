@@ -1,16 +1,16 @@
 ---
 type: Service
-id: https://ktl-registrar.example/knowledge/services/ktl-registrar-plugin
+id: https://w3id.org/ktl/registrar/knowledge/services/ktl-registrar-plugin
 title: KTL Registrar Plugin
 description: "The plugin lifecycle in src/main.ts: fifteen commands, the status bar, vault-wide scanning, bundle-root resolution, and the read-only API the sibling KTL Curator may read."
 documentation: https://github.com/noelmcloughlin/obsidian-ktl-registrar#readme
 resource: src/main.ts
 dependsOn:
-- https://ktl-registrar.example/knowledge/services/validator-engine
-- https://ktl-registrar.example/knowledge/services/report-view
-- https://ktl-registrar.example/knowledge/services/settings-tab
+- https://w3id.org/ktl/registrar/knowledge/services/validator-engine
+- https://w3id.org/ktl/registrar/knowledge/services/report-view
+- https://w3id.org/ktl/registrar/knowledge/services/settings-tab
 about:
-- https://ktl-registrar.example/knowledge/references/commands-and-settings
+- https://w3id.org/ktl/registrar/knowledge/references/commands-and-settings
 generated:
   by: process:ktl-librarian
   at: "2026-10-15T23:50:48Z"

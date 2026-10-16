@@ -1,14 +1,14 @@
 ---
 lokf_version: "0.2"
 okf_version: "0.2"
-base_iri: https://ktl-registrar.example/knowledge/
+base_iri: https://w3id.org/ktl/registrar/knowledge/
 context: https://w3id.org/lokf/context.jsonld
 title: KTL Registrar Knowledge Bundle
 description: Validate the Linked Open Knowledge Format (LOKF) semantic layer on top of OKF v0.2 in Obsidian.
 license: https://creativecommons.org/licenses/by/4.0/
 publisher:
   type: Person
-  id: https://ktl-registrar.example/knowledge/person/noelmcloughlin
+  id: https://w3id.org/ktl/registrar/knowledge/person/noelmcloughlin
   name: Noel McLoughlin
 ---
 
@@ -16,7 +16,7 @@ publisher:
 
 A [LOKF](https://lokf.nolan-nichols.com) knowledge base for the **KTL Registrar** Obsidian plugin. Every Markdown file under `knowledge/` is one concept; together they form a queryable knowledge graph, derived from this repository's code and docs.
 
-`base_iri` is a placeholder (`ktl-registrar.example`, an RFC 2606 reserved domain) pending a real, owned namespace — see [Knowledge sources](playbooks/knowledge-sources.md).
+`base_iri` is `https://w3id.org/ktl/registrar/knowledge/`, a namespace under Knowledge Trust Ladder's w3id.org authority; the w3id rule that resolves it is pending — see [Knowledge sources](playbooks/knowledge-sources.md).
 
 # Services
 

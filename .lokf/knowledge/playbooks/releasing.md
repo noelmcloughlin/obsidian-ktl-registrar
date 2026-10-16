@@ -1,11 +1,11 @@
 ---
 type: Playbook
-id: https://ktl-registrar.example/knowledge/playbooks/releasing
+id: https://w3id.org/ktl/registrar/knowledge/playbooks/releasing
 title: Releasing
 description: Semantic-release computes the version and promotes CHANGELOG.md on merge to main, behind a required-reviewer Environment; the resulting tag invokes the same hardened build-and-attest workflow a hand-pushed tag always has.
 resource: CONTRIBUTING.md
 dependsOn:
-- https://ktl-registrar.example/knowledge/references/obsidian-plugin-guidelines
+- https://w3id.org/ktl/registrar/knowledge/references/obsidian-plugin-guidelines
 generated:
   by: process:ktl-librarian
   at: "2026-10-15T23:50:48Z"

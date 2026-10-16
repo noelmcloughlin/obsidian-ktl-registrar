@@ -1,6 +1,6 @@
 ---
 type: Playbook
-id: https://ktl-registrar.example/knowledge/playbooks/contributing
+id: https://w3id.org/ktl/registrar/knowledge/playbooks/contributing
 title: Contributing
 description: "How to set up KTL Registrar for development, how src/ splits into pure and Obsidian-bound modules, and the checklist before a pull request: npm run check, the changelog entry, the skills pin with its sidecar copies, and a releasing pull request title."
 resource: CONTRIBUTING.md

@@ -1,6 +1,6 @@
 ---
 type: Explanation
-id: https://ktl-registrar.example/knowledge/explanation/why-ktl-registrar
+id: https://w3id.org/ktl/registrar/knowledge/explanation/why-ktl-registrar
 title: Why KTL Registrar
 genre: explanation
 description: "Why KTL Registrar exists: no other known tool checks the LOKF semantic layer, so it checks that layer and the OKF v0.2 base layer beneath it in the editor, reports rather than blocks, and stays independent of its sibling KTL Curator."
@@ -11,10 +11,10 @@ sources:
 - resource: docs/for-the-curious.md
 - resource: docs/using.md
 about:
-- https://ktl-registrar.example/knowledge/references/okf-specification
-- https://ktl-registrar.example/knowledge/references/lokf-specification
+- https://w3id.org/ktl/registrar/knowledge/references/okf-specification
+- https://w3id.org/ktl/registrar/knowledge/references/lokf-specification
 relatedTo:
-- https://ktl-registrar.example/knowledge/services/ktl-registrar-plugin
+- https://w3id.org/ktl/registrar/knowledge/services/ktl-registrar-plugin
 generated:
   by: process:ktl-librarian
   at: "2026-10-15T23:50:48Z"

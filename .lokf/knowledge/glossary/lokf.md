@@ -1,11 +1,11 @@
 ---
 type: GlossaryTerm
-id: https://ktl-registrar.example/knowledge/glossary/lokf
+id: https://w3id.org/ktl/registrar/knowledge/glossary/lokf
 title: LOKF
 definition: Linked Open Knowledge Format - a semantic profile of OKF that binds every field, type, and relationship to a public vocabulary (schema.org/DCAT/PROV-O), so a bundle expands losslessly to JSON-LD/RDF and is queryable with SPARQL.
 abbreviation: LOKF
 definedBy:
-- https://ktl-registrar.example/knowledge/references/lokf-specification
+- https://w3id.org/ktl/registrar/knowledge/references/lokf-specification
 generated:
   by: process:ktl-librarian
   at: "2026-10-15T23:50:48Z"

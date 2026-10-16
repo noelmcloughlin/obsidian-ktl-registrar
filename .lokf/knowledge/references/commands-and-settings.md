@@ -1,6 +1,6 @@
 ---
 type: Reference
-id: https://ktl-registrar.example/knowledge/references/commands-and-settings
+id: https://w3id.org/ktl/registrar/knowledge/references/commands-and-settings
 title: Commands and Settings
 description: Every KTL Registrar command with its id and name, what the status-bar item does when clicked, and the settings groups under Settings → KTL Registrar, including Known LOKF types for a domain schema, from docs/using.md and src/main.ts.
 resource: docs/using.md

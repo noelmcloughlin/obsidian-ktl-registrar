@@ -1,6 +1,6 @@
 ---
 type: Policy
-id: https://ktl-registrar.example/knowledge/policies/code-of-conduct
+id: https://w3id.org/ktl/registrar/knowledge/policies/code-of-conduct
 title: Code of Conduct
 description: The project's code of conduct, adapted from Contributor Covenant 2.1, for harassment-free participation; the same file as the sibling knowledge-trust-ladder repository's.
 resource: CODE_OF_CONDUCT.md
