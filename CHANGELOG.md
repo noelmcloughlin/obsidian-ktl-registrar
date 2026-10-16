@@ -6,6 +6,8 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-10-16
+
 ### Changed
 
 - **The knowledge bundle's namespace is `https://w3id.org/ktl/registrar/knowledge/`.** It was the placeholder `https://ktl-registrar.example/knowledge/`, and every concept's id moved with it, so the bundle can join the KTL federation. The golden fixture of this repository's own bundle expects one warning fewer, since the placeholder warning is gone. No plugin change.
