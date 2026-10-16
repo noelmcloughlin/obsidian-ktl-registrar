@@ -2,24 +2,22 @@
 type: Policy
 id: https://ktl-registrar.example/knowledge/policies/no-telemetry
 title: No Telemetry
-description: KTL Registrar makes no network requests and has no telemetry, analytics, or external services.
-resource: README.md
+description: KTL Registrar makes no network requests, has no telemetry and no external services, and loads no remote code; it reads the open vault and writes only when a person runs a command that edits a note.
+resource: docs/architecture.md
 generated:
   by: process:ktl-librarian
-  at: "2026-09-13T19:00:00Z"
+  at: "2026-10-15T23:50:48Z"
 verified:
-  - by: process:ktl-librarian
-    at: "2026-09-13T19:00:00Z"
+- by: process:ktl-librarian
+  at: "2026-10-15T23:50:48Z"
+sources:
+- resource: README.md
+- resource: docs/architecture.md
+- resource: SECURITY.md
 ---
 
 # Overview
 
-The plugin reads the Markdown in the open vault and writes only when the
-user runs a command or report action that edits a note: the semantic-header,
-safe-fix, promote-relations and Obsidian-affordance commands, and the
-report's *Fix this finding* / *Silence this note* actions. The affordance
-commands add a managed body block or a `diataxis.md` map; everything else
-edits frontmatter. Settings live in the vault's own plugin data. Nothing
-leaves the machine. (Corrected 2026-09-13: this concept had still named the
-header command as the only write path, which the README has not said for
-some time.)
+KTL Registrar makes no network requests and has no telemetry and no external services, as the Privacy section of `docs/architecture.md` says. The README says the same in short: no network, no servers. `SECURITY.md` adds that the plugin loads no remote code, and makes no outward call and loads nothing while validating a note.
+
+The plugin reads the Markdown in the open vault and writes only when a person runs a command that edits a note: the header, safe-fix, promote-relations and affordance commands, and the report's *Fix this finding* and *Silence this note* actions. Settings live in the vault's own plugin data.

@@ -2,21 +2,17 @@
 type: Policy
 id: https://ktl-registrar.example/knowledge/policies/ai-covenant
 title: AI Covenant
-description: Contributors own what they submit regardless of which tools helped write it; AI may support but never proxy discussion; a repository-owned agent commits under a bot identity through a reviewed PR and never self-awards a human verdict.
+description: Contributors own what they submit, whichever tools helped write it; AI may support discussion but never take part on a person's behalf; a repository-owned agent commits under a bot identity, proposes every change as a reviewed pull request, runs with least privilege, and never records a person's verdict itself.
 resource: AI_COVENANT.md
 generated:
   by: process:ktl-librarian
-  at: "2026-09-10T23:58:28Z"
+  at: "2026-10-15T23:50:48Z"
 status: draft
+verified:
+- by: process:ktl-librarian
+  at: "2026-10-15T23:50:48Z"
 ---
 
 # Overview
 
-Adopted verbatim (aside from repo-specific links) from the sibling
-[knowledge-trust-ladder](https://github.com/noelmcloughlin/knowledge-trust-ladder)
-repository's own `AI_COVENANT.md`, so both projects hold contributors to one
-standard. Its "Repository-Owned Agent Automation" section is the part this
-repository's own CI actually implements: see
-[Scheduled Librarian](../playbooks/scheduled-librarian.md) for how
-`knowledge-librarian.yaml` is held to it (bot identity, mandatory PR review,
-and never writing a `human:` verdict itself).
+`AI_COVENANT.md` applies to three repositories: obsidian-ktl-registrar, obsidian-ktl-curator and knowledge-trust-ladder. Its closing note says it is adapted from the Knowledge Trust Ladder AI Covenant, itself adapted from the LinkML AI Covenant. Its "Repository-Owned Agent Automation" section covers this repository's `knowledge-librarian.yaml` workflow, which runs the `ktl-librarian` skill: a bot identity, review always, least privilege enforced, and verdicts that must be real. [Scheduled Librarian](../playbooks/scheduled-librarian.md) describes how the workflow is built.

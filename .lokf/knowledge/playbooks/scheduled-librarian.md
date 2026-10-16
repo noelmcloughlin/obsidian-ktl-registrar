@@ -2,91 +2,52 @@
 type: Playbook
 id: https://ktl-registrar.example/knowledge/playbooks/scheduled-librarian
 title: Scheduled Librarian
-description: The knowledge-librarian.yaml workflow's two-job privilege split - how a third-party agent proposes bundle changes without ever holding a write-scoped token.
+description: "The knowledge-librarian.yaml workflow: three jobs split by privilege, so the agent proposes bundle changes as a patch under a read-only token and only a job that runs no agent pushes the branch and opens the review pull request; how it is switched on, when a scheduled week runs no agent, and the checks publish makes."
 resource: .github/workflows/knowledge-librarian.yaml
 dependsOn:
-  - https://ktl-registrar.example/knowledge/references/lokf-toolkit
+- https://ktl-registrar.example/knowledge/references/lokf-toolkit
 relatedTo:
-  - https://ktl-registrar.example/knowledge/playbooks/knowledge-registrar-gate
+- https://ktl-registrar.example/knowledge/playbooks/knowledge-registrar-gate
 generated:
   by: process:ktl-librarian
-  at: "2026-09-14T16:33:33Z"
+  at: "2026-10-15T23:50:48Z"
 status: draft
 verified:
-  - by: process:ktl-librarian
-    at: "2026-09-14T16:33:33Z"
+- by: process:ktl-librarian
+  at: "2026-10-15T23:50:48Z"
+sources:
+- resource: .github/workflows/knowledge-librarian.yaml
+- resource: .lokf/scripts/knowledge-librarian.sh
+- resource: SECURITY.md
+- resource: AI_COVENANT.md
 ---
 
 # Overview
 
-`.github/workflows/knowledge-librarian.yaml` runs the `ktl-librarian` skill
-on a schedule (Mondays 05:00 UTC) to keep `.lokf/knowledge/` in step with the
-repository, then opens a review PR with whatever changed - never pushing to
-the default branch or auto-merging, and a no-op when nothing changed. It is
-inert until the `KNOWLEDGE_LIBRARIAN_ENABLED` repository variable is set to
-`true`; since 2026-09-13 the `refresh` job's own "Enforce the agent's write
-scope" step carries the same `if:` guard as the agent step, so with the
-variable unset neither runs. `AGENT_CLI` is read from a repository variable
-or, as a fallback, a repository secret (`vars.AGENT_CLI || secrets.AGENT_CLI`).
+`.github/workflows/knowledge-librarian.yaml` runs the `ktl-librarian` skill on a schedule (Mondays 05:00 UTC) and on demand, to keep `.lokf/knowledge/` in step with the repository. It opens a review pull request with whatever changed. It never pushes to the default branch and never auto-merges, opens no pull request when nothing changed, and is inert until the `KNOWLEDGE_LIBRARIAN_ENABLED` repository variable is `true`. It is a copy of the `ktl-sidecar` template, and `SECURITY.md` says the copy differs from the template only in the pin it names: `TRUST_LADDER_SKILLS_REF`, with the commit that tag names in `TRUST_LADDER_SKILLS_SHA`. The install step installs nothing when the tag no longer names that commit.
 
-**Two jobs, split by privilege.** `refresh` runs the agent - third-party
-code - under `contents: read` with `persist-credentials: false`, so no git
-credential is on disk while it executes; it hands its proposed change to
-`publish` as a patch artifact (`git diff --cached --binary`, uploaded and
-downloaded across jobs). Only `publish`, which runs no agent code, holds
-`contents: write` / `pull-requests: write` to apply the patch, push the
-branch, and open the PR. A compromised agent therefore cannot reach a
-write-scoped credential at all, rather than being caught only after using
-one - the previous single-job design's weaker guarantee.
+# Three jobs, split by privilege
 
-**Three independent checks enforce the agent's write scope, not two.**
-`.lokf/scripts/knowledge-librarian.sh` - the fixed, reviewed wrapper the
-workflow always executes, never a repository variable's content as a shell
-command - parses `AGENT_CLI` into a quoted argv array
-(`read -r -a agent_cmd <<< "$AGENT_CLI"`) rather than re-expanding it
-unquoted, so shell metacharacters in that value are inert arguments, not
-executed. Inside the wrapper, the agent invocation and its post-run write-scope
-check both live in a `main()` function called only as the script's last
-line, so bash has read the whole function body before the agent ever runs -
-nothing after the agent call can be skipped by an agent that truncates the
-running script mid-execution. The wrapper also snapshots `.git/config` and
-`.git/hooks` before invoking the agent and restores both unconditionally
-afterwards, so an agent that sets `core.fsmonitor`/`core.hooksPath` or drops
-a hook cannot hijack a later `git status` this script or the workflow runs
-in the same checkout. The `refresh` job's own "Enforce the agent's write
-scope" step repeats the boundary check again at the YAML level. But the
-check that actually matters for trust is `publish`'s: on a clean checkout
-that never shared a workspace with the agent, it re-derives the same
-`.lokf/knowledge/` / `knowledge_bundle/` / `.lokf/feedback.md` allow-list
-from the patch's own `git apply --numstat` output, and separately refuses
-(`grep -Eq '^\+ *-? *by: *human:'`) a patch that adds a `by: human:` claim -
-this skill never writes one (see `ktl-librarian`'s `SKILL.md`) - before
-applying anything. The first two checks run alongside the agent and are
-fail-fast conveniences, not the backstop.
+- `earlier` reads the pull requests this workflow opened before, under a token that can read pull requests and nothing else, and runs no agent. A scheduled run opens no second pull request while one is still open, and does not propose again what a person declined by closing one without merging, until the source moves or a reader asks again. A run a person starts does neither.
 
-**The registrar's own CI checks do not run on the librarian's PR.**
-`knowledge-registrar.yaml`'s `validate`/`provenance` jobs are
-`pull_request`-triggered, and GitHub does not start `pull_request` workflows
-for a PR opened with the default `GITHUB_TOKEN` (anti-recursion). `publish`'s
-checks above are this PR's real backstop; if branch protection requires
-`validate`/`provenance`, they sit at "Expected" until a human fires a fresh
-`pull_request` event (close/reopen, or an empty commit) - which is one reason
-required status checks are deliberately off here. What that gate checks on a
-person's own PR is [Knowledge registrar gate](knowledge-registrar-gate.md).
+- `refresh` runs the agent, which is third-party code, under `contents: read` with `persist-credentials: false`, so no git credential is on disk while it runs. The agent writes one file, `.lokf/patch.yaml`, which the wrapper applies with `knowledge-apply.sh`. The job validates the result and hands the change to `publish` as a patch artifact.
 
-**Whose design this is.** Both files are copies of the `ktl-sidecar`
-template in `knowledge-trust-ladder`. As of 2026-09-14 this repository's
-[SECURITY.md](../../../SECURITY.md) names it only as one row of a
-`Surface | What holds it` table - the deployed copy's one local edit
-(`persist-credentials: false` on the read-only checkouts, stricter than the
-template), the `KNOWLEDGE_LIBRARIAN_ENABLED` / `AGENT_CLI` switches, and what
-the librarian reads here - and links out for the guard design itself: the
-skills repository's shared
-[threat model](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/threat-model.md#prompt-injection-guards),
-not restated here since a copy would go stale with nothing in CI to notice.
-Before this rewrite the same material sat in `SECURITY.md` itself, under a
-section called "The librarian workflow: what is inherited, what this
-repository owns" - that heading no longer exists; do not link to it.
-[AI_COVENANT.md](../../../AI_COVENANT.md)'s "Repository-Owned Agent
-Automation" sets the human-accountability rules this workflow operates under
-(bot identity, review always required, verdicts only a person can record).
+- `publish` runs no agent code and is the only job that holds `contents: write` and `pull-requests: write`. It applies the patch to a clean checkout, pushes the branch and opens the pull request.
+
+# When the agent runs
+
+The workflow reads `AGENT_CLI` from a repository variable or, as a fallback, a secret. `AGENT_PROMPT_FLAG`, `AGENT_API_KEY_ENV`, `AGENT_USE_JOB_TOKEN` and the `AGENT_API_KEY` secret say how the prompt and the agent's credential reach it, and `KNOWLEDGE_RETRIEVAL` turns on an optional retrieval score. A scheduled week skips the agent when `knowledge-report.sh` finds nothing waiting: no moved source, no note a person left since the librarian last looked, no concept without a stamp and no reader feedback. A scheduled run in a month's first seven days, and a run a person starts, always go ahead.
+
+# Checks on the agent's write scope
+
+`.lokf/scripts/knowledge-librarian.sh` is the fixed wrapper the workflow runs, never a variable's content as a shell command. It splits `AGENT_CLI` into an argument array with `read -r -a`, so shell metacharacters in it are inert. The agent call and the post-run check that it wrote nothing but `.lokf/patch.yaml` live inside `main()`, which the script calls only from its last line. The wrapper snapshots `.git/config` and `.git/hooks` before the agent runs and restores both from an EXIT trap, so a changed `core.fsmonitor` or `core.hooksPath` cannot defeat a later check.
+
+The `refresh` job's "Enforce the agent's write scope" step repeats the boundary check in YAML. The check that matters is `publish`'s, on a checkout that never shared a workspace with the agent. It re-derives the allow-list (`.lokf/knowledge/`, `knowledge_bundle/`, `.lokf/feedback.md` and `.lokf/questions.md`) from the patch's own `git apply --numstat` output, refuses a patch that adds a `by: human:` line, and after applying runs `knowledge-provenance.sh --unattended` to refuse a change to any person's event or note.
+
+# The registrar gate does not run on this pull request
+
+GitHub starts no `pull_request` workflow for a pull request opened with the default `GITHUB_TOKEN`, so `knowledge-registrar.yaml`'s jobs do not run on the librarian's pull request, and `publish`'s checks are its backstop. What the gate checks on a person's own pull request is in [Knowledge registrar gate](knowledge-registrar-gate.md).
+
+# Governance
+
+`SECURITY.md` lists this workflow and its wrapper as one row of its `Surface | What holds it` table, and links the guard design in the skills repository's [threat model](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/threat-model.md#prompt-injection-guards). The "Repository-Owned Agent Automation" section of [AI_COVENANT.md](../../../AI_COVENANT.md) sets the rules the workflow runs under: a bot identity, review always, least privilege enforced, and verdicts that only a person can record.

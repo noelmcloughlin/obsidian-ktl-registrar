@@ -19,22 +19,10 @@ verified:
 
 # Overview
 
-`.lokf/pyproject.toml` declares `lokf[build]>=0.7.0`; `just lokf-install` /
-`just lokf-validate` / `just lokf-convert` / `just lokf-serve` all invoke this
-package via `uv run lokf ...`. It is a separate resource from
-[LOKF specification](lokf-specification.md) (lokf.nolan-nichols.com), which
-documents what LOKF *means* and its own, broader environment-bootstrap flow
-that this sidecar does not follow - conflating the two would misattribute the
-actual tooling dependency to a website that doesn't host it.
+`.lokf/pyproject.toml` declares `lokf[build]>=0.7.0`. `just lokf-install`, `just lokf-validate`, `just lokf-convert` and `just lokf-serve` all invoke this package via `uv run lokf ...`.
 
-When `uv`/Python isn't available, the raw LinkML schema
-(`lokf.yaml`, linked above as a source) can be fetched directly for a manual
-structural cross-check - not a substitute for `lokf validate`'s generated
-JSON Schema/SHACL checks, just enough to catch an obviously wrong class or
-field name.
+It is a separate resource from [LOKF specification](lokf-specification.md) (lokf.nolan-nichols.com). That site documents what LOKF *means*, and its own, broader environment-bootstrap flow, which this sidecar does not follow. Conflating the two would misattribute the actual tooling dependency to a website that doesn't host it.
 
-**Not to be confused with** [Validator Engine](../services/validator-engine.md)
-(`src/validator.ts`) - the KTL Registrar *plugin*'s own independent TypeScript
-reimplementation of the same Golden Rules, used at vault-scan time and having
-no runtime dependency on this Python package at all. This toolkit is used only
-to maintain *this* `.lokf/` sidecar bundle itself.
+When `uv`/Python isn't available, fetch the raw LinkML schema (`lokf.yaml`, linked above as a source) directly for a manual structural cross-check. It is not a substitute for `lokf validate`'s generated JSON Schema/SHACL checks; it is just enough to catch an obviously wrong class or field name.
+
+**Not to be confused with** [Validator Engine](../services/validator-engine.md) (`src/validator.ts`). That is the KTL Registrar *plugin*'s own independent TypeScript reimplementation of the same Golden Rules. It runs at vault-scan time and has no runtime dependency on this Python package at all. This toolkit is used only to maintain *this* `.lokf/` sidecar bundle itself.

@@ -2,60 +2,49 @@
 type: Playbook
 id: https://ktl-registrar.example/knowledge/playbooks/quality-gates
 title: Quality Gates
-description: The lint-and-docs CI workflow - shell, workflow, Markdown, link, and spelling checks that run on every push and PR, independent of the Node build and the LOKF bundle's own validation.
+description: "The lint-and-docs.yaml workflow: ShellCheck, actionlint with a check that every action is pinned to a commit, markdownlint, a link check and codespell, on pushes to main, every pull request and a weekly schedule; plus the markdownlint rule overrides and the Dependabot updates that keep the pins current."
 resource: .github/workflows/lint-and-docs.yaml
 dependsOn:
-  - https://ktl-registrar.example/knowledge/references/obsidian-plugin-guidelines
+- https://ktl-registrar.example/knowledge/references/obsidian-plugin-guidelines
 generated:
   by: process:ktl-librarian
-  at: "2026-09-14T15:00:00Z"
+  at: "2026-10-15T23:50:48Z"
 verified:
-  - by: process:ktl-librarian
-    at: "2026-09-14T15:00:00Z"
+- by: process:ktl-librarian
+  at: "2026-10-15T23:50:48Z"
 status: draft
+sources:
+- resource: .github/workflows/lint-and-docs.yaml
+- resource: .markdownlint-cli2.jsonc
+- resource: .github/dependabot.yml
 ---
 
 # Overview
 
-`.github/workflows/lint-and-docs.yaml` ("Lint & docs") runs three independent
-jobs on push to `main`, every PR against any branch, and a weekly Monday
-06:00 UTC schedule (to catch link rot with no PR to trigger it) - `push` was
-narrowed from every branch to `main` only on 2026-09-14, matching
-`build.yml`/`semantic-release.yml`, since an open PR can never have `main` as
-its head and the two triggers no longer double-run the same commit:
-`lint-scripts` (ShellCheck over the whole repo), `lint-workflows`
-(`actionlint` over the GitHub Actions YAML itself, plus, since 2026-09-14, a
-second step that greps every workflow's `uses:` line and fails the job if
-any is not pinned to a 40-hex-char commit SHA or an image digest -
-`actionlint` checks syntax, not pinning), and `validate-markdown`
-(`markdownlint-cli2` against `.markdownlint-cli2.jsonc`, then `lychee`
-link-checking, then `codespell`) over every `**/*.md` file. It never touches
-the Node build (`build.yml`) or the LOKF bundle's own semantics (the separate
-`knowledge-registrar.yaml` workflow) - this is the CI-hardening pass
-backported from `knowledge-trust-ladder`'s own `validate.yml`. Each job repeats
-the same `step-security/harden-runner` (audit mode) + `actions/checkout`
-(`persist-credentials: false`) preamble as `release.yml`, with
-`permissions: {}` at the workflow level and `contents: read` scoped per job;
-a `concurrency` group cancels a superseded run on the same ref.
+`.github/workflows/lint-and-docs.yaml` ("Lint & docs") runs static checks on the shell, the workflows and the prose this repository publishes. It never touches the Node build (`build.yml`) or the LOKF bundle's own semantics (`knowledge-registrar.yaml`). Its header calls it the CI-hardening pass backported from knowledge-trust-ladder's `validate.yml`.
 
-`.markdownlint-cli2.jsonc` disables five rules for reasons specific to this
-repo's content, not because the underlying style guidance is wrong in
-general: `MD013` (SKILL.md/reference prose is deliberately unwrapped),
-`MD025` (every LOKF/OKF concept's frontmatter `title:` reads as an implicit
-H1, so the body's own top-level heading is not a real duplicate - see Golden
-Rule 2 in `ktl-librarian`'s own `SKILL.md`), `MD028` (adjacent `>` callouts
-separated by a blank line are intentionally distinct blockquotes),
-`MD033` (`<PROJ_NAME>`-style angle-bracket placeholders are template tokens,
-not HTML), and `MD041` (`templates/readme-for-ai-agents.md` is an insertable
-fragment meant to start mid-document). `MD024` is scoped to `siblings_only`
-rather than disabled outright, so `CHANGELOG.md`'s repeated
-Keep-a-Changelog headings (`### Added` under each `## [x.y.z]`) pass while a
-genuine duplicate heading under the same parent still fails.
+It runs on a push to `main`, on every pull request against any branch, on a Monday 06:00 UTC schedule to catch link rot without a pull request, and on demand. `push` is scoped to `main` so that a push and a pull request no longer run the workflow twice for the same commit. The workflow sets `permissions: {}`, each job asks for `contents: read`, and a `concurrency` group cancels a superseded run on the same ref. Each job starts with `step-security/harden-runner` in audit mode and `actions/checkout` with `persist-credentials: false`.
 
-`.github/dependabot.yml` keeps the same gate from going stale: `actionlint`
-(above) catches a pinned action's syntax drift, never its staleness, so a
-weekly PR bumps the pinned SHAs in every workflow, the plugin's npm
-devDependencies (grouped into one PR, since none of them ship in `main.js`),
-and separately the `.lokf/` sidecar's own `lokf` floor in `pyproject.toml` -
-kept apart because a major bump there can need concept-frontmatter changes,
-unlike a routine Actions or devDependency bump.
+# The three jobs
+
+- `lint-scripts` runs ShellCheck over the whole repository.
+
+- `lint-workflows` runs `actionlint` over the workflows, with `-ignore copilot-requests` because actionlint 1.7.12 predates the `copilot-requests` scope that `knowledge-librarian.yaml` requests. A second step fails the job when any `uses:` line is not pinned to a 40-character commit SHA or an image digest, since actionlint checks syntax and not pinning.
+
+- `validate-markdown` runs `markdownlint-cli2` with `.markdownlint-cli2.jsonc`, then `lychee` link checking, then `codespell`, over every `**/*.md` file.
+
+# Markdown rules
+
+`.markdownlint-cli2.jsonc` disables six rules for reasons specific to this repository's content:
+
+- `MD013`: prose is deliberately unwrapped.
+- `MD025`: a concept's frontmatter `title:` reads as an implicit H1.
+- `MD028`: adjacent `>` callouts are meant to be separate blockquotes.
+- `MD033`: angle-bracket placeholders are template tokens, not HTML.
+- `MD041`: an insertable template fragment starts mid-document.
+- `MD060`: the GFM table convention pairs a padded header with a bare separator row.
+`MD024` is scoped to `siblings_only`, so `CHANGELOG.md`'s repeated Keep a Changelog headings pass while a real duplicate under the same parent still fails. The config ignores virtualenvs, `node_modules`, the run-time skill folders `.agents/` and `.claude/`, and the `knowledge_bundle` link, whose files are linted at their real path.
+
+# Dependabot
+
+`.github/dependabot.yml` opens weekly updates for three ecosystems. `github-actions` bumps the pinned SHAs in every workflow, since actionlint catches syntax drift and not staleness. `npm` groups the plugin's devDependencies into one pull request, because none of them is bundled into `main.js`, and holds back major bumps of `typescript`, `eslint` and `@eslint/js`. `uv` updates the `.lokf/` sidecar's `lokf` toolkit separately, because a major bump there can need concept frontmatter changes.

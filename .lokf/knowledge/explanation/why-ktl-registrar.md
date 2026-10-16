@@ -3,88 +3,52 @@ type: Explanation
 id: https://ktl-registrar.example/knowledge/explanation/why-ktl-registrar
 title: Why KTL Registrar
 genre: explanation
-description: Why the LOKF semantic layer needs its own in-editor check, why the plugin checks the OKF v0.2 base layer itself instead of leaning on a separate validator, why it names no other plugin but its sibling KTL Curator, and why it is called the registrar. Formerly why-ktl-registrar.md.
-resource: README.md
+description: "Why KTL Registrar exists: no other known tool checks the LOKF semantic layer, so it checks that layer and the OKF v0.2 base layer beneath it in the editor, reports rather than blocks, and stays independent of its sibling KTL Curator."
+resource: docs/for-the-curious.md
 sources:
-  - resource: README.md
-  - resource: docs/for-the-curious.md
+- resource: README.md
+- resource: docs/architecture.md
+- resource: docs/for-the-curious.md
+- resource: docs/using.md
 about:
-  - https://ktl-registrar.example/knowledge/references/okf-specification
-  - https://ktl-registrar.example/knowledge/references/lokf-specification
+- https://ktl-registrar.example/knowledge/references/okf-specification
+- https://ktl-registrar.example/knowledge/references/lokf-specification
 relatedTo:
-  - https://ktl-registrar.example/knowledge/services/ktl-registrar-plugin
+- https://ktl-registrar.example/knowledge/services/ktl-registrar-plugin
 generated:
   by: process:ktl-librarian
-  at: "2026-09-13T19:00:00Z"
+  at: "2026-10-15T23:50:48Z"
 status: draft
 verified:
-  - by: process:ktl-librarian
-    at: "2026-09-14T15:00:00Z"
+- by: process:ktl-librarian
+  at: "2026-10-15T23:50:48Z"
 ---
 
 # Overview
 
-Plain OKF is prose + structure; LOKF adds a bundle-root semantic header, a
-controlled type vocabulary, typed RDF-backed relationships, and
-id/IRI-minting consistency - real, new surface worth its own validator, and
-one that has to run *as a person writes*, in the editor, because an Obsidian
-vault has no CI gate to catch a malformed record after the fact. That is the
-registrar's half of the job the `knowledge-trust-ladder` README names: keeping
-records well-formed, never judging whether they are true. Since 2026-09-14
-the README also places that job on the **three lines of defence** the family
-reads its cast through ([knowledge-trust-ladder's docs/three-lines.md](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/three-lines.md)):
-this plugin and `lokf validate` are the **second line** - compliance, not
-content, ensuring every record is well-formed without owning or judging what
-it claims - alongside the CI gate `knowledge-registrar.yaml` runs; the
-librarian and curator are the first line, and independent audit (not
-shipped) would be the third.
+KTL Registrar keeps a LOKF knowledge bundle well-formed as a person edits it in Obsidian. The README names it the **registrar** of Knowledge Trust Ladder: it checks that every record is well-formed, and it reaches no verdict of its own on whether a record is true. `docs/architecture.md` places that job for anyone who works under the **three lines of defence**: the plugin is second-line work, keeping the format and never judging truth.
 
-# Where the detailed reasoning now lives
+# What LOKF adds over plain OKF
 
-README.md's own "For the curious" section is now one line pointing at
-[docs/for-the-curious.md](../../../docs/for-the-curious.md), which carries
-most of what this section below used to draw from README directly - the
-checks-added-over-plain-OKF list, the OKF v0.2 base-layer rationale, what is
-deliberately left unchecked, and the four-tier trust model. This concept's
-"Why the name" and "What it still leaves out" sections still draw on
-README.md itself (the credits, the alternatives footnote beneath them, and
-the sibling-plugin framing), so both files are recorded as sources. The
-README was rewritten around usage on 2026-09-13 - two vaults, a quick
-start, the commands, which folder is the bundle - and now points at the
-`knowledge-trust-ladder` README for the role table and the trust ladder rather
-than restating them; none of the claims here changed with it.
+Plain OKF is a folder of Markdown files whose only required field is a `type`. LOKF holds the same folder to a stricter dialect, with every field and relationship bound to a public vocabulary (schema.org, DCAT, PROV-O), so the bundle can be turned into a knowledge graph without loss. `docs/for-the-curious.md` lists what the plugin checks of that dialect:
+
+- the bundle-root semantic header;
+- the form and authority of `base_iri`;
+- a controlled type vocabulary;
+- the optional Diátaxis `genre`;
+- typed relationships whose targets must exist;
+- `id` consistency;
+- the shape of the OKF v0.2 §5 trust and lifecycle fields.
+`docs/architecture.md` says its authors know of no other tool that checks the LOKF semantic layer.
 
 # Why it checks the OKF v0.2 base layer itself
 
-Every LOKF field is a slot in the LOKF schema, and the schema subsumes the
-plain-OKF v0.2 rules underneath the dialect - a required `type`, the
-`Attested Computation` contract, reserved `index.md`/`log.md` structure, the
-v0.1→v0.2 migration hints. So the plugin checks them directly (the `okf/*`
-rules, gated by `checkOkfBaseLayer`), with severity taken from the spec's own
-force, rather than depending on a separate OKF validator that might not be
-installed or kept current. An earlier design did the opposite - it treated
-itself as a layered add-on, tried to detect an installed OKF validator, and
-recommended one when absent. That detection read Obsidian's undocumented
-`app.plugins` API (a routine community-review flag), and the recommendation
-became moot once the base layer was covered here; both, and the settings
-action that deep-linked to a specific validator, were removed on 2026-09-12.
-Other OKF v0.2 validators are now mentioned once, in a footnote at the end
-of the README (beneath the credits since the 2026-09-13 rewrite), as
-alternatives for that layer - never as companions or dependencies.
+Every LOKF field is a LOKF schema slot, so the plugin already has what it needs to check the plain OKF rules underneath the dialect. These are the `okf/*` findings: a required `type`, the `Attested Computation` contract, the reserved `index.md` and `log.md` structure, and the v0.1 to v0.2 migration hints. Severity follows the specification's own force. *Settings → OKF v0.2 base layer* switches them off in one place for a person who runs a dedicated OKF validator. `docs/architecture.md` names [OKF Enforcer](https://github.com/MartinForReal/okf-enforcer) as one validator for that layer, and says that none is required because the same base rules are checked here.
 
-# Why the name
+# Why it reports instead of blocking
 
-The job the plugin does is the registrar's - the clerical
-role in the `knowledge-trust-ladder` taxonomy, alongside `lokf validate` and CI's
-`knowledge-registrar.yaml` gate - and a registrar keeps records well-formed
-and says what it finds, where an enforcer would block: the longest section
-of `docs/for-the-curious.md` is on why almost everything here is a warning.
+LOKF's own rules are permissive: a missing optional field, an unknown `type` or a broken cross-link must never cause rejection. So the plugin reserves errors for four kinds of structural problem, which `docs/for-the-curious.md` lists under "Why almost everything is a warning", and reports everything else as a warning a person can act on or ignore. It writes only on an explicit command, and only to the form of a record, never to a claim.
 
-# What it still leaves out
+# What it leaves out
 
-The credibility *depth* of the §5 trust fields - who vouched, whether a
-source is right, which tier a concept has reached - is the sibling
-**KTL Curator**'s surface; this plugin checks only that those fields are
-well-shaped. Neither plugin detects, loads, or calls into the other; the
-one point of contact is a read-only `api` this plugin offers and nobody is
-required to use.
+The plugin checks the shape of the §5 trust and lifecycle fields and never their credibility. It does not weigh a source's signals, rank trust tiers or decide whether a claim is current, and it executes nothing. Whether a claim is true takes a librarian pass and a curator's review, and the sibling **KTL Curator** is where that review happens in the editor. The plugin never loads or calls a skill, an agent or another plugin, and neither plugin detects whether the other is installed. The one point of contact is the read-only `api` that `docs/using.md` describes, which another plugin may read without either depending on the other.

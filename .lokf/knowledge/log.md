@@ -1,5 +1,44 @@
 # Change Log
 
+## 2026-10-16
+
+* **Prose**: reworded 16 concept bodies in plain English. No fact, link, number or frontmatter changed.
+
+## 2026-10-15
+
+* **Changed**: the OKF specification moved to `GoogleCloudPlatform/open-knowledge-format`, which still serves v0.2; the `knowledge-catalog/okf/` copy is frozen.
+* **Rewrite**: Why KTL Registrar, after the README became a doorway; the reasoning now comes from `docs/architecture.md` and `docs/for-the-curious.md`, and the history of removed designs is gone.
+* **Changed**: Why KTL Registrar now names `docs/for-the-curious.md` as its resource and the architecture and using pages as sources.
+* **Rewrite**: Contributing, from the current `CONTRIBUTING.md`: Node versions, the codemirror override, the skills pin with its SHA and sidecar copies, and the releasing pull request title.
+* **Changed**: Contributing now names `scripts/smoke-test.ts` as a source for the word budgets.
+* **Rewrite**: Knowledge registrar gate; the validate job now runs the justfile recipe, provenance reads whole events added, changed or removed, and a second step checks signatures against `.lokf/curators/` keys.
+* **Changed**: Knowledge registrar gate's description now says the gate also reads confirmations a change alters or removes.
+* **Rewrite**: Quality gates; `MD060` is the sixth disabled markdownlint rule, actionlint ignores the `copilot-requests` scope, and Dependabot holds back three majors.
+* **Changed**: Quality gates now names the markdownlint config and the Dependabot file as sources.
+* **Changed**: Releasing now records the plan job's changelog and title checks, takes the protection of `main` from `SECURITY.md`, and lists the release workflows as sources.
+* **Rewrite**: Scheduled librarian; the workflow now has three jobs, the agent's one output is `.lokf/patch.yaml`, a quiet week runs no agent, and `publish` also refuses a change to a person's record.
+* **Changed**: Scheduled librarian now lists the wrapper script, `SECURITY.md` and `AI_COVENANT.md` as sources.
+* **Rewrite**: Knowledge sources now maps today's files, with the README split into the docs pages; the dated pass notes are gone, and `knowledge-release.yaml`, `docs/install.md` and `llms.txt` are listed as gaps.
+* **Changed**: Knowledge sources' description now names the left-out files and the gaps.
+* **Rewrite**: No telemetry, now drawn from the Privacy section of `docs/architecture.md` and from `SECURITY.md`, since the README became a doorway.
+* **Changed**: No telemetry now names `docs/architecture.md` as its resource.
+* **Rewrite**: AI covenant; the file is adapted from knowledge-trust-ladder's covenant, not a verbatim copy, as its closing note says.
+* **Changed**: AI covenant's description now follows the covenant's own section names.
+* **Rewrite**: Code of conduct; the file says it is adapted from Contributor Covenant 2.1, so the claim that it is unmodified is gone.
+* **Changed**: Code of conduct's description now says the covenant is adapted.
+* **Rewrite**: Commands and settings, from `docs/using.md` now that the README is a doorway; the command ids still come from `src/main.ts`.
+* **Changed**: Commands and settings now names `docs/using.md` as its resource and `src/main.ts` as a source.
+* **Changed**: OKF specification's description now names the specification's version and its trust and lifecycle fields.
+* **Changed**: Obsidian plugin guidelines' description now names the guidelines the lint rules enforce here.
+* **Changed**: LOKF glossary term gains a description, so its index bullet says what it defines.
+* **Changed**: OKF glossary term gains a description, so its index bullet says what it defines.
+* **Changed**: Diátaxis genre glossary term gains a description, so its index bullet says what it defines.
+* **Changed**: KTL Registrar plugin now points at `docs/using.md` and `docs/architecture.md`, where the README's material moved; `src/main.ts` changed only names and the ribbon icon.
+* **Rewrite**: Settings tab; the group headings are now spelt as `src/settings.ts` spells them, the full list of comma-separated settings is named, and the break-glass toggle is quoted from its own description.
+* **Changed**: Settings tab now names `src/vocab.ts` as a source for the vocabulary refresh rule.
+* **Rewrite**: Validator engine; it checks the OKF v0.2 base layer itself, reports lokf 0.8.0's pattern failures as errors, and covers thirteen relation fields with `measures`, `memberOf` and `holder`.
+* **Changed**: Validator engine's description now names the OKF base layer and the errors shared with `lokf validate`.
+
 ## 2026-09-24
 
 * **Future-dated times corrected.** 6 `process:ktl-librarian` times were later than the commit that recorded them (round placeholders written as UTC). Each now carries that commit's time, the latest moment git attests, so the bundle keeps the sidecar's new conventions rule 11.

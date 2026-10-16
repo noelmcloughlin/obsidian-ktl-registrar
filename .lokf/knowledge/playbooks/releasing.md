@@ -5,59 +5,45 @@ title: Releasing
 description: Semantic-release computes the version and promotes CHANGELOG.md on merge to main, behind a required-reviewer Environment; the resulting tag invokes the same hardened build-and-attest workflow a hand-pushed tag always has.
 resource: CONTRIBUTING.md
 dependsOn:
-  - https://ktl-registrar.example/knowledge/references/obsidian-plugin-guidelines
+- https://ktl-registrar.example/knowledge/references/obsidian-plugin-guidelines
 generated:
   by: process:ktl-librarian
-  at: "2026-09-13T19:00:00Z"
+  at: "2026-10-15T23:50:48Z"
 verified:
-  - by: process:ktl-librarian
-    at: "2026-09-14T15:00:00Z"
+- by: process:ktl-librarian
+  at: "2026-10-15T23:50:48Z"
+sources:
+- resource: CONTRIBUTING.md
+- resource: .github/workflows/semantic-release.yml
+- resource: .github/workflows/release.yml
+- resource: .releaserc.json
+- resource: SECURITY.md
 ---
 
 # Overview
 
-A person no longer picks the version. `semantic-release.yml`'s `release` job
-runs on every push to `main`, behind the `release` GitHub Environment
-(required reviewers configured in this repository's own settings, not by
-the workflow file): `@semantic-release/commit-analyzer` computes the next
-version from Conventional Commits since the last tag; `@semantic-release/exec`
-runs `.github/scripts/changelog-release.mjs` as its `verifyRelease`,
-`generateNotes`, and `prepare` hooks, which refuses the run if this
-repository's `CHANGELOG.md` `## [Unreleased]` section is empty, uses it as
-the release notes, and then retitles it to a dated heading with a fresh
-empty one above; `@semantic-release/npm` (`npmPublish: false`) bumps
-`package.json` via `npm version <ver> --no-git-tag-version`, which still
-triggers the existing `version` script - `manifest.json` and `versions.json`
-update exactly as they did under a hand-run `npm version`, `.npmrc`'s
-`tag-version-prefix=""` included, so the tag stays bare (Obsidian matches a
-release to a plugin version by exact tag equality). `@semantic-release/git`
-commits those files; semantic-release's own core then creates and pushes
-that bare tag. The tool itself is installed at exact pinned versions inside
-the workflow, never added to `package.json`.
+A person no longer picks the version. `semantic-release.yml`'s `release` job runs on every push to `main`, behind the `release` GitHub Environment. The required reviewers are configured in this repository's own settings, not by the workflow file. The job runs these steps:
 
-That push then invokes `release.yml` directly, via a `workflow_call` trigger
-added alongside its original `push: tags:` one - needed because a tag pushed
-with the default `GITHUB_TOKEN` does not itself re-trigger another
-workflow's `push` event (GitHub's own loop prevention). `release.yml` is
-otherwise unchanged and still works standalone for a hand-pushed tag: its
-"Verify tag matches manifest version" step, `step-security/harden-runner` in
-audit mode, `persist-credentials: false`, SHA-pinned actions, and
-`permissions: {}` defaulting to a scoped `contents: write` /
-`id-token: write` / `attestations: write` on the one job that needs them are
-all exactly as before. The release itself is still opened as a **draft**
-carrying `main.js`, `manifest.json`, and `styles.css` with build-provenance
-attestation, for manual review before publishing - the same human checkpoint
-this playbook has always ended on, now with a second one (the Environment
-approval) in front of it.
+1. `@semantic-release/commit-analyzer` computes the next version from Conventional Commits since the last tag.
+2. `@semantic-release/exec` runs `.github/scripts/changelog-release.mjs` as its `verifyRelease`, `generateNotes`, and `prepare` hooks. The script refuses the run if this repository's `CHANGELOG.md` `## [Unreleased]` section is empty. Otherwise it uses that section as the release notes, then retitles it to a dated heading with a fresh empty one above.
+3. `@semantic-release/npm` (`npmPublish: false`) bumps `package.json` via `npm version <ver> --no-git-tag-version`. That still triggers the existing `version` script, so `manifest.json` and `versions.json` update exactly as they did under a hand-run `npm version`. `.npmrc`'s `tag-version-prefix=""` still applies, so the tag stays bare, because Obsidian matches a release to a plugin version by exact tag equality.
+4. `@semantic-release/git` commits those files.
+5. semantic-release's own core creates and pushes that bare tag.
 
-A `pull_request`-triggered `plan` job in `semantic-release.yml` previews
-every PR into `main` with `--dry-run` - no write scope, no commit, no tag -
-so a malformed commit message or a broken exec script surfaces in review.
+The tool itself is installed at exact pinned versions inside the workflow, never added to `package.json`.
 
-`main` is protected, but not by a merge gate (`CONTRIBUTING.md` and
-`SECURITY.md`, 2026-09-13): deletions and force-pushes are blocked and
-linear history is required, while a rule requiring pull requests or passing
-status checks is deliberately off - rulesets apply to direct pushes too, and
-the release job's own `[skip ci]` promotion commit would be rejected, with
-no bypass-list entry possible for `github-actions[bot]`. CI still runs on
-every pull request and is read before merge; access control is the gate.
+That push then invokes `release.yml` directly, via a `workflow_call` trigger added alongside its original `push: tags:` one. The extra trigger is needed because a tag pushed with the default `GITHUB_TOKEN` does not itself re-trigger another workflow's `push` event (GitHub's own loop prevention).
+
+`release.yml` is otherwise unchanged, and still works standalone for a hand-pushed tag. These are all exactly as before:
+
+- its "Verify tag matches manifest version" step;
+- `step-security/harden-runner` in audit mode;
+- `persist-credentials: false`;
+- SHA-pinned actions;
+- `permissions: {}`, defaulting to a scoped `contents: write` / `id-token: write` / `attestations: write` on the one job that needs them.
+
+The release itself is still opened as a **draft** carrying `main.js`, `manifest.json`, and `styles.css` with build-provenance attestation, for manual review before publishing. That is the same human checkpoint this playbook has always ended on, now with a second one (the Environment approval) in front of it.
+
+A `pull_request`-triggered `plan` job in `semantic-release.yml` previews every PR into `main` with `--dry-run`: no write scope, no commit, no tag. So a malformed commit message or a broken exec script surfaces in review. When the commits would release, the same job refuses an empty `## [Unreleased]` section and a pull request title with no releasing type (`feat:`, `fix:`, `security:` or a breaking `!`), because a squash merge takes its subject from the title.
+
+`main` is protected, but not by a merge gate. `SECURITY.md` says `main` blocks deletion and force-pushes and requires linear history, deliberately nothing more, and the skills repository's threat model gives the reasons under [Repository hardening](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/threat-model.md#repository-hardening).
