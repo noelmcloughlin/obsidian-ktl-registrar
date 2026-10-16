@@ -6,6 +6,10 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+### Added
+
+- **A website for the knowledge bundle.** `website/` builds an Astro Starlight site from `.lokf/knowledge`, the README, `docs/` and this changelog, with a trust label on every concept page; `knowledge-website.yaml` publishes it to GitHub Pages once `KNOWLEDGE_WEBSITE_ENABLED` is `true`. No plugin change.
+
 ## [1.5.19] - 2026-10-15
 
 ### Security
