@@ -45,7 +45,7 @@ Each row names the files a concept is derived from, the concepts they feed, and 
 
 # Gaps
 
-- `.github/workflows/knowledge-release.yaml` has no concept. `SECURITY.md` lists it as the template's jobs, inert until dispatched or armed by `KNOWLEDGE_RELEASE_ENABLED`, with `attach` the only job that can write.
+- `.github/workflows/knowledge-release.yaml` has no concept. `SECURITY.md` lists it as the template's jobs, inert until dispatched or turned on by `KNOWLEDGE_RELEASE_ENABLED`, with `attach` the only job that can write.
 
 - `docs/install.md` (getting a bundle, where to install the plugin, the quick start) has no concept.
 

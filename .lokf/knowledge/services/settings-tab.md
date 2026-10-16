@@ -29,7 +29,13 @@ Settings a person edits as comma-separated text are stored as string arrays: kno
 
 # Bundle roots
 
-*Bundle root folders* accepts a folder inside a dot-folder. When a person saves one that Obsidian's index does not list today, a `Notice` warns that nothing under it will be scanned until a plugin exposes it (Hidden Folders Access, for one) or the folder is opened as its own vault. Left blank, the vault decides: a root `index.md` with a LOKF header makes the whole vault the bundle, otherwise a top-level `knowledge_bundle` folder with its own `index.md` is the bundle, and otherwise the vault has no bundle.
+*Bundle root folders* accepts a folder inside a dot-folder. A person may save one that Obsidian's index does not list today. Then a `Notice` warns that nothing under it will be scanned until a plugin exposes it (Hidden Folders Access, for one) or the folder is opened as its own vault.
+
+Left blank, the vault decides:
+
+- a root `index.md` with a LOKF header makes the whole vault the bundle;
+- otherwise a top-level `knowledge_bundle` folder with its own `index.md` is the bundle;
+- otherwise the vault has no bundle.
 
 *Treat the vault root as the bundle (break-glass)* (`treatVaultRootAsBundle`) is off by default, and its description says it is meant to stay off. Turned on, it has the whole vault checked anyway. It never overrides a detected `knowledge_bundle` folder, because `implicitBundleRoots` in `src/validator.ts` puts the folder first. Changing either setting tells the plugin that its scope changed.
 

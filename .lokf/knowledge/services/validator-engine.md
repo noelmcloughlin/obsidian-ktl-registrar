@@ -22,7 +22,22 @@ verified:
 
 `src/validator.ts` imports nothing, neither Obsidian nor a YAML parser. Callers hand in already-parsed frontmatter, and the note body when they have it, so the module runs unchanged under Obsidian and under plain Node in `scripts/smoke-test.ts`.
 
-`validateLokfConcept` runs two layers. The LOKF semantic layer has five rule groups: the bundle-root semantic header and `base_iri` (`validateRootHeader`), the type vocabulary and type-specific fields (`validateTypeVocabulary`), typed relationships with target-existence checking (`validateRelationships`), id minting (`validateConceptId`), and the shape of the OKF v0.2 §5 trust and lifecycle fields (`validateTrustLifecycle`). The OKF v0.2 base layer, the `okf/*` rules behind the `checkOkfBaseLayer` setting, checks what the LOKF schema already subsumes: a required `type` (§11), the `Attested Computation` contract (§10), the reserved `index.md` and `log.md` structure (§8 and §9), and the v0.1 to v0.2 migration hints (§13). A vault that runs a dedicated OKF validator can turn that layer off. Credibility and trust-tier interpretation stay out of scope.
+`validateLokfConcept` runs two layers. The LOKF semantic layer has five rule groups:
+
+- the bundle-root semantic header and `base_iri` (`validateRootHeader`);
+- the type vocabulary and type-specific fields (`validateTypeVocabulary`);
+- typed relationships, with target-existence checking (`validateRelationships`);
+- id minting (`validateConceptId`);
+- the shape of the OKF v0.2 §5 trust and lifecycle fields (`validateTrustLifecycle`).
+
+The OKF v0.2 base layer is the set of `okf/*` rules behind the `checkOkfBaseLayer` setting. It checks what the LOKF schema already subsumes:
+
+- a required `type` (§11);
+- the `Attested Computation` contract (§10);
+- the reserved `index.md` and `log.md` structure (§8 and §9);
+- the v0.1 to v0.2 migration hints (§13).
+
+A vault that runs a dedicated OKF validator can turn that layer off. Credibility and trust-tier interpretation stay out of scope.
 
 # Values and types
 
@@ -30,7 +45,13 @@ The engine never assumes a frontmatter value is a string. A scalar is coerced to
 
 # Errors that match lokf validate
 
-Since lokf 0.8.0, `lokf validate` rejects values that break the schema's patterns, and the engine reports each as an error: a `generated` or `verified` actor that is not `human:<id>`, `process:<id>` or `<producer>/<version>`, a `sources[].author` that is not an actor string, a `Person`'s `email` that is not an address, and a `Service`'s `http_method` outside `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD` and `OPTIONS`. A `generated` block with no `by` and a `sources` entry with no `resource` are errors too, because OKF marks both REQUIRED. `stale_after` may be an ISO 8601 datetime or a bare date.
+Since lokf 0.8.0, `lokf validate` rejects values that break the schema's patterns, and the engine reports each as an error:
+
+- a `generated` or `verified` actor that is not `human:<id>`, `process:<id>` or `<producer>/<version>`;
+- a `sources[].author` that is not an actor string;
+- a `Person`'s `email` that is not an address;
+- a `Service`'s `http_method` outside `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD` and `OPTIONS`.
+A `generated` block with no `by` and a `sources` entry with no `resource` are errors too, because OKF marks both REQUIRED. `stale_after` may be an ISO 8601 datetime or a bare date.
 
 # Relation fields
 

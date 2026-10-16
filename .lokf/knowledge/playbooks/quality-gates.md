@@ -21,7 +21,7 @@ sources:
 
 # Overview
 
-`.github/workflows/lint-and-docs.yaml` ("Lint & docs") runs static checks on the shell, the workflows and the prose this repository ships. It never touches the Node build (`build.yml`) or the LOKF bundle's own semantics (`knowledge-registrar.yaml`). Its header calls it the CI-hardening pass backported from knowledge-trust-ladder's `validate.yml`.
+`.github/workflows/lint-and-docs.yaml` ("Lint & docs") runs static checks on the shell, the workflows and the prose this repository publishes. It never touches the Node build (`build.yml`) or the LOKF bundle's own semantics (`knowledge-registrar.yaml`). Its header calls it the CI-hardening pass backported from knowledge-trust-ladder's `validate.yml`.
 
 It runs on a push to `main`, on every pull request against any branch, on a Monday 06:00 UTC schedule to catch link rot without a pull request, and on demand. `push` is scoped to `main` so that a push and a pull request no longer run the workflow twice for the same commit. The workflow sets `permissions: {}`, each job asks for `contents: read`, and a `concurrency` group cancels a superseded run on the same ref. Each job starts with `step-security/harden-runner` in audit mode and `actions/checkout` with `persist-credentials: false`.
 
@@ -35,8 +35,16 @@ It runs on a push to `main`, on every pull request against any branch, on a Mond
 
 # Markdown rules
 
-`.markdownlint-cli2.jsonc` disables six rules for reasons specific to this repository's content: `MD013` (prose is deliberately unwrapped), `MD025` (a concept's frontmatter `title:` reads as an implicit H1), `MD028` (adjacent `>` callouts are meant to be separate blockquotes), `MD033` (angle-bracket placeholders are template tokens, not HTML), `MD041` (an insertable template fragment starts mid-document) and `MD060` (the GFM table convention pairs a padded header with a bare separator row). `MD024` is scoped to `siblings_only`, so `CHANGELOG.md`'s repeated Keep a Changelog headings pass while a real duplicate under the same parent still fails. The config ignores virtualenvs, `node_modules`, the run-time skill folders `.agents/` and `.claude/`, and the `knowledge_bundle` link, whose files are linted at their real path.
+`.markdownlint-cli2.jsonc` disables six rules for reasons specific to this repository's content:
+
+- `MD013`: prose is deliberately unwrapped.
+- `MD025`: a concept's frontmatter `title:` reads as an implicit H1.
+- `MD028`: adjacent `>` callouts are meant to be separate blockquotes.
+- `MD033`: angle-bracket placeholders are template tokens, not HTML.
+- `MD041`: an insertable template fragment starts mid-document.
+- `MD060`: the GFM table convention pairs a padded header with a bare separator row.
+`MD024` is scoped to `siblings_only`, so `CHANGELOG.md`'s repeated Keep a Changelog headings pass while a real duplicate under the same parent still fails. The config ignores virtualenvs, `node_modules`, the run-time skill folders `.agents/` and `.claude/`, and the `knowledge_bundle` link, whose files are linted at their real path.
 
 # Dependabot
 
-`.github/dependabot.yml` opens weekly updates for three ecosystems. `github-actions` bumps the pinned SHAs in every workflow, since actionlint catches syntax drift and not staleness. `npm` groups the plugin's devDependencies into one pull request, because none of them ships in `main.js`, and holds back major bumps of `typescript`, `eslint` and `@eslint/js`. `uv` updates the `.lokf/` sidecar's `lokf` toolkit separately, because a major bump there can need concept frontmatter changes.
+`.github/dependabot.yml` opens weekly updates for three ecosystems. `github-actions` bumps the pinned SHAs in every workflow, since actionlint catches syntax drift and not staleness. `npm` groups the plugin's devDependencies into one pull request, because none of them is bundled into `main.js`, and holds back major bumps of `typescript`, `eslint` and `@eslint/js`. `uv` updates the `.lokf/` sidecar's `lokf` toolkit separately, because a major bump there can need concept frontmatter changes.

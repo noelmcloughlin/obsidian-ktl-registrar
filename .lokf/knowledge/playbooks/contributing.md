@@ -45,7 +45,7 @@ This repository's own `.lokf/` bundle is maintained with knowledge-trust-ladder,
 
 - Add a line or two under `## [Unreleased]` in `CHANGELOG.md` when the change alters plugin behaviour. The release pipeline refuses an empty section.
 
-- Regenerate `src/lokf-vocab.json` with `npm run build-vocab` only when bumping the sidecar's pinned `lokf`. It is built from the schema that `lokf` ships (`.lokf/uv.lock`, which needs `uv`) and kept identical to KTL Curator's.
+- Regenerate `src/lokf-vocab.json` with `npm run build-vocab` only when bumping the sidecar's pinned `lokf`. It is built from the schema that `lokf` includes (`.lokf/uv.lock`, which needs `uv`) and kept identical to KTL Curator's.
 
 - When moving `TRUST_LADDER_SKILLS_REF`, set `TRUST_LADDER_SKILLS_SHA` beside it to the commit that tag names, and copy the three `knowledge-*.yaml` workflows and the files under `.lokf/scripts/` and `.lokf/m365/` from that release's `skills/ktl-sidecar/templates/` in the same pull request.
 

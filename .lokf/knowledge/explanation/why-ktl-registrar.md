@@ -30,7 +30,16 @@ KTL Registrar keeps a LOKF knowledge bundle well-formed as a person edits it in 
 
 # What LOKF adds over plain OKF
 
-Plain OKF is a folder of Markdown files whose only required field is a `type`. LOKF holds the same folder to a stricter dialect, with every field and relationship bound to a public vocabulary (schema.org, DCAT, PROV-O), so the bundle can be turned into a knowledge graph without loss. `docs/for-the-curious.md` lists what the plugin checks of that dialect: the bundle-root semantic header, the form and authority of `base_iri`, a controlled type vocabulary, the optional Diátaxis `genre`, typed relationships whose targets must exist, `id` consistency, and the shape of the OKF v0.2 §5 trust and lifecycle fields. `docs/architecture.md` says its authors know of no other tool that checks the LOKF semantic layer.
+Plain OKF is a folder of Markdown files whose only required field is a `type`. LOKF holds the same folder to a stricter dialect, with every field and relationship bound to a public vocabulary (schema.org, DCAT, PROV-O), so the bundle can be turned into a knowledge graph without loss. `docs/for-the-curious.md` lists what the plugin checks of that dialect:
+
+- the bundle-root semantic header;
+- the form and authority of `base_iri`;
+- a controlled type vocabulary;
+- the optional Diátaxis `genre`;
+- typed relationships whose targets must exist;
+- `id` consistency;
+- the shape of the OKF v0.2 §5 trust and lifecycle fields.
+`docs/architecture.md` says its authors know of no other tool that checks the LOKF semantic layer.
 
 # Why it checks the OKF v0.2 base layer itself
 

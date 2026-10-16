@@ -16,8 +16,4 @@ verified:
 
 # Overview
 
-Validated by `validateTypeVocabulary` in `src/validator.ts`: an out-of-enum or
-non-string `genre` value is a warning, never an error, consistent with LOKF's
-permissive-by-design philosophy. This concept itself is tagged `genre:
-reference` in this bundle's own root header conventions - a plain glossary
-entry, not a worked example.
+`validateTypeVocabulary` in `src/validator.ts` validates the field. An out-of-enum or non-string `genre` value is a warning, never an error, consistent with LOKF's permissive-by-design philosophy. This concept itself is tagged `genre: reference` in this bundle's own root header conventions, because it is a plain glossary entry, not a worked example.

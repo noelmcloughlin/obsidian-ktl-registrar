@@ -17,5 +17,4 @@ verified:
 
 # Overview
 
-LOKF is a semantic profile *of* OKF, not a replacement for it - every LOKF
-bundle is also a valid OKF bundle.
+LOKF is a semantic profile *of* OKF, not a replacement for it. Every LOKF bundle is also a valid OKF bundle.
