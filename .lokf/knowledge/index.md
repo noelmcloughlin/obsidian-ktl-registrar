@@ -48,6 +48,7 @@ A [LOKF](https://lokf.nolan-nichols.com) knowledge base for the **KTL Registrar*
 * [Scheduled Librarian](playbooks/scheduled-librarian.md) - The knowledge-librarian.yaml workflow: three jobs split by privilege, so the agent proposes bundle changes as a patch under a read-only token and only a job that runs no agent pushes the branch and opens the review pull request; how it is switched on, when a scheduled week runs no agent, and the checks publish makes.
 * [Knowledge registrar gate](playbooks/knowledge-registrar-gate.md) - The knowledge-registrar.yaml workflow: it validates the bundle and its relation targets and checks the sidecar conventions on every pull request that touches the bundle, and ties every human: confirmation a change adds, alters or removes to that person's approving review or verified signature, with an environment reviewer's attestation as the fallback.
 * [Knowledge Website](playbooks/knowledge-website.md) - The website/ folder and the knowledge-website.yaml workflow: an Astro Starlight site built from the bundle, the README, docs/ and the changelog, how to preview it, what to edit, and how the workflow builds it on pull requests and deploys it to GitHub Pages at `https://noelmcloughlin.github.io/obsidian-ktl-registrar/` once KNOWLEDGE_WEBSITE_ENABLED is true.
+* [Install KTL Registrar](playbooks/install-ktl-registrar.md) - How to get a LOKF bundle, open it as its own Obsidian vault, and install KTL Registrar there from a GitHub release, with BRAT or from source. The plugin is not yet in the community plugin store and needs Obsidian 1.13.0 or later.
 
 # Policies
 
@@ -57,4 +58,4 @@ A [LOKF](https://lokf.nolan-nichols.com) knowledge base for the **KTL Registrar*
 
 # Explanation
 
-* [Why KTL Registrar](explanation/why-ktl-registrar.md) - Why KTL Registrar exists: no other known tool checks the LOKF semantic layer, so it checks that layer and the OKF v0.2 base layer beneath it in the editor, reports rather than blocks, and stays independent of its sibling KTL Curator.
+* [Why KTL Registrar](explanation/why-ktl-registrar.md) - Why KTL Registrar exists: no other known tool checks the LOKF semantic layer, so it checks that layer and the OKF v0.2 base layer beneath it in the editor, reports rather than blocks, lets a person turn off Enforce OKF conformance as errors to downgrade the OKF errors to warnings, and stays independent of its sibling KTL Curator.

@@ -6,13 +6,14 @@ description: "How to set up KTL Registrar for development, how src/ splits into 
 resource: CONTRIBUTING.md
 generated:
   by: process:ktl-librarian
-  at: "2026-10-15T23:50:48Z"
+  at: "2026-10-16T23:46:11Z"
 verified:
 - by: process:ktl-librarian
-  at: "2026-10-15T23:50:48Z"
+  at: "2026-10-16T23:46:11Z"
 sources:
 - resource: CONTRIBUTING.md
 - resource: scripts/smoke-test.ts
+- resource: .github/workflows/build.yml
 ---
 
 # Overview

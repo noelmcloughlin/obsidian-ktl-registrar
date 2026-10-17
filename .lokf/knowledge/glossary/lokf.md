@@ -17,5 +17,4 @@ verified:
 
 # Overview
 
-See [LOKF specification](../references/lokf-specification.md) for the full
-Golden Rules this plugin implements.
+[LOKF specification](../references/lokf-specification.md) gives the full Golden Rules this plugin implements.

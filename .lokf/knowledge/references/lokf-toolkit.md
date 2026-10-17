@@ -27,4 +27,4 @@ This package is a separate resource from the [LOKF specification](lokf-specifica
 
 When `uv` or Python is not available, fetch the raw LinkML schema (`lokf.yaml`, listed as a source at the commit tagged v0.8.0) for a manual structural cross-check. It does not replace the generated JSON Schema checks that `lokf validate` runs. It is enough to catch an obviously wrong class or field name.
 
-**Not to be confused with** [Validator Engine](../services/validator-engine.md) (`src/validator.ts`). That is the KTL Registrar *plugin*'s own independent TypeScript reimplementation of the same Golden Rules. It runs at vault-scan time and has no runtime dependency on this Python package at all. This toolkit is used only to maintain *this* `.lokf/` sidecar bundle itself.
+**Not to be confused with** [Validator Engine](../services/validator-engine.md) (`src/validator.ts`). That is the KTL Registrar *plugin*'s own independent TypeScript reimplementation of the same Golden Rules. It runs at vault-scan time and has no runtime dependency on this Python package. This toolkit only maintains this repository's `.lokf/` sidecar bundle.

@@ -50,4 +50,4 @@ GitHub will not let anyone approve their own pull request, so on a one-person re
 
 # What it does not do
 
-It never runs on the scheduled librarian's pull request, which `knowledge-librarian.yaml`'s `publish` job opens with the default `GITHUB_TOKEN`, because GitHub starts no `pull_request` workflow for such a pull request. `publish` carries its own checks instead; see [Scheduled librarian](scheduled-librarian.md). And it is no required status check: `SECURITY.md` says `main` blocks deletion and force-pushes and requires linear history, deliberately nothing more.
+It never runs on the scheduled librarian's pull request, which `knowledge-librarian.yaml`'s `publish` job opens with the default `GITHUB_TOKEN`, because GitHub starts no `pull_request` workflow for such a pull request. `publish` carries its own checks instead, which [Scheduled librarian](scheduled-librarian.md) describes. And it is no required status check: `SECURITY.md` says `main` blocks deletion and force-pushes and requires linear history, and nothing more.
