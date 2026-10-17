@@ -37,20 +37,20 @@ For the §5 trust and lifecycle fields the plugin checks shape and never credibi
 
 ## Where this fits: the "Schema-valid" tier
 
-The companion [knowledge-trust-ladder](https://github.com/noelmcloughlin/knowledge-trust-ladder) project describes [four levels of trust](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/for-the-curious.md#four-levels-of-checking) a claim in a bundle can earn:
+The companion [Knowledge Trust Ladder](https://w3id.org/ktl/) (KTL) project describes [four levels of trust](https://w3id.org/ktl/docs/for-the-curious/#four-levels-of-checking) a claim in a bundle can earn:
 
 - **schema-valid**: the frontmatter is well-formed and its relations resolve;
 - **source-consistent**: an agent re-checked it against its source;
 - **human-confirmed**: a named person vouches for it;
 - **proven-in-use**: a reader's question was answered from it.
 
-Each proves less than its name suggests. This plugin checks the first level as you write, inside the editor. It cannot tell you whether a claim is true. That takes a **librarian** pass and a **curator**'s review, and [KTL Curator](https://github.com/noelmcloughlin/obsidian-ktl-curator) is where the review happens in the editor.
+Each proves less than its name suggests. This plugin checks the first level as you write, inside the editor. It cannot tell you whether a claim is true. That takes a **librarian** pass and a **curator**'s review, and [KTL Curator](https://w3id.org/ktl/curator/) is where the review happens in the editor.
 
 This plugin never loads or calls a skill, an agent or another plugin, and KTL Curator, one tier above, is equally independent: neither plugin detects whether the other is installed.
 
 ## Where the bundle lives, host by host
 
-The skills' page [The bundle in Obsidian](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/obsidian.md#where-the-bundle-lives-host-by-host) describes the layouts: a code repository, a vault kept in git, a shared drive, and many hosts in one vault. Two of them touch this plugin. A bundle rearranged into a real `knowledge_bundle/` folder inside a vault is detected as a bundle inside that vault ([Which folder is the bundle](architecture.md#which-folder-is-the-bundle)). Several repositories' bundles linked into one vault are listed under *Bundle root folders*, and Obsidian Sync does not carry such links.
+The skills' page [The bundle in Obsidian](https://w3id.org/ktl/docs/obsidian/#where-the-bundle-lives-host-by-host) describes the layouts: a code repository, a vault kept in git, a shared drive, and many hosts in one vault. Two of them touch this plugin. A bundle rearranged into a real `knowledge_bundle/` folder inside a vault is detected as a bundle inside that vault ([Which folder is the bundle](architecture.md#which-folder-is-the-bundle)). Several repositories' bundles linked into one vault are listed under *Bundle root folders*, and Obsidian Sync does not carry such links.
 
 ## Why almost everything is a warning
 
