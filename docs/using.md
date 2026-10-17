@@ -43,8 +43,8 @@ The settings are under **Settings → KTL Registrar**. Obsidian's settings searc
 - **Type-specific fields**: the recommended-field warnings for `Metric`, `Service` and `GlossaryTerm`.
 - **Semantic header & base_iri**: the authority denylist, the placeholder-domain list, and whether a missing header warns.
 - **Relationships**: whether relation targets inside the bundle must resolve to a real file (always a warning, never an error), and an off-by-default predicate check.
-- **OKF v0.2 base layer**: the plain OKF rules underneath LOKF, on by default so a bundle stays checkable on its own. Turn it off if a dedicated OKF validator takes over. **Enforce OKF conformance as errors** downgrades the spec's REQUIRED findings to warnings; a break-glass switch for mid-migration bundles, not recommended otherwise.
-- **Trust & lifecycle**: whether the *shape* of `verified`, `generated`, `status`, `stale_after` and `sources` is checked. Their credibility is never judged here; that is the curator's work.
+- **OKF v0.2 base layer**: the plain OKF rules underneath LOKF, on by default so a bundle stays checkable on its own. Turn it off if a dedicated OKF validator takes over. Turning off **Enforce OKF conformance as errors** downgrades the spec's REQUIRED findings to warnings. It is a break-glass switch for mid-migration bundles, not recommended otherwise.
+- **Trust & lifecycle**: whether the *shape* of `verified`, `generated`, `status`, `stale_after` and `sources` is checked. Their credibility is never judged here. That is the curator's work.
 - **Rule severity**: rule ids whose warnings are raised to errors. Escalation only.
 - **Field aliasing (advanced)**: `user=canonical` pairs that map a vault's own frontmatter keys onto the LOKF ones before checking. Off by default.
 - **Scope & performance**: the bundle-root settings above, excluded folders, a per-note opt-out (`lokf: ignore` in frontmatter), and the batch size for large vaults.

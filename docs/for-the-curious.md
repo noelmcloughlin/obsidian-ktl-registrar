@@ -20,7 +20,7 @@
 
 Every LOKF field is a LOKF schema slot, so the plugin already has what it needs to check the plain OKF rules underneath the LOKF dialect. A rule exists here because OKF v0.2, or the LOKF schema that mirrors it, says so. These are the `okf/*` findings. *Settings → OKF v0.2 base layer* switches them off in one place if you run a dedicated OKF validator.
 
-**Severity follows the specification's own force.** What OKF marks REQUIRED or MUST, or lists under §11 conformance, is an **error**. The shape of optional fields and the migration hints are warnings. *Enforce OKF conformance as errors*, in the same settings group, downgrades the mandatory errors to warnings for a bundle in mid-migration, so the findings stay visible without blocking. It is a break-glass switch and not recommended otherwise.
+**Severity follows the specification's own force.** What OKF marks REQUIRED or MUST, or lists under §11 conformance, is an **error**. The shape of optional fields and the migration hints are warnings. Turning off *Enforce OKF conformance as errors*, in the same settings group, downgrades the mandatory errors to warnings for a bundle in mid-migration, so the findings stay visible without blocking. It is a break-glass switch and not recommended otherwise.
 
 | Rule | OKF v0.2 | Severity |
 | --- | --- | --- |

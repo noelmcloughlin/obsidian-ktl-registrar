@@ -6,10 +6,10 @@ This page says how to get a bundle, where to install KTL Registrar, and how to s
 
 ## Quick start
 
-1. **Get a bundle.** The usual way: at the host, run `ktl-sidecar` once and then `ktl-librarian` to derive concepts from your sources, every one marked a draft. The hand-made way: open an empty folder as a vault and run **Insert the bundle's semantic header** (below); a small bundle grown by hand is a fine way to learn the format, but nothing will refresh it when your sources change.
-2. **Open it as a vault.** **File → Open folder as vault**, pick `knowledge_bundle`.
-3. **Install the plugin there** ([Install](#install)), in that vault's `.obsidian/plugins/`, not in your workshop. Installed in a vault with no bundle it reads *LOKF: no bundle* and does nothing.
-4. **Edit.** The status bar reads **LOKF ✓**, **LOKF ⚠ 3**, or **LOKF ✖ 1**. Click it, or run **Validate vault**, for the full report. Add [KTL Curator](https://github.com/noelmcloughlin/obsidian-ktl-curator) when you start confirming what the librarian wrote.
+1. **Get a bundle.** The usual way: at the host, run `ktl-sidecar` once and then `ktl-librarian` to derive concepts from your sources, every one marked a draft. The hand-made way: open an empty folder as an Obsidian vault and run **Insert the bundle's semantic header** ([Commands](using.md#commands)). A small bundle grown by hand is a fine way to learn the format, but nothing will refresh it when your sources change.
+2. **Open it as a vault.** Choose **File → Open folder as vault**, and pick `knowledge_bundle`.
+3. **Install the plugin there** ([Install](#install)), in that vault's `.obsidian/plugins/`, not in your workshop. In a vault with no bundle, it reads *LOKF: no bundle* and does nothing.
+4. **Edit.** The status bar reads **LOKF ✓**, **LOKF ⚠ 3**, or **LOKF ✖ 1**. Click it to validate the active note, or run **Validate vault** for the full report. Add [KTL Curator](https://github.com/noelmcloughlin/obsidian-ktl-curator) when you start confirming what the librarian wrote.
 
 ## Install
 
