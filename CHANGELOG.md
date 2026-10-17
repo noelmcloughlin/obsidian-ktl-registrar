@@ -6,6 +6,10 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+### Security
+
+- **The sidecar copies and the skills pin match `v0.45.1`.** The release changed `.lokf/scripts/knowledge-apply.py` and `.lokf/scripts/knowledge-federate.py` here; its [changelog](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/v0.45.1/CHANGELOG.md) says how.
+
 ## [1.7.2] - 2026-10-16
 
 ### Security
