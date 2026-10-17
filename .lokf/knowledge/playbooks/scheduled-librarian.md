@@ -14,7 +14,7 @@ generated:
 status: draft
 verified:
 - by: process:ktl-librarian
-  at: "2026-10-15T23:50:48Z"
+  at: "2026-10-16T23:45:55Z"
 sources:
 - resource: .github/workflows/knowledge-librarian.yaml
 - resource: .lokf/scripts/knowledge-librarian.sh

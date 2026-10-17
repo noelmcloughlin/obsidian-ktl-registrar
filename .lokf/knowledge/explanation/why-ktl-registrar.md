@@ -3,13 +3,14 @@ type: Explanation
 id: https://w3id.org/ktl/registrar/knowledge/explanation/why-ktl-registrar
 title: Why KTL Registrar
 genre: explanation
-description: "Why KTL Registrar exists: no other known tool checks the LOKF semantic layer, so it checks that layer and the OKF v0.2 base layer beneath it in the editor, reports rather than blocks, and stays independent of its sibling KTL Curator."
+description: "Why KTL Registrar exists: no other known tool checks the LOKF semantic layer, so it checks that layer and the OKF v0.2 base layer beneath it in the editor, reports rather than blocks, lets a person turn off Enforce OKF conformance as errors to downgrade the OKF errors to warnings, and stays independent of its sibling KTL Curator."
 resource: docs/for-the-curious.md
 sources:
 - resource: README.md
 - resource: docs/architecture.md
 - resource: docs/for-the-curious.md
 - resource: docs/using.md
+- resource: src/settings.ts
 about:
 - https://w3id.org/ktl/registrar/knowledge/references/okf-specification
 - https://w3id.org/ktl/registrar/knowledge/references/lokf-specification
@@ -17,11 +18,11 @@ relatedTo:
 - https://w3id.org/ktl/registrar/knowledge/services/ktl-registrar-plugin
 generated:
   by: process:ktl-librarian
-  at: "2026-10-15T23:50:48Z"
+  at: "2026-10-16T23:47:10Z"
 status: draft
 verified:
 - by: process:ktl-librarian
-  at: "2026-10-16T00:38:14Z"
+  at: "2026-10-16T23:47:10Z"
 ---
 
 # Overview
@@ -39,11 +40,16 @@ Plain OKF is a folder of Markdown files whose only required field is a `type`. L
 - typed relationships whose targets must exist;
 - `id` consistency;
 - the shape of the OKF v0.2 §5 trust and lifecycle fields.
+
 `docs/architecture.md` says its authors know of no other tool that checks the LOKF semantic layer.
 
 # Why it checks the OKF v0.2 base layer itself
 
-Every LOKF field is a LOKF schema slot, so the plugin already has what it needs to check the plain OKF rules underneath the dialect. These are the `okf/*` findings: a required `type`, the `Attested Computation` contract, the reserved `index.md` and `log.md` structure, and the v0.1 to v0.2 migration hints. Severity follows the specification's own force. *Settings → OKF v0.2 base layer* switches them off in one place for a person who runs a dedicated OKF validator. `docs/architecture.md` names [OKF Enforcer](https://github.com/MartinForReal/okf-enforcer) as one validator for that layer, and says that none is required because the same base rules are checked here.
+Every LOKF field is a LOKF schema slot, so the plugin already has what it needs to check the plain OKF rules underneath the dialect. These are the `okf/*` findings: a required `type`, the `Attested Computation` contract, the reserved `index.md` and `log.md` structure, and the v0.1 to v0.2 migration hints. Severity follows the specification's own force: what OKF marks REQUIRED or MUST, or lists under §11 conformance, is an error, and the shape of optional fields and the migration hints are warnings.
+
+*Enforce OKF conformance as errors* is on by default in `src/settings.ts`. Turning it off downgrades the mandatory errors to warnings for a bundle in mid-migration, so the findings stay visible without blocking, and leaves LOKF's own structural errors (`base_iri`, `Field` and `Distribution`) as errors. `docs/for-the-curious.md` calls it a break-glass switch, not recommended otherwise.
+
+*Settings → OKF v0.2 base layer* switches the `okf/*` findings off in one place for a person who runs a dedicated OKF validator. `docs/architecture.md` names [OKF Enforcer](https://github.com/MartinForReal/okf-enforcer) as one validator for that layer, and says that none is required because the same base rules are checked here.
 
 # Why it reports instead of blocking
 

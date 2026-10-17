@@ -1,7 +1,20 @@
 # Change Log
 
+## 2026-10-17
+
+* **Changed**: the Diátaxis genre term now says its `genre: reference` tag sits in its own frontmatter; it had placed the tag in the bundle's root header, which carries none.
+
 ## 2026-10-16
 
+* **Prose**: reworded 15 concept bodies in plain English. No fact, link, number or frontmatter changed.
+* **Changed**: Quality Gates; the paragraph on `MD024` and the ignored folders no longer runs on from the last list item, so Markdown shows it as a paragraph of its own.
+* **Changed**: Validator Engine; the paragraph on the REQUIRED `generated.by` and source `resource` no longer runs on from the last list item, so Markdown shows it as a paragraph of its own.
+* **Changed**: Why KTL Registrar names the `okf/*` findings where the base-layer switch turns them off, now that the switch has a paragraph of its own.
+* **Changed**: Why KTL Registrar's section on the OKF base layer is split into three paragraphs, one each for severity, the conformance switch and the base-layer switch.
+* **Changed**: Contributing now names `.github/workflows/build.yml` as a source, since it says `npm run check` runs the same three steps that workflow runs.
+* **Changed**: Why KTL Registrar now says that turning off *Enforce OKF conformance as errors*, on by default in `src/settings.ts`, downgrades the OKF errors to warnings, as the reworded `docs/for-the-curious.md` puts it. The sentence after the list of checks is now its own paragraph.
+* **Added**: Install KTL Registrar, from `docs/install.md`, which the source map listed as a gap.
+* **Changed**: the source map now lists `docs/install.md` as the source of Install KTL Registrar and no longer as a gap, names `build.yml` beside `CONTRIBUTING.md`, and leaves out `.gitignore`, `.npmrc`, `package-lock.json`, `styles.css` and the generated `src/lokf-vocab.json` on purpose.
 * **Changed**: the bundle's `base_iri` moved from the placeholder `https://ktl-registrar.example/knowledge/` to `https://w3id.org/ktl/registrar/knowledge/`, a namespace under Knowledge Trust Ladder's w3id.org authority, so the bundle can join a federation; every id and relation target moved with it, and no concept's text changed.
 * **Changed**: Quality Gates now says that `.markdownlint-cli2.jsonc` ignores the folders the knowledge website generates, as it does since #74.
 * **Changed**: LOKF Toolkit now gives the `>=0.8.0` floor that `.lokf/pyproject.toml` declares, not 0.7.0, and pins its fallback schema to the commit tagged v0.8.0 instead of `main`.

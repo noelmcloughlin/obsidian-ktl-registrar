@@ -9,7 +9,7 @@ generated:
   at: "2026-10-15T23:50:48Z"
 verified:
 - by: process:ktl-librarian
-  at: "2026-10-16T00:38:14Z"
+  at: "2026-10-16T23:45:55Z"
 sources:
 - resource: README.md
 - resource: docs/architecture.md

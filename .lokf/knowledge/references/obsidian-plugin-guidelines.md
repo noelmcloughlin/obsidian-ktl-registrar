@@ -14,9 +14,9 @@ verified:
 
 # Overview
 
-This repo enforces these guidelines via `eslint-plugin-obsidianmd` (`eslint.config.mts`):
+This repository enforces these guidelines with `eslint-plugin-obsidianmd` (`eslint.config.mts`):
 
-- no `innerHTML`/inline styles;
+- no `innerHTML` and no inline styles;
 - no HTML heading elements in a settings tab (`new Setting(...).setHeading()` instead);
 - no detaching leaves in `onunload`;
 - sentence-case UI text;

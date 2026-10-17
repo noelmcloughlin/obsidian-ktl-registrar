@@ -14,6 +14,6 @@ verified:
 
 # Overview
 
-OKF v0.2 defines required `type`, the provenance/trust/lifecycle families (`generated`, `verified`, `sources`, `status`, `stale_after`), and Attested Computation shape.
+OKF v0.2 defines the required `type`, the provenance, trust and lifecycle families (`generated`, `verified`, `sources`, `status`, `stale_after`), and the shape of an Attested Computation.
 
-KTL Registrar checks the *shape* of the trust/lifecycle family, in a bundle that uses it. Since 0.4.0 it also checks the plain-OKF rules the LOKF schema subsumes: required `type`, Attested Computation shape, and reserved `index.md`/`log.md` structure. Severity is taken from the spec's own force; see [Why KTL Registrar](../explanation/why-ktl-registrar.md). [OKF Enforcer](https://github.com/MartinForReal/okf-enforcer) is one existing validator for this layer.
+KTL Registrar checks the *shape* of the trust and lifecycle family, in a bundle that uses it. Since 0.4.0 it also checks the plain-OKF rules the LOKF schema subsumes: the required `type`, the shape of an Attested Computation, and the reserved structure of `index.md` and `log.md`. Severity follows the specification's own force, as [Why KTL Registrar](../explanation/why-ktl-registrar.md) explains. [OKF Enforcer](https://github.com/MartinForReal/okf-enforcer) is one existing validator for this layer.

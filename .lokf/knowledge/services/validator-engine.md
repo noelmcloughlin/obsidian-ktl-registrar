@@ -12,7 +12,7 @@ relatedTo:
 - https://w3id.org/ktl/registrar/knowledge/references/lokf-toolkit
 generated:
   by: process:ktl-librarian
-  at: "2026-10-15T23:50:48Z"
+  at: "2026-10-16T23:48:09Z"
 verified:
 - by: process:ktl-librarian
   at: "2026-10-15T23:50:48Z"
@@ -27,7 +27,7 @@ verified:
 - the bundle-root semantic header and `base_iri` (`validateRootHeader`);
 - the type vocabulary and type-specific fields (`validateTypeVocabulary`);
 - typed relationships, with target-existence checking (`validateRelationships`);
-- id minting (`validateConceptId`);
+- `id` consistency (`validateConceptId`);
 - the shape of the OKF v0.2 §5 trust and lifecycle fields (`validateTrustLifecycle`).
 
 The OKF v0.2 base layer is the set of `okf/*` rules behind the `checkOkfBaseLayer` setting. It checks what the LOKF schema already subsumes:
@@ -51,6 +51,7 @@ Since lokf 0.8.0, `lokf validate` rejects values that break the schema's pattern
 - a `sources[].author` that is not an actor string;
 - a `Person`'s `email` that is not an address;
 - a `Service`'s `http_method` outside `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD` and `OPTIONS`.
+
 A `generated` block with no `by` and a `sources` entry with no `resource` are errors too, because OKF marks both REQUIRED. `stale_after` may be an ISO 8601 datetime or a bare date.
 
 # Relation fields

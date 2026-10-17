@@ -23,15 +23,15 @@ verified:
 
 **KTL Registrar Plugin** (`src/main.ts`) is the plugin's lifecycle shell. It registers:
 
-- fifteen commands: `validate-vault`, `validate-active`, `scaffold-root-header`, plus find/fix/affordance/navigation commands ([Commands and settings](../references/commands-and-settings.md) has the full, current id list);
+- fifteen commands: `validate-vault`, `validate-active`, `scaffold-root-header`, plus find, fix, affordance and navigation commands ([Commands and settings](../references/commands-and-settings.md) has the full, current id list);
 - a clickable status-bar indicator (`LOKF ✓` / `LOKF ⚠ N` / `LOKF ✖ N` / `LOKF: no bundle`);
 - the collapsible side-panel report view.
 
-A person may run **Validate active note** (the command, or a status-bar click) on a note excluded by settings or outside every configured bundle root. The plugin now says so via a `Notice`, instead of clearing the status bar to `LOKF: —` with no explanation. Every other outcome (clean, unreadable, N findings) already produced one. The debounced file-open path that fires on every navigation stays silent by design; only an explicit ask gets told why nothing happened.
+A person may run **Validate active note** (the command, or a status-bar click) on a note excluded by settings or outside every configured bundle root. The plugin says so in a `Notice`, instead of clearing the status bar to `LOKF: —` with no explanation. Every other outcome (clean, unreadable, N findings) already produced one. The debounced file-open path that fires on every navigation stays silent by design; only an explicit ask gets told why nothing happened.
 
 Its settings are not its own (2026-09-14). `loadSettings` is one call to `vocab.ts`'s import-free `mergeSavedSettings` and one `Object.assign`. Defaults come from the pinned manifest, and saved values go over them. A vocabulary list still equal to the pre-schema hard-coded default is refreshed to the manifest's, while an edited one is preserved. The rule moved out of `main.ts` so the smoke test could reach it, which is the boundary this plugin draws generally.
 
-It caches the bundle-root `base_iri`, read once per scan from `index.md` and invalidated on `create`/`modify`/`delete`/`rename` of that one file, so opening notes doesn't re-read the root on every keystroke. It debounces file-open validation by 150ms, so arrowing through a file list doesn't parse a note per keystroke.
+It caches the bundle-root `base_iri`, read once per scan from `index.md` and invalidated on a `create`, `modify`, `delete` or `rename` of that one file, so opening notes doesn't re-read the root on every keystroke. It debounces file-open validation by 150ms, so arrowing through a file list doesn't parse a note per keystroke.
 
 The plugin neither detects nor recommends any other plugin. An earlier design carried three things:
 
@@ -58,7 +58,7 @@ With *Bundle root folders* empty, `bundleRoots()` falls back to `implicitRoots()
 
 It suggests the first when the vault holds no Markdown besides `index.md`, and the second otherwise, and it never decides alone. The scan checks Obsidian's live index before explaining an absent root, so a dot-folder root that a plugin such as Hidden Folders Access exposes is scanned like any other.
 
-`writeDiataxisMap` now writes `diataxis.md` as a `Document` with a minted `id` and `generated.by: ktl-registrar/<version>` (`affordances.ts`'s `DiataxisHeader`). It upgrades a headerless map on its next refresh, because `lokf validate` aborts a run on a note with no frontmatter, which the earlier map triggered.
+`writeDiataxisMap` now writes `diataxis.md` as a `Document` with an `id` and `generated.by: ktl-registrar/<version>` (`affordances.ts`'s `DiataxisHeader`). It upgrades a headerless map on its next refresh, because `lokf validate` aborts a run on a note with no frontmatter, which the earlier map triggered.
 
 The feature-fit audit that stood here as open questions is resolved:
 

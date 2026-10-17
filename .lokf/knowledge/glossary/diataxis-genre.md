@@ -7,7 +7,7 @@ abbreviation: genre
 genre: reference
 generated:
   by: process:ktl-librarian
-  at: "2026-10-15T23:50:48Z"
+  at: "2026-10-17T00:17:54Z"
 description: The optional Diátaxis genre facet (tutorial, how-to, reference or explanation) that tags how a concept's prose serves the reader; the plugin warns on a value outside the list.
 verified:
 - by: process:ktl-librarian
@@ -16,4 +16,4 @@ verified:
 
 # Overview
 
-`validateTypeVocabulary` in `src/validator.ts` validates the field. An out-of-enum or non-string `genre` value is a warning, never an error, consistent with LOKF's permissive-by-design philosophy. This concept itself is tagged `genre: reference` in this bundle's own root header conventions, because it is a plain glossary entry, not a worked example.
+`validateTypeVocabulary` in `src/validator.ts` validates the field. An out-of-enum or non-string `genre` value is a warning, never an error, in keeping with LOKF's permissive rules. This concept is tagged `genre: reference` in its own frontmatter, because it is a plain glossary entry, not a worked example.
