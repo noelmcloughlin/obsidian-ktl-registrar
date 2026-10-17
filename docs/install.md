@@ -13,10 +13,10 @@ This page says how to get a bundle, where to install KTL Registrar, and how to s
 
 ## Install
 
-Not yet in the community plugin store. Install it in the bundle's vault, at `<bundle>/.obsidian/plugins/ktl-registrar/`.
+The plugin is not yet in the community plugin store. Install it in the bundle's vault, at `<bundle>/.obsidian/plugins/ktl-registrar/`.
 
 - **From a [GitHub release](https://github.com/noelmcloughlin/obsidian-ktl-registrar/releases)**: copy `main.js`, `manifest.json` and `styles.css` into that folder and enable the plugin under **Settings → Community plugins**.
-- **[BRAT](https://github.com/TfTHacker/obsidian42-brat)**: add `noelmcloughlin/obsidian-ktl-registrar` as a beta plugin; BRAT installs the latest release and keeps it updated.
+- **[BRAT](https://github.com/TfTHacker/obsidian42-brat)**: add `noelmcloughlin/obsidian-ktl-registrar` as a beta plugin. BRAT installs the latest release and keeps it updated.
 - **From source**: `npm ci && npm run build`, then copy the same three files.
 
-Requires Obsidian **1.13.0** or later.
+The plugin requires Obsidian **1.13.0** or later.
