@@ -11,9 +11,9 @@ This page says what a knowledge bundle is, which role KTL Registrar plays in kee
 
 A bundle is a folder of Markdown notes in the [Linked Open Knowledge Format](https://lokf.nolan-nichols.com/) (LOKF): one concept per note, a few properties on each, and an `index.md` at the root that names the bundle. The [`knowledge-trust-ladder`](https://github.com/noelmcloughlin/knowledge-trust-ladder) skills build one beside whatever they are run on: a code repository, a vault of notes, a folder of documents.
 
-This plugin is the **registrar** of that family: it checks that every record is well-formed. Its sibling [KTL Curator](https://github.com/noelmcloughlin/obsidian-ktl-curator) records what a person decides about each record. Neither reaches a verdict of its own; the judging stays with the person.
+This plugin is the **registrar** of that family: it checks that every record is well-formed. Its sibling [KTL Curator](https://github.com/noelmcloughlin/obsidian-ktl-curator) records what a person decides about each record. Neither reaches a verdict of its own. The judging stays with the person.
 
-All the roles are on the skills' [architecture page](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/architecture.md#four-skills-three-lines-of-the-poem), and the two plugins under [the fifth role](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/architecture.md#the-fifth-role-which-is-not-a-skill). For anyone who works under the **three lines of defence**, this plugin is second-line work, keeping the format and never judging truth; [docs/three-lines.md](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/three-lines.md) says where the rest sit.
+The skills' [architecture page](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/architecture.md#four-skills-three-lines-of-the-poem) sets out all the roles, and [the fifth role](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/architecture.md#the-fifth-role-which-is-not-a-skill) covers the two plugins. For anyone who works under the **three lines of defence**, this plugin is second-line work: it keeps the format and never judges truth. [docs/three-lines.md](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/three-lines.md) says where the rest sit.
 
 Obsidian is optional in both directions: the skills rely on `lokf validate`, not on this plugin, and the plugin works on any LOKF bundle however it was made. The format is all they share.
 
@@ -28,7 +28,7 @@ Your everyday Obsidian vault is the **workshop**. The bundle is the **exhibition
   </picture>
 </p>
 
-How the `knowledge_bundle` doorway behaves on each host is recorded once in the skills' playbook [Open the knowledge bundle in Obsidian](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/.lokf/knowledge/playbooks/open-bundle-in-obsidian.md). If it is missing, `ln -s .lokf/knowledge knowledge_bundle` (or `mklink /J knowledge_bundle .lokf\knowledge` on Windows) makes it, or open `.lokf/knowledge` by path.
+The skills' playbook [Open the knowledge bundle in Obsidian](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/.lokf/knowledge/playbooks/open-bundle-in-obsidian.md) records how the `knowledge_bundle` doorway behaves on each host. If the link is missing, make it with `ln -s .lokf/knowledge knowledge_bundle` (or `mklink /J knowledge_bundle .lokf\knowledge` on Windows), or open `.lokf/knowledge` by path.
 
 ## Which folder is the bundle
 
@@ -40,18 +40,18 @@ With nothing configured, the vault decides:
 
 Two settings widen that under *Settings → Scope and performance*:
 
-- **Bundle root folders**: for a bundle that sits as a folder inside a larger vault, or several of them (`bird-watching, projects/art-portfolio`). Each is an independent bundle with its own `index.md` and `base_iri`; notes outside every listed folder are ignored. Obsidian indexes such a folder like any other, so exhibits mix with your notes in search, graph and link suggestions, so the skills install the bundle as a separate vault instead (the playbook's [last section](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/.lokf/knowledge/playbooks/open-bundle-in-obsidian.md#why-the-bundle-is-never-a-real-folder-inside-a-vault) says why).
+- **Bundle root folders**: for a bundle that sits as a folder inside a larger vault, or several of them (`bird-watching, projects/art-portfolio`). Each is an independent bundle with its own `index.md` and `base_iri`. Notes outside every listed folder are ignored. Obsidian indexes such a folder like any other, so exhibits mix with your notes in search, graph and link suggestions. The skills install the bundle as a separate vault instead, and the playbook's [last section](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/.lokf/knowledge/playbooks/open-bundle-in-obsidian.md#why-the-bundle-is-never-a-real-folder-inside-a-vault) says why.
 - **Treat the vault root as the bundle**: a break-glass switch for a vault that really is a bundle but whose root `index.md` has no header yet.
 
-A folder inside a dot-folder is accepted but only scanned if something has put it in Obsidian's index (the community plugin *Hidden Folders Access* does that); otherwise the scan says so rather than reporting an empty bundle as clean.
+A folder inside a dot-folder is accepted, but it is scanned only if something has put it in Obsidian's index. The community plugin *Hidden Folders Access* does that. Otherwise the scan says so, rather than reporting an empty bundle as clean.
 
 ## Privacy
 
-No network requests, no telemetry, no external services. The plugin reads the Markdown in the open vault and writes only when you run a command that edits a note: the header, safe-fix, promote-relations and affordance commands, and the report's *Fix this finding* and *Silence this note* actions. Settings live in the vault's own plugin data.
+The plugin makes no network requests, sends no telemetry and uses no external services. It reads the Markdown in the open vault and writes only when you run a command that edits a note: the header, safe-fix, promote-relations and affordance commands, and the report's *Fix this finding* and *Silence this note* actions. Settings live in the vault's own plugin data.
 
 ## Development
 
-See [CONTRIBUTING.md](../CONTRIBUTING.md). The layout follows the upstream [obsidian-sample-plugin](https://github.com/obsidianmd/obsidian-sample-plugin); `npm run lint` runs Obsidian's own `eslint-plugin-obsidianmd` ruleset.
+See [CONTRIBUTING.md](../CONTRIBUTING.md). The layout follows the upstream [obsidian-sample-plugin](https://github.com/obsidianmd/obsidian-sample-plugin). `npm run lint` runs Obsidian's own `eslint-plugin-obsidianmd` ruleset.
 
 ```text
 src/
@@ -70,11 +70,11 @@ docs/               the reasoning behind the checks
 .lokf/              this repository's own LOKF knowledge bundle
 ```
 
-`src/validator.ts` takes already-parsed frontmatter and imports nothing, so the whole rule set runs under plain Node via `npm run smoke-test` with no Obsidian install. Parsing happens in `src/main.ts` with Obsidian's own `parseYaml`.
+`src/validator.ts` takes already-parsed frontmatter and imports nothing, so the whole rule set runs under plain Node via `npm run smoke-test` with no Obsidian install. `src/main.ts` does the parsing, with Obsidian's own `parseYaml`.
 
 ## This repository's own bundle
 
-This repository keeps a bundle of its own under `.lokf/knowledge/`, maintained by the `knowledge-trust-ladder`, which a scheduled [workflow](../.github/workflows/knowledge-librarian.yaml) installs at run time. It is what the docent answers from, and none of it is part of the plugin. To contribute to it, [CONTRIBUTING.md](../CONTRIBUTING.md#development-setup) says which skills that takes.
+This repository keeps a bundle of its own under `.lokf/knowledge/`, maintained by the `knowledge-trust-ladder` skills, which a scheduled [workflow](../.github/workflows/knowledge-librarian.yaml) installs at run time. It is what the docent answers from, and none of it is part of the plugin. [CONTRIBUTING.md](../CONTRIBUTING.md#development-setup) says which skills you need to contribute to it.
 
 ## Read on
 
@@ -96,7 +96,7 @@ This repository keeps a bundle of its own under `.lokf/knowledge/`, maintained b
 - [knowledge-trust-ladder](https://github.com/noelmcloughlin/knowledge-trust-ladder), the registrar role this plugin fills in the editor, and whose bundle template the smoke test validates.
 - [KTL Curator](https://github.com/noelmcloughlin/obsidian-ktl-curator), the sibling plugin, forked from this one and sharing the bundle-root plumbing in `src/validator.ts`.
 
-We know of no other tool that checks the LOKF semantic layer. Validators for the plain OKF v0.2 layer beneath it exist, such as [OKF Enforcer](https://github.com/MartinForReal/okf-enforcer); the same base rules are checked here, so none is required.
+We know of no other tool that checks the LOKF semantic layer. Validators for the plain OKF v0.2 layer beneath it exist, such as [OKF Enforcer](https://github.com/MartinForReal/okf-enforcer). This plugin checks the same base rules, so none is required.
 
 ## License
 

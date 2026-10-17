@@ -12,7 +12,7 @@ This page lists the report panel, the in-editor diagnostics, the commands, the s
 
 ## Commands
 
-**Commands.** Open the command palette and search for **LOKF**:
+Open the command palette and search for **LOKF**:
 
 | Command | What it does |
 | --- | --- |
@@ -35,16 +35,16 @@ Clicking the status-bar item validates the active note, or runs a vault scan if 
 
 ## Settings
 
-Under **Settings → KTL Registrar**; every setting is also reachable through Obsidian's settings search.
+The settings are under **Settings → KTL Registrar**. Obsidian's settings search also finds every setting.
 
 - **This device**: silences the plugin on this computer or phone only. Never synced.
 - **In-editor diagnostics**: the underlines and the autocomplete, both on by default.
-- **Type vocabulary**: the known LOKF classes, whether an unrecognised `type` is worth a warning, and the accepted `genre` values. *Known LOKF types* is also the extension point. A bundle validated against a domain schema (`lokf validate --schema <file>`, [recipe](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/skills/ktl-librarian/references/domain-schema.md)) lists that schema's classes here, since the plugin cannot read the schema, which sits outside the vault. Listed, they stop warning and appear in autocomplete; unlisted, they only ever warn. A list you have edited is yours to keep current, and should match KTL Curator's.
+- **Type vocabulary**: the known LOKF classes, whether an unrecognised `type` is worth a warning, and the accepted `genre` values. *Known LOKF types* is also the extension point. For a bundle validated against a domain schema (`lokf validate --schema <file>`, [recipe](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/skills/ktl-librarian/references/domain-schema.md)), list that schema's classes here. The plugin cannot read the schema, which sits outside the vault. A listed class stops warning and appears in autocomplete. An unlisted one only ever warns. A list you have edited is yours to keep current, and should match KTL Curator's.
 - **Type-specific fields**: the recommended-field warnings for `Metric`, `Service` and `GlossaryTerm`.
 - **Semantic header & base_iri**: the authority denylist, the placeholder-domain list, and whether a missing header warns.
 - **Relationships**: whether relation targets inside the bundle must resolve to a real file (always a warning, never an error), and an off-by-default predicate check.
-- **OKF v0.2 base layer**: the plain OKF rules underneath LOKF, on by default so a bundle stays checkable on its own. Turn it off if a dedicated OKF validator takes over. **Enforce OKF conformance as errors** downgrades the spec's REQUIRED findings to warnings; a break-glass switch for mid-migration bundles, not recommended otherwise.
-- **Trust & lifecycle**: whether the *shape* of `verified`, `generated`, `status`, `stale_after` and `sources` is checked. Their credibility is never judged here; that is the curator's work.
+- **OKF v0.2 base layer**: the plain OKF rules underneath LOKF, on by default so a bundle stays checkable on its own. Turn it off if a dedicated OKF validator takes over. Turning off **Enforce OKF conformance as errors** downgrades the spec's REQUIRED findings to warnings. It is a break-glass switch for mid-migration bundles, not recommended otherwise.
+- **Trust & lifecycle**: whether the *shape* of `verified`, `generated`, `status`, `stale_after` and `sources` is checked. Their credibility is never judged here. That is the curator's work.
 - **Rule severity**: rule ids whose warnings are raised to errors. Escalation only.
 - **Field aliasing (advanced)**: `user=canonical` pairs that map a vault's own frontmatter keys onto the LOKF ones before checking. Off by default.
 - **Scope & performance**: the bundle-root settings above, excluded folders, a per-note opt-out (`lokf: ignore` in frontmatter), and the batch size for large vaults.
@@ -53,8 +53,8 @@ Under **Settings → KTL Registrar**; every setting is also reachable through Ob
 
 A sibling plugin or agent can read validation state at `app.plugins.plugins["ktl-registrar"].api` without either depending on the other:
 
-- `getReport()`: the latest vault scan's findings, as a read-only snapshot.
-- `validatePath(path)`: validate one note on demand; never writes.
-- `onValidated(callback)`: fires when a scan or incremental re-check finishes; returns an unsubscribe function.
+- `getReport()`: returns the latest vault scan's findings, as a read-only snapshot.
+- `validatePath(path)`: validates one note on demand, and never writes.
+- `onValidated(callback)`: fires when a scan or incremental re-check finishes, and returns an unsubscribe function.
 
 The `LokfFinding` shape is a stable contract in `src/public-api.ts`, independent of the plugin's internals.
