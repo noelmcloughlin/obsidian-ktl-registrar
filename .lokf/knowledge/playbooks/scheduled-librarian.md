@@ -5,21 +5,21 @@ title: Scheduled Librarian
 description: "The knowledge-librarian.yaml workflow: three jobs split by privilege, so the agent proposes bundle changes as a patch under a read-only token and only a job that runs no agent pushes the branch and opens the review pull request; how it is switched on, when a scheduled week runs no agent, and the checks publish makes."
 resource: .github/workflows/knowledge-librarian.yaml
 dependsOn:
-- https://w3id.org/ktl/registrar/knowledge/references/lokf-toolkit
+  - https://w3id.org/ktl/registrar/knowledge/references/lokf-toolkit
 relatedTo:
-- https://w3id.org/ktl/registrar/knowledge/playbooks/knowledge-registrar-gate
+  - https://w3id.org/ktl/registrar/knowledge/playbooks/knowledge-registrar-gate
 generated:
   by: process:ktl-librarian
-  at: "2026-10-15T23:50:48Z"
+  at: "2026-10-18T00:14:24Z"
 status: draft
 verified:
-- by: process:ktl-librarian
-  at: "2026-10-16T23:45:55Z"
+  - by: process:ktl-librarian
+    at: "2026-10-18T00:14:24Z"
 sources:
-- resource: .github/workflows/knowledge-librarian.yaml
-- resource: .lokf/scripts/knowledge-librarian.sh
-- resource: SECURITY.md
-- resource: AI_COVENANT.md
+  - resource: .github/workflows/knowledge-librarian.yaml
+  - resource: .lokf/scripts/knowledge-librarian.sh
+  - resource: SECURITY.md
+  - resource: AI_COVENANT.md
 ---
 
 # Overview
@@ -50,4 +50,4 @@ GitHub starts no `pull_request` workflow for a pull request opened with the defa
 
 # Governance
 
-`SECURITY.md` lists this workflow and its wrapper as one row of its `Surface | What holds it` table, and links the guard design in the skills repository's [threat model](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/threat-model.md#prompt-injection-guards). The "Repository-Owned Agent Automation" section of [AI_COVENANT.md](../../../AI_COVENANT.md) sets the rules the workflow runs under: a bot identity, review always, least privilege enforced, and verdicts that only a person can record.
+`SECURITY.md` lists this workflow and its wrapper as one row of its `Surface | What holds it` table, and links the guard design in the skills repository's [threat model](https://w3id.org/ktl/docs/threat-model/#prompt-injection-guards). The "Repository-Owned Agent Automation" section of [AI_COVENANT.md](../../../AI_COVENANT.md) sets the rules the workflow runs under: a bot identity, review always, least privilege enforced, and verdicts that only a person can record.

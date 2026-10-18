@@ -6,23 +6,23 @@ genre: explanation
 description: "Why KTL Registrar exists: no other known tool checks the LOKF semantic layer, so it checks that layer and the OKF v0.2 base layer beneath it in the editor, reports rather than blocks, lets a person turn off Enforce OKF conformance as errors to downgrade the OKF errors to warnings, and stays independent of its sibling KTL Curator."
 resource: docs/for-the-curious.md
 sources:
-- resource: README.md
-- resource: docs/architecture.md
-- resource: docs/for-the-curious.md
-- resource: docs/using.md
-- resource: src/settings.ts
+  - resource: README.md
+  - resource: docs/architecture.md
+  - resource: docs/for-the-curious.md
+  - resource: docs/using.md
+  - resource: src/settings.ts
 about:
-- https://w3id.org/ktl/registrar/knowledge/references/okf-specification
-- https://w3id.org/ktl/registrar/knowledge/references/lokf-specification
+  - https://w3id.org/ktl/registrar/knowledge/references/okf-specification
+  - https://w3id.org/ktl/registrar/knowledge/references/lokf-specification
 relatedTo:
-- https://w3id.org/ktl/registrar/knowledge/services/ktl-registrar-plugin
+  - https://w3id.org/ktl/registrar/knowledge/services/ktl-registrar-plugin
 generated:
   by: process:ktl-librarian
   at: "2026-10-16T23:47:10Z"
 status: draft
 verified:
-- by: process:ktl-librarian
-  at: "2026-10-16T23:47:10Z"
+  - by: process:ktl-librarian
+    at: "2026-10-18T00:14:24Z"
 ---
 
 # Overview

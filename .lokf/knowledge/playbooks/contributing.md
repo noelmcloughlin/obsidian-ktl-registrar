@@ -6,14 +6,15 @@ description: "How to set up KTL Registrar for development, how src/ splits into 
 resource: CONTRIBUTING.md
 generated:
   by: process:ktl-librarian
-  at: "2026-10-16T23:46:11Z"
+  at: "2026-10-18T00:14:24Z"
 verified:
-- by: process:ktl-librarian
-  at: "2026-10-16T23:46:11Z"
+  - by: process:ktl-librarian
+    at: "2026-10-18T00:14:24Z"
 sources:
-- resource: CONTRIBUTING.md
-- resource: scripts/smoke-test.ts
-- resource: .github/workflows/build.yml
+  - resource: CONTRIBUTING.md
+  - resource: scripts/smoke-test.ts
+  - resource: .github/workflows/build.yml
+status: draft
 ---
 
 # Overview
@@ -56,4 +57,8 @@ Dependabot bumps the pinned action SHAs and the npm devDependencies, and skips m
 
 # Releasing
 
-`CONTRIBUTING.md` summarises the release flow and links to knowledge-trust-ladder's [docs/releasing.md](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/releasing.md) for the whole pipeline. [Releasing](releasing.md) describes it from this repository's workflows.
+`CONTRIBUTING.md` summarises the release flow and links to knowledge-trust-ladder's [docs/releasing.md](https://w3id.org/ktl/docs/releasing/) for the whole pipeline. [Releasing](releasing.md) describes it from this repository's workflows.
+
+## Open questions
+
+- 2026-10-18, process:ktl-librarian: `CONTRIBUTING.md` says a pin move copies the three `knowledge-*.yaml` workflows, and the repository now also carries `.github/workflows/knowledge-sync.yaml`, while `.lokf/scripts/knowledge-sync.sh` copies every template the release's `knowledge-sync.manifest` lists; which should this playbook describe?

@@ -6,25 +6,25 @@ description: "The knowledge-registrar.yaml workflow: it validates the bundle and
 genre: how-to
 resource: .github/workflows/knowledge-registrar.yaml
 sources:
-- resource: .github/workflows/knowledge-registrar.yaml
-- resource: .lokf/justfile
-- resource: SECURITY.md
+  - resource: .github/workflows/knowledge-registrar.yaml
+  - resource: .lokf/justfile
+  - resource: SECURITY.md
 relatedTo:
-- https://w3id.org/ktl/registrar/knowledge/playbooks/scheduled-librarian
+  - https://w3id.org/ktl/registrar/knowledge/playbooks/scheduled-librarian
 dependsOn:
-- https://w3id.org/ktl/registrar/knowledge/references/lokf-toolkit
+  - https://w3id.org/ktl/registrar/knowledge/references/lokf-toolkit
 generated:
   by: process:ktl-librarian
-  at: "2026-10-15T23:50:48Z"
+  at: "2026-10-18T00:14:24Z"
 status: draft
 verified:
-- by: process:ktl-librarian
-  at: "2026-10-15T23:50:48Z"
+  - by: process:ktl-librarian
+    at: "2026-10-18T00:14:24Z"
 ---
 
 # Overview
 
-`.github/workflows/knowledge-registrar.yaml` is the registrar's job in CI: it keeps the bundle's records well-formed and their provenance straight, and never judges whether a claim is true. It is a copy of the `ktl-sidecar` template in knowledge-trust-ladder, and `SECURITY.md` lists it as the template's jobs unchanged. The guard design is documented once, in the skills repository's [threat model](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/main/docs/threat-model.md#human-attribution-human-is-a-claim-not-a-credential).
+`.github/workflows/knowledge-registrar.yaml` is the registrar's job in CI: it keeps the bundle's records well-formed and their provenance straight, and never judges whether a claim is true. It is a copy of the `ktl-sidecar` template in knowledge-trust-ladder, and `SECURITY.md` lists it as the template's jobs unchanged. The guard design is documented once, in the skills repository's [threat model](https://w3id.org/ktl/docs/threat-model/#human-attribution-human-is-a-claim-not-a-credential).
 
 The workflow runs on a pull request that touches `.lokf/**`, `knowledge_bundle/**` or the workflow itself, on a Monday 06:00 UTC schedule, and on demand. It sets `permissions: {}` at the top, and none of its three jobs can write to the repository, keeps a credential on disk, or runs an LLM or agent.
 

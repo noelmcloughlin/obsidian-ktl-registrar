@@ -5,10 +5,10 @@ title: Knowledge Sources
 description: Map of the repository files and outside sources this bundle is derived from, which concepts each feeds, how a refresh re-checks each, which files are left out on purpose, and which have no concept yet.
 generated:
   by: process:ktl-librarian
-  at: "2026-10-16T23:45:55Z"
+  at: "2026-10-18T00:14:24Z"
 verified:
-- by: process:ktl-librarian
-  at: "2026-10-16T23:45:55Z"
+  - by: process:ktl-librarian
+    at: "2026-10-16T23:45:55Z"
 ---
 
 # Sources
@@ -53,3 +53,5 @@ Each row names the files a concept is derived from, the concepts they feed, and 
 - `.github/workflows/knowledge-release.yaml` has no concept. `SECURITY.md` lists it as the template's jobs, inert until dispatched or turned on by `KNOWLEDGE_RELEASE_ENABLED`, with `attach` the only job that can write.
 
 - `llms.txt`, the agent context file, has no concept.
+
+- `.github/workflows/knowledge-sync.yaml` and its pull request template, `.github/PULL_REQUEST_TEMPLATE/knowledge-sync.md`, have no concept. The workflow's header says it keeps the sidecar's copies and the skills pin at the newest release of Knowledge Trust Ladder each week, and opens one pull request with the `KNOWLEDGE_SYNC_TOKEN` secret. `SECURITY.md` does not list it yet.
