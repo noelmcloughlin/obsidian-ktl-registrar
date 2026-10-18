@@ -2,6 +2,7 @@
 
 ## 2026-10-18
 
+* **Changed**: Knowledge registrar gate is related to the registrar in Knowledge Trust Ladder's bundle, the role that concept says `knowledge-registrar.yaml` plays; the first link from this bundle into another member of the KTL federation.
 * **Changed**: links to Knowledge Trust Ladder's docs pages and to KTL Curator use their w3id.org addresses, as `CONTRIBUTING.md`, `SECURITY.md` and `docs/install.md` now do.
 * **Question**: the contributing playbook's pin rule counts three sidecar workflows, and the sync script now copies whatever the release's manifest lists, `knowledge-sync.yaml` among them.
 * **Changed**: the source map lists `knowledge-sync.yaml` and its pull request template, which the sidecar syncs added, as a gap with no concept.

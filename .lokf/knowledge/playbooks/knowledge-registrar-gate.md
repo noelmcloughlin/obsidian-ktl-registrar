@@ -11,11 +11,12 @@ sources:
   - resource: SECURITY.md
 relatedTo:
   - https://w3id.org/ktl/registrar/knowledge/playbooks/scheduled-librarian
+  - https://w3id.org/ktl/knowledge/glossary/registrar
 dependsOn:
   - https://w3id.org/ktl/registrar/knowledge/references/lokf-toolkit
 generated:
   by: process:ktl-librarian
-  at: "2026-10-18T00:14:24Z"
+  at: "2026-10-18T13:39:12Z"
 status: draft
 verified:
   - by: process:ktl-librarian
