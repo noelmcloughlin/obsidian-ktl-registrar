@@ -8,12 +8,12 @@ generated:
   by: process:ktl-librarian
   at: "2026-10-15T23:50:48Z"
 verified:
-- by: process:ktl-librarian
-  at: "2026-10-16T23:45:55Z"
+  - by: process:ktl-librarian
+    at: "2026-10-18T00:14:24Z"
 sources:
-- resource: README.md
-- resource: docs/architecture.md
-- resource: SECURITY.md
+  - resource: README.md
+  - resource: docs/architecture.md
+  - resource: SECURITY.md
 ---
 
 # Overview

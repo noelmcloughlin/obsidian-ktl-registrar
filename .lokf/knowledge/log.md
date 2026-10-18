@@ -1,5 +1,11 @@
 # Change Log
 
+## 2026-10-18
+
+* **Changed**: links to Knowledge Trust Ladder's docs pages and to KTL Curator use their w3id.org addresses, as `CONTRIBUTING.md`, `SECURITY.md` and `docs/install.md` now do.
+* **Question**: the contributing playbook's pin rule counts three sidecar workflows, and the sync script now copies whatever the release's manifest lists, `knowledge-sync.yaml` among them.
+* **Changed**: the source map lists `knowledge-sync.yaml` and its pull request template, which the sidecar syncs added, as a gap with no concept.
+
 ## 2026-10-17
 
 * **Changed**: the Diátaxis genre term now says its `genre: reference` tag sits in its own frontmatter; it had placed the tag in the bundle's root header, which carries none.
