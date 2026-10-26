@@ -1,5 +1,9 @@
 # Change Log
 
+## 2026-10-26
+
+* **Changed**: the bundle index says w3id.org resolves `https://w3id.org/ktl/registrar/knowledge/`, as the docent reported on 2026-10-17; it had said the rule was pending.
+
 ## 2026-10-18
 
 * **Changed**: Knowledge registrar gate is related to the registrar in Knowledge Trust Ladder's bundle, the role that concept says `knowledge-registrar.yaml` plays; the first link from this bundle into another member of the KTL federation.

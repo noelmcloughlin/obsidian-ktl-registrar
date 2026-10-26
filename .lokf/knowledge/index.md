@@ -16,7 +16,7 @@ publisher:
 
 A [LOKF](https://lokf.nolan-nichols.com) knowledge base for the **KTL Registrar** Obsidian plugin. Every Markdown file under `knowledge/` is one concept; together they form a queryable knowledge graph, derived from this repository's code and docs.
 
-`base_iri` is `https://w3id.org/ktl/registrar/knowledge/`, a namespace under Knowledge Trust Ladder's w3id.org authority; the w3id rule that resolves it is pending — see [Knowledge sources](playbooks/knowledge-sources.md).
+`base_iri` is `https://w3id.org/ktl/registrar/knowledge/`, a namespace under Knowledge Trust Ladder's w3id.org authority, which resolves it to this plugin's knowledge site.
 
 # Services
 
