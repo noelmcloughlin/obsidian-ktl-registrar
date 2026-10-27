@@ -5,15 +5,18 @@ title: Knowledge Website
 description: "The website/ folder and the knowledge-website.yaml workflow: an Astro Starlight site built from the bundle, the README, docs/ and the changelog, how to preview it, what to edit, and how the workflow builds it on pull requests and deploys it to GitHub Pages at `https://noelmcloughlin.github.io/obsidian-ktl-registrar/` once KNOWLEDGE_WEBSITE_ENABLED is true."
 resource: website/README.md
 sources:
-- resource: website/README.md
-- resource: website/site.config.mjs
-- resource: .github/workflows/knowledge-website.yaml
+  - resource: website/README.md
+  - resource: website/site.config.mjs
+  - resource: .github/workflows/knowledge-website.yaml
 dependsOn:
-- https://w3id.org/ktl/registrar/knowledge/references/lokf-toolkit
+  - https://w3id.org/ktl/registrar/knowledge/references/lokf-toolkit
 generated:
   by: process:ktl-librarian
   at: "2026-10-16T00:38:14Z"
 status: draft
+verified:
+  - by: process:ktl-librarian
+    at: "2026-10-27T01:14:26Z"
 ---
 
 # Overview

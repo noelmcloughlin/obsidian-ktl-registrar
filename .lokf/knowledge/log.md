@@ -1,5 +1,13 @@
 # Change Log
 
+## 2026-10-27
+
+* **Changed**: Contributing now describes the skills pin moving through the weekly `knowledge-sync.yaml` pull request, as `CONTRIBUTING.md` has said since #103, in place of the retired by-hand copy step.
+* **Resolved**: `CONTRIBUTING.md` itself now describes the automated weekly sync (#103), so the playbook follows that wording rather than choosing between the two.
+* **Changed**: Knowledge registrar gate's validate job now runs `lokf-check-refs` through `uv run --locked just`, since `.lokf/uv.lock` pins `rust-just`, with the `uvx` form kept only as the fallback for a host whose lock does not.
+* **Changed**: Scheduled librarian now says the wrapper sets `KNOWLEDGE_PEN_DRY_RUN_ONLY=1` while the agent runs, so the pen itself refuses to apply a patch early and leaves the file for `publish` to apply.
+* **Changed**: the source map's `knowledge-sync.yaml` gap row no longer says `SECURITY.md` leaves the workflow out, since #103 added it to the surface table.
+
 ## 2026-10-26
 
 * **Changed**: the bundle index says w3id.org resolves `https://w3id.org/ktl/registrar/knowledge/`, as the docent reported on 2026-10-17; it had said the rule was pending.

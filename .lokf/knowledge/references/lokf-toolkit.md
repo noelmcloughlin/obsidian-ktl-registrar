@@ -5,18 +5,18 @@ title: LOKF Toolkit
 description: The `lokf` PyPI package that the `.lokf/` sidecar depends on (`lokf[build]>=0.8.0`) and runs through the justfile recipes and the website's sync; a separate resource from the LOKF specification website.
 resource: https://pypi.org/project/lokf/
 sources:
-- resource: https://raw.githubusercontent.com/nicholsn/lokf/66073c3eb8b8ca6ca00fb66ba11beca235eaedc8/lokf.yaml
-  title: lokf.yaml at the commit tagged v0.8.0 (raw LinkML schema, no-Python fallback)
-- resource: .lokf/pyproject.toml
-- resource: .lokf/justfile
+  - resource: https://raw.githubusercontent.com/nicholsn/lokf/66073c3eb8b8ca6ca00fb66ba11beca235eaedc8/lokf.yaml
+    title: lokf.yaml at the commit tagged v0.8.0 (raw LinkML schema, no-Python fallback)
+  - resource: .lokf/pyproject.toml
+  - resource: .lokf/justfile
 relatedTo:
-- https://w3id.org/ktl/registrar/knowledge/references/lokf-specification
+  - https://w3id.org/ktl/registrar/knowledge/references/lokf-specification
 generated:
   by: process:ktl-librarian
   at: "2026-10-16T00:38:14Z"
 verified:
-- by: process:ktl-librarian
-  at: "2026-10-16T00:38:14Z"
+  - by: process:ktl-librarian
+    at: "2026-10-27T01:14:26Z"
 ---
 
 # Overview

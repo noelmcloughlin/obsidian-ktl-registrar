@@ -6,10 +6,10 @@ description: "How to set up KTL Registrar for development, how src/ splits into 
 resource: CONTRIBUTING.md
 generated:
   by: process:ktl-librarian
-  at: "2026-10-18T00:14:24Z"
+  at: "2026-10-27T01:14:26Z"
 verified:
   - by: process:ktl-librarian
-    at: "2026-10-18T00:14:24Z"
+    at: "2026-10-27T01:14:26Z"
 sources:
   - resource: CONTRIBUTING.md
   - resource: scripts/smoke-test.ts
@@ -49,7 +49,7 @@ This repository's own `.lokf/` bundle is maintained with knowledge-trust-ladder,
 
 - Regenerate `src/lokf-vocab.json` with `npm run build-vocab` only when bumping the sidecar's pinned `lokf`. It is built from the schema that `lokf` includes (`.lokf/uv.lock`, which needs `uv`) and kept identical to KTL Curator's.
 
-- When moving `TRUST_LADDER_SKILLS_REF`, set `TRUST_LADDER_SKILLS_SHA` beside it to the commit that tag names, and copy the three `knowledge-*.yaml` workflows and the files under `.lokf/scripts/` and `.lokf/m365/` from that release's `skills/ktl-sidecar/templates/` in the same pull request.
+- The skills pin moves with the sidecar copies: each week `knowledge-sync.yaml` opens one pull request that moves `TRUST_LADDER_SKILLS_REF` and `TRUST_LADDER_SKILLS_SHA` to the newest release and copies every template it lists over the copy here. To move sooner, run `.lokf/scripts/knowledge-sync.sh --branch <tag>`. Never move the pin alone: the install step installs nothing when the two disagree.
 
 - Give the pull request title a releasing type (`feat:`, `fix:`, `security:`) when the commits would release, because a squash merge takes its subject from the title and the `plan` job refuses a mismatch.
 
@@ -58,7 +58,3 @@ Dependabot bumps the pinned action SHAs and the npm devDependencies, and skips m
 # Releasing
 
 `CONTRIBUTING.md` summarises the release flow and links to knowledge-trust-ladder's [docs/releasing.md](https://w3id.org/ktl/docs/releasing/) for the whole pipeline. [Releasing](releasing.md) describes it from this repository's workflows.
-
-## Open questions
-
-- 2026-10-18, process:ktl-librarian: `CONTRIBUTING.md` says a pin move copies the three `knowledge-*.yaml` workflows, and the repository now also carries `.github/workflows/knowledge-sync.yaml`, while `.lokf/scripts/knowledge-sync.sh` copies every template the release's `knowledge-sync.manifest` lists; which should this playbook describe?
