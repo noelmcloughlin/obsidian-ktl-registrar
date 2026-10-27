@@ -10,11 +10,11 @@ relatedTo:
   - https://w3id.org/ktl/registrar/knowledge/playbooks/knowledge-registrar-gate
 generated:
   by: process:ktl-librarian
-  at: "2026-10-18T00:14:24Z"
+  at: "2026-10-27T01:14:26Z"
 status: draft
 verified:
   - by: process:ktl-librarian
-    at: "2026-10-19T10:31:38Z"
+    at: "2026-10-27T01:14:26Z"
 sources:
   - resource: .github/workflows/knowledge-librarian.yaml
   - resource: .lokf/scripts/knowledge-librarian.sh
@@ -41,6 +41,8 @@ The workflow reads `AGENT_CLI` from a repository variable or, as a fallback, a s
 # Checks on the agent's write scope
 
 `.lokf/scripts/knowledge-librarian.sh` is the fixed wrapper the workflow runs, never a variable's content as a shell command. It splits `AGENT_CLI` into an argument array with `read -r -a`, so shell metacharacters in it are inert. The agent call and the post-run check that it wrote nothing but `.lokf/patch.yaml` live inside `main()`, which the script calls only from its last line. The wrapper snapshots `.git/config` and `.git/hooks` before the agent runs and restores both from an EXIT trap, so a changed `core.fsmonitor` or `core.hooksPath` cannot defeat a later check.
+
+While the agent runs, the wrapper exports `KNOWLEDGE_PEN_DRY_RUN_ONLY=1`. The pen then refuses any call but `--dry-run` and leaves `.lokf/patch.yaml` in place for the wrapper to apply. This guards against an agent that calls the pen itself: without the flag, the pen would apply the patch and delete the file, leaving the checks below nothing to re-derive the allow-list from.
 
 The `refresh` job's "Enforce the agent's write scope" step repeats the boundary check in YAML. The check that matters is `publish`'s, on a checkout that never shared a workspace with the agent. It re-derives the allow-list (`.lokf/knowledge/`, `knowledge_bundle/`, `.lokf/feedback.md` and `.lokf/questions.md`) from the patch's own `git apply --numstat` output, refuses a patch that adds a `by: human:` line, and after applying runs `knowledge-provenance.sh --unattended` to refuse a change to any person's event or note.
 

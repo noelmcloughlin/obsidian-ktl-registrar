@@ -16,11 +16,11 @@ dependsOn:
   - https://w3id.org/ktl/registrar/knowledge/references/lokf-toolkit
 generated:
   by: process:ktl-librarian
-  at: "2026-10-18T13:39:12Z"
+  at: "2026-10-27T01:14:26Z"
 status: draft
 verified:
   - by: process:ktl-librarian
-    at: "2026-10-19T10:31:38Z"
+    at: "2026-10-27T01:14:26Z"
 ---
 
 # Overview
@@ -31,7 +31,7 @@ The workflow runs on a pull request that touches `.lokf/**`, `knowledge_bundle/*
 
 # validate: "Validate the LOKF bundle"
 
-The job runs `uv sync --locked` in `.lokf/`, so it installs exactly what `.lokf/uv.lock` names and fails when the lock is missing or behind `pyproject.toml`. It then runs the justfile's `lokf-check-refs` recipe through `uvx --from rust-just==1.47.0 just`. That recipe runs `lokf validate --check-refs`, which validates against the schema and resolves every typed-relation target in the bundle's own namespace, and it passes the domain schema when the justfile's `schema` line names one. Last, the job runs `bash scripts/knowledge-conventions.sh knowledge` for the conventions `lokf validate` cannot see, because the toolkit reads a body as an opaque string and never opens `log.md`. On a pull request the script also gets `--since` the merge base, so its rule 14 reads each commit.
+The job runs `uv sync --locked` in `.lokf/`, so it installs exactly what `.lokf/uv.lock` names and fails when the lock is missing or behind `pyproject.toml`. It then runs the justfile's `lokf-check-refs` recipe: since `.lokf/uv.lock` pins `rust-just`, the step runs it with `uv run --locked just`, the same copy the earlier `uv sync --locked` installed, and falls back to `uvx --from rust-just==1.47.0 just` on a host whose lock does not pin it. That recipe runs `lokf validate --check-refs`, which validates against the schema and resolves every typed-relation target in the bundle's own namespace, and it passes the domain schema when the justfile's `schema` line names one. Last, the job runs `bash scripts/knowledge-conventions.sh knowledge` for the conventions `lokf validate` cannot see, because the toolkit reads a body as an opaque string and never opens `log.md`. On a pull request the script also gets `--since` the merge base, so its rule 14 reads each commit.
 
 # provenance: "Check new human confirmations"
 
