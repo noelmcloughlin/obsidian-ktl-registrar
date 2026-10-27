@@ -2,18 +2,22 @@
 type: Playbook
 id: https://w3id.org/ktl/registrar/knowledge/playbooks/contributing
 title: Contributing
-description: "How to set up KTL Registrar for development, how src/ splits into pure and Obsidian-bound modules, and the checklist before a pull request: npm run check, the changelog entry, the skills pin with its sidecar copies, and a releasing pull request title."
+description: "How to set up KTL Registrar for development, how src/ splits into pure and Obsidian-bound modules, and the checklist before a pull request: npm run check, the changelog entry, a releasing pull request title, and the skills pin, which knowledge-sync.yaml and knowledge-sync.sh move with every template the release's knowledge-sync.manifest lists."
 resource: CONTRIBUTING.md
 generated:
   by: process:ktl-librarian
-  at: "2026-10-27T01:14:26Z"
+  at: "2026-10-27T01:34:19Z"
 verified:
   - by: process:ktl-librarian
-    at: "2026-10-27T01:14:26Z"
+    at: "2026-10-27T01:34:19Z"
 sources:
   - resource: CONTRIBUTING.md
   - resource: scripts/smoke-test.ts
   - resource: .github/workflows/build.yml
+  - resource: .lokf/scripts/knowledge-sync.sh
+    title: what a sync reads, copies, adds and moves
+  - resource: .github/workflows/knowledge-sync.yaml
+    title: the weekly pull request and the workflow changes it holds back
 status: draft
 ---
 
@@ -49,11 +53,22 @@ This repository's own `.lokf/` bundle is maintained with knowledge-trust-ladder,
 
 - Regenerate `src/lokf-vocab.json` with `npm run build-vocab` only when bumping the sidecar's pinned `lokf`. It is built from the schema that `lokf` includes (`.lokf/uv.lock`, which needs `uv`) and kept identical to KTL Curator's.
 
-- The skills pin moves with the sidecar copies: each week `knowledge-sync.yaml` opens one pull request that moves `TRUST_LADDER_SKILLS_REF` and `TRUST_LADDER_SKILLS_SHA` to the newest release and copies every template it lists over the copy here. To move sooner, run `.lokf/scripts/knowledge-sync.sh --branch <tag>`. Never move the pin alone: the install step installs nothing when the two disagree.
+- The skills pin moves with the sidecar copies: each week `knowledge-sync.yaml` opens one pull request that moves `TRUST_LADDER_SKILLS_REF` and `TRUST_LADDER_SKILLS_SHA` to the newest release and copies every template that release lists over the copy here. To move sooner, run `.lokf/scripts/knowledge-sync.sh --branch <tag>`. Never move the pin alone: the install step installs nothing when the two disagree.
 
 - Give the pull request title a releasing type (`feat:`, `fix:`, `security:`) when the commits would release, because a squash merge takes its subject from the title and the `plan` job refuses a mismatch.
 
 Dependabot bumps the pinned action SHAs and the npm devDependencies, and skips major bumps of `typescript`, `eslint` and `@eslint/js` until `eslint-plugin-obsidianmd` supports them.
+
+# What a pin move copies
+
+`.lokf/scripts/knowledge-sync.sh` makes the copies, whether `knowledge-sync.yaml` or a person runs it:
+
+- It reads `knowledge-sync.manifest` out of the release tag, never from a working tree, so the release itself lists the templates.
+- It copies each listed template that this repository already carries over its copy. It adds a missing one only when ktl-sidecar installs that template on every host, or when a file here needs it.
+- Because `website/site.config.mjs` is here, it also copies the ktl-website templates over `website/` and `.github/workflows/knowledge-website.yaml`. It leaves out `site.config.mjs`, `README.md` and `src/styles/custom.css`, which this repository owns.
+- It moves `TRUST_LADDER_SKILLS_REF` and `TRUST_LADDER_SKILLS_SHA` to the tag and the commit that tag names, and writes the changelog entry under `## [Unreleased]` and `### Security`.
+
+The weekly pull request changes no workflow but the pin. The workflow holds the other workflow changes back for a person to apply from the run, or pushes them as a second commit once a reviewer of the Environment that `KNOWLEDGE_SYNC_REVIEW_ENVIRONMENT` names approves.
 
 # Releasing
 

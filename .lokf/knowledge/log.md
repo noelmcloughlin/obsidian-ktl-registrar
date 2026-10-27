@@ -2,6 +2,8 @@
 
 ## 2026-10-27
 
+* **Changed**: Contributing says what a pin move copies, from `knowledge-sync.sh` and `knowledge-sync.yaml`: each template the release's `knowledge-sync.manifest` lists that the repository carries, the site's templates, and the workflow changes held back for a person.
+* **Changed**: the source map's contributing row names `knowledge-sync.sh` and `knowledge-sync.yaml`, and its sync gap note points to the contributing playbook for what a pin move copies.
 * **Changed**: Contributing now describes the skills pin moving through the weekly `knowledge-sync.yaml` pull request, as `CONTRIBUTING.md` has said since #103, in place of the retired by-hand copy step.
 * **Resolved**: `CONTRIBUTING.md` itself now describes the automated weekly sync (#103), so the playbook follows that wording rather than choosing between the two.
 * **Changed**: Knowledge registrar gate's validate job now runs `lokf-check-refs` through `uv run --locked just`, since `.lokf/uv.lock` pins `rust-just`, with the `uvx` form kept only as the fallback for a host whose lock does not.

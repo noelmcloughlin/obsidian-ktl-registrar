@@ -5,7 +5,7 @@ title: Knowledge Sources
 description: Map of the repository files and outside sources this bundle is derived from, which concepts each feeds, how a refresh re-checks each, which files are left out on purpose, and which have no concept yet.
 generated:
   by: process:ktl-librarian
-  at: "2026-10-27T01:14:26Z"
+  at: "2026-10-27T01:34:19Z"
 verified:
   - by: process:ktl-librarian
     at: "2026-10-27T01:14:26Z"
@@ -22,7 +22,7 @@ Each row names the files a concept is derived from, the concepts they feed, and 
 | `docs/install.md` | `playbooks/install-ktl-registrar.md` | re-read on any change to the page; compare the Obsidian version with `minAppVersion` in `manifest.json` |
 | `src/validator.ts`, `src/report-view.ts`, `src/settings.ts`, `src/vocab.ts` | the four Service concepts | re-read each file; a new or removed rule group, settings group or relation field is a gap |
 | `manifest.json`, `package.json` | plugin identity, `minAppVersion`, the npm scripts | compare with `playbooks/contributing.md`, `services/settings-tab.md` and `playbooks/install-ktl-registrar.md` |
-| `CONTRIBUTING.md`, `scripts/smoke-test.ts`, `eslint.config.mts`, `.github/workflows/build.yml` | `playbooks/contributing.md` | compare the checklist and the import-free module list with what the smoke test imports, and `npm run check` with the steps `build.yml` runs |
+| `CONTRIBUTING.md`, `scripts/smoke-test.ts`, `eslint.config.mts`, `.github/workflows/build.yml`, `.lokf/scripts/knowledge-sync.sh`, `.github/workflows/knowledge-sync.yaml` | `playbooks/contributing.md` | compare the checklist and the import-free module list with what the smoke test imports, `npm run check` with the steps `build.yml` runs, and what a pin move copies with the sync script's and the sync workflow's headers |
 | `.github/workflows/semantic-release.yml`, `.github/workflows/release.yml`, `.releaserc.json` | `playbooks/releasing.md` | compare the jobs, permissions and triggers |
 | `.github/workflows/lint-and-docs.yaml`, `.markdownlint-cli2.jsonc`, `.github/dependabot.yml` | `playbooks/quality-gates.md` | compare the job steps, the disabled rules, the ignored folders and the ecosystems |
 | `.github/workflows/knowledge-registrar.yaml`, `.lokf/justfile`, `.lokf/curators/` | `playbooks/knowledge-registrar-gate.md` | compare the three jobs with the `ktl-sidecar` template at the pinned release |
@@ -54,4 +54,4 @@ Each row names the files a concept is derived from, the concepts they feed, and 
 
 - `llms.txt`, the agent context file, has no concept.
 
-- `.github/workflows/knowledge-sync.yaml` and its pull request template, `.github/PULL_REQUEST_TEMPLATE/knowledge-sync.md`, have no concept. The workflow's header says it keeps the sidecar's copies and the skills pin at the newest release of Knowledge Trust Ladder each week, and opens one pull request with the `KNOWLEDGE_SYNC_TOKEN` secret. `SECURITY.md` now lists it in the surface table, alongside `knowledge-website.yaml`.
+- `.github/workflows/knowledge-sync.yaml` and its pull request template, `.github/PULL_REQUEST_TEMPLATE/knowledge-sync.md`, have no concept of their own; `playbooks/contributing.md` says what a pin move copies. The workflow's header says it keeps the sidecar's copies and the skills pin at the newest release of Knowledge Trust Ladder each week, and opens one pull request with the `KNOWLEDGE_SYNC_TOKEN` secret. `SECURITY.md` now lists it in the surface table, alongside `knowledge-website.yaml`.
