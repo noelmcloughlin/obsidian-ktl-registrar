@@ -6,6 +6,8 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+## [1.7.11] - 2026-10-27
+
 ### Security
 
 - **The sidecar copies and the skills pin are at Knowledge Trust Ladder [v0.56.2](https://github.com/noelmcloughlin/knowledge-trust-ladder/compare/v0.56.1...v0.56.2).** The release changed `.lokf/.gitignore` here. No plugin change.
