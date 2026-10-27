@@ -6,6 +6,8 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+## [1.7.12] - 2026-10-27
+
 ### Fixed
 
 - **A `!` after the type marks a breaking change.** `.releaserc.json` names the Conventional Commits preset, so a `feat!:` commit releases a new major version instead of nothing. No plugin change.
