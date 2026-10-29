@@ -2,6 +2,7 @@
 type: GlossaryTerm
 id: https://w3id.org/ktl/registrar/knowledge/glossary/diataxis-genre
 title: Diátaxis genre
+resource: src/validator.ts
 definition: An optional facet (tutorial/how-to/reference/explanation) tagging how a concept's prose serves the reader, orthogonal to its LOKF type.
 abbreviation: genre
 genre: reference

@@ -2,6 +2,7 @@
 type: Playbook
 id: https://w3id.org/ktl/registrar/knowledge/playbooks/knowledge-sources
 title: Knowledge Sources
+resource: .
 description: Map of the repository files and outside sources this bundle is derived from, which concepts each feeds, how a refresh re-checks each, which files are left out on purpose, and which have no concept yet.
 generated:
   by: process:ktl-librarian

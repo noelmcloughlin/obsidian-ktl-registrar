@@ -2,6 +2,7 @@
 type: GlossaryTerm
 id: https://w3id.org/ktl/registrar/knowledge/glossary/lokf
 title: LOKF
+resource: https://lokf.nolan-nichols.com/specification/
 definition: Linked Open Knowledge Format - a semantic profile of OKF that binds every field, type, and relationship to a public vocabulary (schema.org/DCAT/PROV-O), so a bundle expands losslessly to JSON-LD/RDF and is queryable with SPARQL.
 abbreviation: LOKF
 definedBy:
