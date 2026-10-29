@@ -5,17 +5,17 @@ title: Validator Engine
 description: "The import-free rule engine in src/validator.ts: the LOKF semantic layer (bundle header and base_iri, type vocabulary, typed relationships, id minting, trust and lifecycle shape), the OKF v0.2 base layer behind checkOkfBaseLayer, the errors lokf validate also raises, and pure bundle-root detection."
 resource: src/validator.ts
 isPartOf:
-- https://w3id.org/ktl/registrar/knowledge/services/ktl-registrar-plugin
+  - https://w3id.org/ktl/registrar/knowledge/services/ktl-registrar-plugin
 about:
-- https://w3id.org/ktl/registrar/knowledge/references/lokf-specification
+  - https://w3id.org/ktl/registrar/knowledge/references/lokf-specification
 relatedTo:
-- https://w3id.org/ktl/registrar/knowledge/references/lokf-toolkit
+  - https://w3id.org/ktl/registrar/knowledge/references/lokf-toolkit
 generated:
   by: process:ktl-librarian
-  at: "2026-10-16T23:48:09Z"
+  at: "2026-10-29T02:09:46Z"
 verified:
-- by: process:ktl-librarian
-  at: "2026-10-15T23:50:48Z"
+  - by: process:ktl-librarian
+    at: "2026-10-15T23:50:48Z"
 ---
 
 # Overview
@@ -56,7 +56,7 @@ A `generated` block with no `by` and a `sources` entry with no `resource` are er
 
 # Relation fields
 
-`RELATION_FIELDS` names thirteen fields: `isPartOf`, `hasPart`, `references`, `dependsOn`, `derivedFrom`, `about`, `sameAs`, `relatedTo`, `definedBy`, `source`, `measures`, `memberOf` and `holder`. They are every slot the LOKF schema ranges over Concept apart from `concepts` and `target`, and the smoke test holds this hand-kept list to the pinned manifest, `src/lokf-vocab.json`. The schema declares each of them multivalued, so a bare scalar in one of them fails `lokf validate`, and the engine warns with the list form rather than only resolving the target. The code notes that an audit recorded in this bundle's `log.md` on 2026-09-09 found that mistake in roughly half its concepts.
+`RELATION_FIELDS` names fourteen fields: `isPartOf`, `hasPart`, `references`, `dependsOn`, `derivedFrom`, `isReplacedBy`, `about`, `sameAs`, `relatedTo`, `definedBy`, `source`, `measures`, `memberOf` and `holder`. They are every slot the LOKF schema ranges over Concept apart from `concepts` and `target`, and the smoke test holds this hand-kept list to the pinned manifest, `src/lokf-vocab.json`. The schema declares each of them multivalued, so a bare scalar in one of them fails `lokf validate`, and the engine warns with the list form rather than only resolving the target. The code notes that an audit recorded in this bundle's `log.md` on 2026-09-09 found that mistake in roughly half its concepts.
 
 # Paths and bundle roots
 
