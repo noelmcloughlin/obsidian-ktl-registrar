@@ -6,6 +6,10 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+### Changed
+
+- **The validator follows lokf 0.9.0's schema.** `isReplacedBy` is a relation field, so its value must be a list whose targets resolve, and the default known predicates add `isReplacedBy` and `wasRevisionOf`. The `.lokf` sidecar's floor is lokf 0.9.0 too.
+
 ## [1.7.13] - 2026-10-29
 
 ### Security
