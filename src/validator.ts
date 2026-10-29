@@ -143,6 +143,7 @@ export const RELATION_FIELDS = [
   "references",
   "dependsOn",
   "derivedFrom",
+  "isReplacedBy",
   "about",
   "sameAs",
   "relatedTo",

@@ -1,5 +1,9 @@
 # Change Log
 
+## 2026-10-29
+
+* **Changed**: LOKF Toolkit gives the `>=0.9.0` floor that `.lokf/pyproject.toml` now declares and pins its fallback schema to the commit tagged v0.9.0; Validator Engine lists fourteen relation fields with `isReplacedBy`.
+
 ## 2026-10-27
 
 * **Changed**: Contributing says what a pin move copies, from `knowledge-sync.sh` and `knowledge-sync.yaml`: each template the release's `knowledge-sync.manifest` lists that the repository carries, the site's templates, and the workflow changes held back for a person.
