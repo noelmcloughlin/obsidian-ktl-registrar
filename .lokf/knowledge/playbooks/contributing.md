@@ -6,13 +6,14 @@ description: "How to set up KTL Registrar for development, how src/ splits into 
 resource: CONTRIBUTING.md
 generated:
   by: process:ktl-librarian
-  at: "2026-10-27T01:34:19Z"
+  at: "2026-11-02T13:09:37Z"
 verified:
   - by: process:ktl-librarian
-    at: "2026-10-27T01:34:19Z"
+    at: "2026-11-02T13:09:37Z"
 sources:
   - resource: CONTRIBUTING.md
   - resource: scripts/smoke-test.ts
+  - resource: eslint.config.mts
   - resource: .github/workflows/build.yml
   - resource: .lokf/scripts/knowledge-sync.sh
     title: what a sync reads, copies, adds and moves
@@ -46,6 +47,7 @@ This repository's own `.lokf/` bundle is maintained with knowledge-trust-ladder,
 - Check anything that needs the Obsidian `App` by hand in a real vault.
 
 - Keep `validator.ts` to shape only: the OKF base layer (`okf/*`, behind `checkOkfBaseLayer`) and the LOKF semantic layer (`lokf/*`), never the credibility of a §5 field, a trust-tier verdict or runtime attestation.
+- Register an event with `registerEvent` so it unloads; lint holds the rest of the house style, such as `createEl` over `innerHTML`, styling in `styles.css`, and a declarative settings tab.
 
 - Make a link into a sibling repository resolve on that repository's `main` first, since the link check follows it.
 

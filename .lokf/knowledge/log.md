@@ -1,5 +1,9 @@
 # Change Log
 
+## 2026-11-02
+
+* **Changed**: Contributing's pull-request checklist now names the `registerEvent` unload rule `CONTRIBUTING.md` states, and cites `eslint.config.mts` as a source, which the source map already credited it as.
+
 ## 2026-10-29
 
 * **Changed**: LOKF Toolkit gives the `>=0.9.0` floor that `.lokf/pyproject.toml` now declares and pins its fallback schema to the commit tagged v0.9.0; Validator Engine lists fourteen relation fields with `isReplacedBy`.

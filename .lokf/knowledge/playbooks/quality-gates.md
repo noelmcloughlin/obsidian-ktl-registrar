@@ -5,18 +5,18 @@ title: Quality Gates
 description: "The lint-and-docs.yaml workflow: ShellCheck, actionlint with a check that every action is pinned to a commit, markdownlint, a link check and codespell, on pushes to main, every pull request and a weekly schedule; plus the markdownlint rule overrides and the Dependabot updates that keep the pins current."
 resource: .github/workflows/lint-and-docs.yaml
 dependsOn:
-- https://w3id.org/ktl/registrar/knowledge/references/obsidian-plugin-guidelines
+  - https://w3id.org/ktl/registrar/knowledge/references/obsidian-plugin-guidelines
 generated:
   by: process:ktl-librarian
   at: "2026-10-16T23:48:09Z"
 verified:
-- by: process:ktl-librarian
-  at: "2026-10-16T00:38:14Z"
+  - by: process:ktl-librarian
+    at: "2026-11-02T13:09:37Z"
 status: draft
 sources:
-- resource: .github/workflows/lint-and-docs.yaml
-- resource: .markdownlint-cli2.jsonc
-- resource: .github/dependabot.yml
+  - resource: .github/workflows/lint-and-docs.yaml
+  - resource: .markdownlint-cli2.jsonc
+  - resource: .github/dependabot.yml
 ---
 
 # Overview
