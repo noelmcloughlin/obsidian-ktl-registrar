@@ -11,8 +11,8 @@ generated:
   at: "2026-10-17T00:17:54Z"
 description: The optional Diátaxis genre facet (tutorial, how-to, reference or explanation) that tags how a concept's prose serves the reader; the plugin warns on a value outside the list.
 verified:
-- by: process:ktl-librarian
-  at: "2026-10-15T23:50:48Z"
+  - by: process:ktl-librarian
+    at: "2026-11-02T13:09:37Z"
 ---
 
 # Overview
