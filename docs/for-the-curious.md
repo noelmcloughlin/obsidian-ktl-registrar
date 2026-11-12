@@ -37,7 +37,7 @@ For the §5 trust and lifecycle fields the plugin checks shape and never credibi
 
 ## Where this fits: the "Schema-valid" tier
 
-The companion [Knowledge Trust Ladder](https://w3id.org/ktl/) (KTL) project describes [four levels of trust](https://w3id.org/ktl/docs/for-the-curious/#four-levels-of-checking) a claim in a bundle can earn:
+The companion [Knowledge Trust Ladder](https://w3id.org/ktl/) (KTL) project describes [four levels of trust](https://w3id.org/ktl/docs/how-it-works/#four-levels-of-checking) a claim in a bundle can earn:
 
 - **schema-valid**: the frontmatter is well-formed and its relations resolve;
 - **source-consistent**: an agent re-checked it against its source;
