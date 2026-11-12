@@ -6,10 +6,10 @@ description: "How to set up KTL Registrar for development, how src/ splits into 
 resource: CONTRIBUTING.md
 generated:
   by: process:ktl-librarian
-  at: "2026-11-02T13:09:37Z"
+  at: "2026-11-09T13:38:39Z"
 verified:
   - by: process:ktl-librarian
-    at: "2026-11-02T13:09:37Z"
+    at: "2026-11-09T13:38:39Z"
 sources:
   - resource: CONTRIBUTING.md
   - resource: scripts/smoke-test.ts
@@ -19,6 +19,8 @@ sources:
     title: what a sync reads, copies, adds and moves
   - resource: .github/workflows/knowledge-sync.yaml
     title: the weekly pull request and the workflow changes it holds back
+  - resource: package.json
+    title: the npm scripts the checklist runs and names
 status: draft
 ---
 

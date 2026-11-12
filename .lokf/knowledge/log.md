@@ -4,6 +4,10 @@
 
 * **Changed**: concepts call the bundle's file in `.lokf/schema/` a domain vocabulary, and keep *domain schema* for a LinkML project's model of a domain.
 
+## 2026-11-09
+
+* **Extended** `playbooks/contributing.md`'s `sources`: `package.json` is where every `npm run` command the checklist cites (`dev`, `check`, `build-vocab`, `smoke-test`, `lint`) is actually defined, and the coverage sweep found it was never named.
+
 ## 2026-11-02
 
 * **Changed**: Contributing's pull-request checklist now names the `registerEvent` unload rule `CONTRIBUTING.md` states, and cites `eslint.config.mts` as a source, which the source map already credited it as.

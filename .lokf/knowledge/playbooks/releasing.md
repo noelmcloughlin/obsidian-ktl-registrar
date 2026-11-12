@@ -11,7 +11,7 @@ generated:
   at: "2026-10-18T00:14:24Z"
 verified:
   - by: process:ktl-librarian
-    at: "2026-11-02T13:09:37Z"
+    at: "2026-11-09T13:38:39Z"
 sources:
   - resource: CONTRIBUTING.md
   - resource: .github/workflows/semantic-release.yml
