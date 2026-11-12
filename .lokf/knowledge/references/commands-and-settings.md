@@ -2,17 +2,17 @@
 type: Reference
 id: https://w3id.org/ktl/registrar/knowledge/references/commands-and-settings
 title: Commands and Settings
-description: Every KTL Registrar command with its id and name, what the status-bar item does when clicked, and the settings groups under Settings → KTL Registrar, including Known LOKF types for a domain schema, from docs/using.md and src/main.ts.
+description: Every KTL Registrar command with its id and name, what the status-bar item does when clicked, and the settings groups under Settings → KTL Registrar, including Known LOKF types for a domain vocabulary, from docs/using.md and src/main.ts.
 resource: docs/using.md
 generated:
   by: process:ktl-librarian
-  at: "2026-10-15T23:50:48Z"
+  at: "2026-11-12T14:50:51Z"
 verified:
-- by: process:ktl-librarian
-  at: "2026-10-16T23:45:55Z"
+  - by: process:ktl-librarian
+    at: "2026-10-16T23:45:55Z"
 sources:
-- resource: docs/using.md
-- resource: src/main.ts
+  - resource: docs/using.md
+  - resource: src/main.ts
 ---
 
 # Commands
@@ -45,4 +45,4 @@ Clicking the status-bar item validates the active note, or runs a vault scan if 
 
 `docs/using.md` says every setting is also reachable through Obsidian's settings search. It lists these groups under **Settings → KTL Registrar**: This device, In-editor diagnostics, Type vocabulary, Type-specific fields, Semantic header & base_iri, Relationships, OKF v0.2 base layer, Trust & lifecycle, Rule severity, Field aliasing (advanced), and Scope & performance. [Settings tab](../services/settings-tab.md) gives the headings as `src/settings.ts` spells them.
 
-*Known LOKF types*, under Type vocabulary, is the extension point for a bundle validated against a domain schema (`lokf validate --schema <file>`). A person lists that schema's classes there, since the plugin cannot read the schema, which sits outside the vault. Listed classes stop warning and appear in autocomplete. Unlisted ones only ever warn. A list a person has edited is theirs to keep current, and should match KTL Curator's.
+*Known LOKF types*, under Type vocabulary, is the extension point for a bundle validated against a domain vocabulary (`lokf validate --schema <file>`). A person lists its classes there, since the plugin cannot read that file, which sits outside the vault. Listed classes stop warning and appear in autocomplete. Unlisted ones only ever warn. A list a person has edited is theirs to keep current, and should match KTL Curator's.

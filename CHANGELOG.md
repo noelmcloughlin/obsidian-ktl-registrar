@@ -6,6 +6,10 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+### Changed
+
+- **The file a bundle's `schema :=` line names is called its *domain vocabulary*, as Knowledge Trust Ladder now calls it.** The settings text, the docs and the link to the librarian's recipe, `domain-vocabulary.md`, follow. The setting still answers a search for "domain schema".
+
 ## [1.8.0] - 2026-10-29
 
 ### Changed

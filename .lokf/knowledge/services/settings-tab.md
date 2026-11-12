@@ -2,21 +2,21 @@
 type: Service
 id: https://w3id.org/ktl/registrar/knowledge/services/settings-tab
 title: Settings Tab
-description: "The declarative settings tab in src/settings.ts (Obsidian 1.13.0 getSettingDefinitions API): its eleven groups, how list settings are stored and saved, bundle root folders and the break-glass whole-vault switch, and Known LOKF types as the domain-schema extension point."
+description: "The declarative settings tab in src/settings.ts (Obsidian 1.13.0 getSettingDefinitions API): its eleven groups, how list settings are stored and saved, bundle root folders and the break-glass whole-vault switch, and Known LOKF types as the domain-vocabulary extension point."
 resource: src/settings.ts
 isPartOf:
-- https://w3id.org/ktl/registrar/knowledge/services/ktl-registrar-plugin
+  - https://w3id.org/ktl/registrar/knowledge/services/ktl-registrar-plugin
 about:
-- https://w3id.org/ktl/registrar/knowledge/references/commands-and-settings
+  - https://w3id.org/ktl/registrar/knowledge/references/commands-and-settings
 generated:
   by: process:ktl-librarian
-  at: "2026-10-15T23:50:48Z"
+  at: "2026-11-12T14:50:51Z"
 verified:
-- by: process:ktl-librarian
-  at: "2026-10-15T23:50:48Z"
+  - by: process:ktl-librarian
+    at: "2026-10-15T23:50:48Z"
 sources:
-- resource: src/settings.ts
-- resource: src/vocab.ts
+  - resource: src/settings.ts
+  - resource: src/vocab.ts
 ---
 
 # Overview
@@ -41,4 +41,4 @@ Left blank, the vault decides:
 
 # Known LOKF types
 
-*Known LOKF types* (`knownTypes`, under Type vocabulary) defaults to the classes of the pinned LOKF schema, and an untouched list is refreshed on upgrade. Its description says that a bundle validated against a domain schema (`lokf validate --schema <file>`) lists that schema's classes here too, because the plugin cannot read the schema, which sits outside the vault. It also says that listed classes stop warning and appear in autocomplete. It asks that the list be kept the same as KTL Curator's. `mergeSavedSettings` in `src/vocab.ts` refreshes the list only while it still equals the pre-schema default, so an edited list is never overwritten and never gains a later core class on its own.
+*Known LOKF types* (`knownTypes`, under Type vocabulary) defaults to the classes of the pinned LOKF schema, and an untouched list is refreshed on upgrade. Its description says that a bundle validated against a domain vocabulary (`lokf validate --schema <file>`) lists its classes here too, because the plugin cannot read that file, which sits outside the vault. It also says that listed classes stop warning and appear in autocomplete. It asks that the list be kept the same as KTL Curator's. `mergeSavedSettings` in `src/vocab.ts` refreshes the list only while it still equals the pre-schema default, so an edited list is never overwritten and never gains a later core class on its own.
