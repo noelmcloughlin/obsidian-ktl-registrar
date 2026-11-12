@@ -138,8 +138,8 @@ export class KtlRegistrarSettingTab extends PluginSettingTab {
               SCHEMA_VERSION
                 ? `Comma-separated recognized LOKF classes. Defaults track the pinned LOKF schema ${SCHEMA_VERSION}; an untouched list is refreshed automatically on upgrade.`
                 : "Comma-separated list of recognized LOKF classes."
-            } A bundle validated against a domain schema (lokf validate --schema <file>) lists that schema's classes here too - the plugin cannot read the schema, which sits outside the vault - so they stop warning and appear in autocomplete. Keep the list the same as KTL Curator's.`,
-            aliases: ["vocabulary", "classes", "domain schema", "custom type", "knownTypes"],
+            } A bundle validated against a domain vocabulary (lokf validate --schema <file>) lists its classes here too - the plugin cannot read that file, which sits outside the vault - so they stop warning and appear in autocomplete. Keep the list the same as KTL Curator's.`,
+            aliases: ["vocabulary", "classes", "domain vocabulary", "domain schema", "custom type", "knownTypes"],
             control: { type: "textarea", key: "knownTypes", rows: 3 },
           },
           {
