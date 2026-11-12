@@ -1,5 +1,9 @@
 # Change Log
 
+## 2026-11-12
+
+* **Changed**: concepts call the bundle's file in `.lokf/schema/` a domain vocabulary, and keep *domain schema* for a LinkML project's model of a domain.
+
 ## 2026-11-02
 
 * **Changed**: Contributing's pull-request checklist now names the `registerEvent` unload rule `CONTRIBUTING.md` states, and cites `eslint.config.mts` as a source, which the source map already credited it as.
