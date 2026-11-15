@@ -34,11 +34,12 @@ Every workflow pins its actions to commit SHAs, declares `permissions: {}` at th
 | `knowledge-librarian.yaml` and `.lokf/scripts/knowledge-librarian.sh` | The `ktl-sidecar` template's jobs and checks, unchanged; the copy differs from the template only in the pin it names. The agent runs with no write token and no credential on disk, and its one output is `.lokf/patch.yaml`, which `knowledge-apply.sh` applies; only `publish`, which runs no agent code, holds a write token, and it confines the patch to `.lokf/knowledge/`, `knowledge_bundle/`, `.lokf/feedback.md` and `.lokf/questions.md` and refuses a change to a person's record. Armed only while `KNOWLEDGE_LIBRARIAN_ENABLED` is `true`; `AGENT_CLI` picks the agent, never the command, and its credential, a secret or the job token, reaches only the agent; `schedule` and `workflow_dispatch` only. [Prompt-injection guards](https://w3id.org/ktl/docs/threat-model/#prompt-injection-guards). |
 | `knowledge-sync.yaml` and `.lokf/scripts/knowledge-sync.sh` | The template's jobs. Only `publish` and `push-workflows` hold `KNOWLEDGE_SYNC_TOKEN`, from the `knowledge-sync` Environment, and `push-workflows` waits for a `knowledge-sync-review` reviewer. Nothing from the release runs. |
 | `knowledge-website.yaml` | The template's jobs. Only `deploy`, which runs GitHub's deploy-pages action alone, holds the Pages scopes. |
+| `scorecard.yml` and `codeql.yml`, which publish the OpenSSF Scorecard and scan the code | Read-only checkout; only the upload of results can write: `security-events: write`, and for Scorecard `id-token: write`. |
 | `README.md`, `llms.txt`, `src/`, `.lokf/knowledge/`, `.lokf/feedback.md` | What the librarian reads. `feedback.md` is the one input a stranger can write; the skill treats it as content to inspect, never instructions to follow. |
 
 If every inherited guard failed, the worst case is a pull request confined to the bundle, which only the maintainer can merge, after reading it. Nothing on that path reaches `src/`, a release artifact or a published release.
 
-`main` blocks deletion and force-pushes and requires linear history, deliberately nothing more; secret scanning and push protection are on; CodeQL is off because nothing here has a network surface or a runtime dependency. The reasons are under [Repository hardening](https://w3id.org/ktl/docs/threat-model/#repository-hardening).
+`main` blocks deletion and force-pushes and requires linear history, deliberately nothing more; secret scanning and push protection are on; `codeql.yml` runs CodeQL on each pull request, each push to `main` and weekly. The reasons are under [Repository hardening](https://w3id.org/ktl/docs/threat-model/#repository-hardening).
 
 ## Not covered
 

@@ -1,5 +1,9 @@
 # Change Log
 
+## 2026-11-15
+
+* **Changed**: the concepts that cite the knowledge website describe the Hugo site that replaced the Astro one.
+
 ## 2026-11-12
 
 * **Changed**: concepts call the bundle's file in `.lokf/schema/` a domain vocabulary, and keep *domain schema* for a LinkML project's model of a domain.

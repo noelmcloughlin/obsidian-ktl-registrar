@@ -6,7 +6,7 @@ description: "How to set up KTL Registrar for development, how src/ splits into 
 resource: CONTRIBUTING.md
 generated:
   by: process:ktl-librarian
-  at: "2026-11-09T13:38:39Z"
+  at: "2026-11-15T03:16:48Z"
 verified:
   - by: process:ktl-librarian
     at: "2026-11-09T13:38:39Z"
@@ -69,7 +69,7 @@ Dependabot bumps the pinned action SHAs and the npm devDependencies, and skips m
 
 - It reads `knowledge-sync.manifest` out of the release tag, never from a working tree, so the release itself lists the templates.
 - It copies each listed template that this repository already carries over its copy. It adds a missing one only when ktl-sidecar installs that template on every host, or when a file here needs it.
-- Because `website/site.config.mjs` is here, it also copies the ktl-website templates over `website/` and `.github/workflows/knowledge-website.yaml`. It leaves out `site.config.mjs`, `README.md` and `src/styles/custom.css`, which this repository owns.
+- Because `website/site.toml` is here, it also copies the ktl-website templates over `website/` and `.github/workflows/knowledge-website.yaml`, and adds a site template that is missing. It leaves out `site.toml`, `README.md` and `assets/css/custom.css`, which this repository owns.
 - It moves `TRUST_LADDER_SKILLS_REF` and `TRUST_LADDER_SKILLS_SHA` to the tag and the commit that tag names, and writes the changelog entry under `## [Unreleased]` and `### Security`.
 
 The weekly pull request changes no workflow but the pin. The workflow holds the other workflow changes back for a person to apply from the run, or pushes them as a second commit once a reviewer of the Environment that `KNOWLEDGE_SYNC_REVIEW_ENVIRONMENT` names approves.
