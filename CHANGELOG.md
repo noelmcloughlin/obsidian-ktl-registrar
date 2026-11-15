@@ -15,6 +15,7 @@ No version below has been published as a GitHub release yet, so entries describe
 ### Changed
 
 - **The knowledge website is built with Hugo from the ktl-website templates**, set by `website/site.toml`, in place of the Astro site.
+- **The release job installs semantic-release with `npm ci` from `.github/release/package-lock.json`**, which pins every package it pulls in by hash.
 
 ### Security
 
