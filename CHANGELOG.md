@@ -6,6 +6,8 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+## [1.8.2] - 2026-11-15
+
 ### Added
 
 - **`scorecard.yml` publishes this repository's OpenSSF Scorecard.**
