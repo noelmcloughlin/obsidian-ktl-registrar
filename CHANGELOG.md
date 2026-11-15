@@ -6,6 +6,11 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+### Added
+
+- **`scorecard.yml` publishes this repository's OpenSSF Scorecard.**
+- **The README shows the CI, licence, OpenSSF Scorecard and KTL scorecard badges.**
+
 ### Changed
 
 - **The knowledge website is built with Hugo from the ktl-website templates**, set by `website/site.toml`, in place of the Astro site.
