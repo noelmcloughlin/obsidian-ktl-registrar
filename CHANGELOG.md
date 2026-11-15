@@ -6,6 +6,10 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+### Changed
+
+- **The release tools are in `.release/`**, outside `.github/`, where Dependabot's pull requests for them were refused.
+
 ## [1.8.2] - 2026-11-15
 
 ### Added
