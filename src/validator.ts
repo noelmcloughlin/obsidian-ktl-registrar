@@ -327,12 +327,16 @@ export function toVaultPath(bundlePath: string, root: string): string {
 const FM_RE = /^---\r?\n([\s\S]*?)\r?\n---/;
 const SCHEME_RE = /^[a-z][a-z0-9+.-]*:/i;
 
-export function isReserved(path: string): "index" | "log" | "diataxis" | null {
-  const f = (path.split("/").pop() || "").toLowerCase();
+/** `index.md` and `log.md` are reserved in every folder. `diataxis.md` is
+ *  reserved at the bundle root only, where writeDiataxisMap generates it; one
+ *  deeper in the bundle is an ordinary concept candidate. `root` is the bundle
+ *  root `path` sits in - "" when `path` is already bundle-relative. */
+export function isReserved(path: string, root: string): "index" | "log" | "diataxis" | null {
+  const rel = toBundlePath(path, root);
+  const f = (rel.split("/").pop() || "").toLowerCase();
   if (f === "index.md") return "index";
   if (f === "log.md") return "log";
-  // A generated Obsidian affordance (the Diátaxis map), never a concept.
-  if (f === "diataxis.md") return "diataxis";
+  if (f === "diataxis.md" && !rel.includes("/")) return "diataxis";
   return null;
 }
 
@@ -1333,7 +1337,8 @@ export function validateLokfConcept(
   exists?: (path: string) => boolean,
   body?: string
 ): LokfIssue[] {
-  const reserved = isReserved(path);
+  // `path` is bundle-relative here, so the root is "".
+  const reserved = isReserved(path, "");
 
   // A note that has explicitly opted out is silenced before any rule runs -
   // including the root header - but stays a concept in the bundle graph.
@@ -1350,7 +1355,7 @@ export function validateLokfConcept(
   if (reserved === "log") {
     return applySeverityOverrides(relaxOkfConformance(settings.checkOkfBaseLayer ? validateLogStructure(body) : [], settings), settings);
   }
-  if (reserved) return []; // diataxis.md - a generated affordance, never a concept
+  if (reserved) return []; // the root diataxis.md - a generated affordance, never a concept
   if (!hasFm) return []; // missing frontmatter entirely is the OKF validator's error
 
   const cut = path.lastIndexOf("/");

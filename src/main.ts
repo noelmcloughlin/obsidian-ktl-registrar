@@ -562,6 +562,11 @@ export default class KtlRegistrarPlugin extends Plugin {
     return !toBundlePath(file.path, root).includes("/");
   }
 
+  /** isReserved against the bundle root the file sits in. */
+  private isReservedFile(path: string): boolean {
+    return isReserved(path, this.resolveRoot(path) ?? "") !== null;
+  }
+
   private candidateFiles(): TFile[] {
     const configDir = this.app.vault.configDir;
     return this.app.vault
@@ -706,7 +711,7 @@ export default class KtlRegistrarPlugin extends Plugin {
           !f.path.startsWith(configDir + "/") &&
           !isExcluded(f.path, this.settings) &&
           this.isInBundle(f.path) &&
-          !isReserved(f.path)
+          !this.isReservedFile(f.path)
       );
     const conceptPaths = new Set(conceptFiles.map((f) => f.path));
     const records: ConceptRecord[] = [];
@@ -820,7 +825,7 @@ export default class KtlRegistrarPlugin extends Plugin {
             !f.path.startsWith(configDir + "/") &&
             !isExcluded(f.path, this.settings) &&
             this.resolveRoot(f.path) === root &&
-            !isReserved(f.path)
+            !isReserved(f.path, root)
         )
         .map((f) => toBundlePath(f.path, root).replace(/\.md$/i, ""))
         .sort();
@@ -996,13 +1001,13 @@ export default class KtlRegistrarPlugin extends Plugin {
   private async addAffordancesToNote(view: MarkdownView): Promise<void> {
     if (this.blockedOnDevice()) return;
     const file = view.file;
-    if (!file || !this.isConcept(file) || isReserved(file.path)) {
+    if (!file || !this.isConcept(file) || this.isReservedFile(file.path)) {
       new Notice("LOKF: the active note is not a concept in a configured bundle.");
       return;
     }
     const root = this.resolveRoot(file.path) ?? "";
     const baseIri = await this.findBaseIriFor(root);
-    const conceptPaths = new Set(this.candidateFiles().filter((f) => !isReserved(f.path)).map((f) => f.path));
+    const conceptPaths = new Set(this.candidateFiles().filter((f) => !this.isReservedFile(f.path)).map((f) => f.path));
     let touched = false;
     await this.app.vault.process(file, (doc) => {
       const parsed = this.parseNote(doc);
@@ -1032,7 +1037,7 @@ export default class KtlRegistrarPlugin extends Plugin {
     const files = this.candidateFiles();
     const roots = [...new Set(files.map((f) => this.resolveRoot(f.path) ?? ""))];
     await Promise.all(roots.map((r) => this.findBaseIriFor(r)));
-    const concepts = files.filter((f) => !isReserved(f.path));
+    const concepts = files.filter((f) => !this.isReservedFile(f.path));
     const conceptPaths = new Set(concepts.map((f) => f.path));
     // Preview from the metadata cache (frontmatter only, no file reads) so the
     // confirmation names the notes that will actually change, not every concept.
@@ -1094,8 +1099,8 @@ export default class KtlRegistrarPlugin extends Plugin {
     const mapPath = toVaultPath("diataxis.md", root);
     const entries: DiataxisEntry[] = [];
     for (const f of this.candidateFiles()) {
-      if (isReserved(f.path) || f.path === mapPath) continue;
       if ((this.resolveRoot(f.path) ?? "") !== root) continue;
+      if (isReserved(f.path, root)) continue;
       const parsed = this.parsedFromCache(f);
       if (!parsed.hasFm) continue;
       const raw = parsed.data["genre"];
@@ -1149,7 +1154,7 @@ export default class KtlRegistrarPlugin extends Plugin {
     const { body } = splitFrontmatter(doc);
     const root = this.resolveRoot(file.path) ?? "";
     const baseIri = this.cachedBaseIriFor(root);
-    const conceptPaths = new Set(this.candidateFiles().filter((f) => !isReserved(f.path)).map((f) => f.path));
+    const conceptPaths = new Set(this.candidateFiles().filter((f) => !this.isReservedFile(f.path)).map((f) => f.path));
     const bundleSelf = toBundlePath(file.path, root);
     const cut = bundleSelf.lastIndexOf("/");
     const conceptDir = cut > 0 ? bundleSelf.slice(0, cut) : "";

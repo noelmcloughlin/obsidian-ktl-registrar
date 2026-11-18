@@ -29,7 +29,9 @@ Open the command palette and search for **LOKF**:
 | Promote body links to typed relations… | Guesses a typed relation for each `[[wikilink]]` and lets you confirm each one: the hand-authoring aid for a bundle no agent maintains |
 | Add Obsidian affordances to the active note | Tags the note with its Diátaxis `genre` and lists its typed relations as wikilinks in one managed block, so the tag pane, graph and backlinks see them |
 | Generate Obsidian affordances across the vault | Does that for every concept, plus a Diátaxis map per bundle, after a confirmation |
-| Generate the Diátaxis map for this bundle | Builds or refreshes `diataxis.md`, grouping concepts by `genre` |
+| Generate the Diátaxis map for this bundle | Builds or refreshes `diataxis.md` at the bundle root, grouping concepts by `genre` |
+
+Three file names are reserved and never validated as concepts: `index.md` and `log.md` in every folder, and `diataxis.md` at the bundle root, where the map is written. A `diataxis.md` in a subfolder is an ordinary note.
 
 Clicking the status-bar item validates the active note, or runs a vault scan if none is open.
 

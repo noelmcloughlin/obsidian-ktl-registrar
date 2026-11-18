@@ -33,6 +33,7 @@ import {
   resolveRelationTarget,
   isExcluded,
   isIgnoredByFrontmatter,
+  isReserved,
   applySeverityOverrides,
   applyFieldAliases,
   DEFAULT_SETTINGS,
@@ -736,7 +737,14 @@ section("non-scalar values are named by shape, never stringified", () => {
 section("reserved files", () => {
   expect("non-root index.md yields nothing", check("services/index.md", "# Services\n").length === 0, "expected none");
   expect("log.md yields nothing", check("log.md", "# Change Log\n", { isRoot: true }).length === 0, "expected none");
-  expect("a generated diataxis.md is reserved, never validated as a concept", check("diataxis.md", "# Diátaxis map\n").length === 0, "expected none");
+  expect("the root diataxis.md is reserved, never validated as a concept", check("diataxis.md", "# Diátaxis map\n", { isRoot: true }).length === 0, "expected none");
+  expect("isReserved names the root diataxis.md", isReserved("diataxis.md", "") === "diataxis", String(isReserved("diataxis.md", "")));
+  expect("isReserved sees the root through a bundle-root prefix", isReserved("kb/diataxis.md", "kb") === "diataxis", String(isReserved("kb/diataxis.md", "kb")));
+  expect("a nested diataxis.md is not reserved", isReserved("guides/diataxis.md", "") === null, String(isReserved("guides/diataxis.md", "")));
+  expect("a nested diataxis.md under a bundle root is not reserved", isReserved("kb/guides/diataxis.md", "kb") === null, String(isReserved("kb/guides/diataxis.md", "kb")));
+  expect("index.md and log.md stay reserved in every folder", isReserved("kb/guides/index.md", "kb") === "index" && isReserved("a/b/log.md", "") === "log", "expected index and log");
+  const nested = check("guides/diataxis.md", "---\ntype: Service\ntitle: Diataxis guide\n---\n# Diátaxis guide\n");
+  expect("a nested diataxis.md is validated as a concept", nested.length > 0, "expected issues for a bare Service concept");
 });
 
 // ---- Golden fixtures: real bundle directories, walked whole ----
@@ -813,6 +821,9 @@ function validateBundle(
       );
     } else {
       console.log(`  characterized - ${warnCount} warning(s), not asserted`);
+      for (const r of found) {
+        for (const i of r.issues.filter((i) => i.severity === "warning")) console.log(`    ${r.path}: ${i.rule} - ${i.message}`);
+      }
     }
   });
 }
@@ -1563,7 +1574,16 @@ validateBundle("ktl-registrar's own .lokf/knowledge", join(repoRoot, ".lokf", "k
   expectedWarnings: 7,
 });
 
-// (c) any other real bundle, opt-in so this suite stays hermetic - its result
+// (c) the KTL specification's reader conformance bundle: one concept per
+// trust label section 8 lets a program compute. Reserved index.md and log.md
+// at its root, so the walk covers them too. scripts/fixtures/conformance-reader
+// is copied from knowledge-trust-ladder's tests/conformance/reader/.lokf and
+// must be re-copied when that changes. Warnings are printed, not pinned.
+validateBundle("KTL reader conformance bundle", join(repoRoot, "scripts", "fixtures", "conformance-reader", "knowledge"), {
+  required: true,
+});
+
+// (d) any other real bundle, opt-in so this suite stays hermetic - its result
 // must not depend on what happens to sit next to the checkout. Point it at a
 // curated bundle to check the rules against one:
 //   LOKF_EXTRA_BUNDLE=../knowledge-trust-ladder/.lokf/knowledge npm run smoke-test
