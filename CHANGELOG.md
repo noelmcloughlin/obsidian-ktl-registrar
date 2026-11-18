@@ -6,6 +6,8 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+## [1.8.4] - 2026-11-18
+
 ### Fixed
 
 - **`diataxis.md` is reserved at the bundle root only, where the Diátaxis map is written; one in a subfolder is validated as a concept.** `index.md` and `log.md` stay reserved in every folder.
