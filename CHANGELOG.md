@@ -6,6 +6,8 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+## [1.8.7] - 2026-11-19
+
 ### Security
 
 - **The skills pin is at Knowledge Trust Ladder [v0.69.2](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/v0.69.2/CHANGELOG.md).** The sync also wrote the template over a local edit of `.github/workflows/knowledge-sync.yaml`. No plugin change.
