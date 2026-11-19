@@ -6,6 +6,10 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+### Security
+
+- **The sidecar copies and the skills pin are at Knowledge Trust Ladder [v0.70.3](https://github.com/noelmcloughlin/knowledge-trust-ladder/compare/v0.70.1...v0.70.3).** The release changed `.github/PULL_REQUEST_TEMPLATE/knowledge-sync.md` and `.lokf/scripts/knowledge-sync.sh` here. The sync also wrote the template over a local edit of `.github/workflows/knowledge-release.yaml` and `.github/workflows/knowledge-sync.yaml`. No plugin change.
+
 ## [1.8.9] - 2026-11-19
 
 ### Security
