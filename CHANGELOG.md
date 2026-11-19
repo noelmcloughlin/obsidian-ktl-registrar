@@ -6,6 +6,10 @@ No version below has been published as a GitHub release yet, so entries describe
 
 ## [Unreleased]
 
+### Fixed
+
+- **Each draft release carries its changelog section as its body.** The release workflow creates the draft, and semantic-release only tags here, so the notes now come from `changelog-release.mjs notes` in that workflow.
+
 ## [1.8.7] - 2026-11-19
 
 ### Security
