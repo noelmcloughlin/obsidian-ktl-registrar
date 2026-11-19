@@ -10,6 +10,12 @@ No version below has been published as a GitHub release yet, so entries describe
 
 - **Each draft release carries its changelog section as its body.** The release workflow creates the draft, and semantic-release only tags here, so the notes now come from `changelog-release.mjs notes` in that workflow.
 
+## [1.8.7] - 2026-11-19
+
+### Security
+
+- **The skills pin is at Knowledge Trust Ladder [v0.69.2](https://github.com/noelmcloughlin/knowledge-trust-ladder/blob/v0.69.2/CHANGELOG.md).** The sync also wrote the template over a local edit of `.github/workflows/knowledge-sync.yaml`. No plugin change.
+
 ## [1.8.6] - 2026-11-18
 
 ### Security
